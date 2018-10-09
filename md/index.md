@@ -4,8 +4,19 @@
 
 ## 目录
 
+#### Linux
+
 + [Linux监控](./Linux监控.html)
+
+#### golang
+
++ [golang小技巧](./golang小技巧.html)
+
 + [go并发编程模式](./go并发编程模式.html)
+
+#### python
+
++ [gevent学习笔记](./gevent学习笔记.html)
 
 ## 学习资源
 
