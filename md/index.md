@@ -17,6 +17,7 @@
 #### python
 
 + [gevent学习笔记](./gevent学习笔记.html)
++ [python函数式编程](./python函数式编程.html)
 
 ## 学习资源
 
