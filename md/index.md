@@ -19,6 +19,10 @@
 + [gevent学习笔记](./gevent学习笔记.html)
 + [python函数式编程](./python函数式编程.html)
 
+#### 其他
+
++ [influxdb学习笔记](./influxdb学习笔记.html)
+
 ## 学习资源
 
 + [golang 搭建整套微服务Blog](http://callistaenterprise.se/blogg/teknik/2017/02/17/go-blog-series-part1/)

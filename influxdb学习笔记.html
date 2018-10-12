@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
-<title>index</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; }
+<title>influxdb学习笔记</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; }
 html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
 body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857143; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
 iframe { margin: auto; }
@@ -143,6 +143,79 @@ table tr th { border-bottom-width: 0px; }
 video { max-width: 100%; display: block; margin: 0px auto; }
 iframe { max-width: 100%; width: 100%; border: none; }
 .highlight td, .highlight tr { border: 0px; }
+
+
+.CodeMirror { height: auto; }
+.CodeMirror.cm-s-inner { background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
+.CodeMirror-scroll { overflow-y: hidden; overflow-x: auto; z-index: 3; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-gutters { border-right-width: 1px; border-right-style: solid; border-right-color: rgb(221, 221, 221); background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; white-space: nowrap; background-position: inherit inherit; background-repeat: inherit inherit; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: red; }
+.cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: hidden; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 30px; z-index: 3; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; border: none !important; background-position: 0px 0px !important; background-repeat: initial initial !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-width: 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; word-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; background-position: 0px 0px; background-repeat: initial initial; }
+.CodeMirror-wrap pre { word-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right-width: 30px; border-right-style: solid; border-right-color: transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right-style: none; width: auto; }
+.CodeMirror-linebackground { position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right-style: none; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.cm-searching { background-color: rgba(255, 255, 0, 0.4); background-position: initial initial; background-repeat: initial initial; }
+@media print { 
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
 
 
 html {
@@ -430,6 +503,6 @@ table tbody+tbody {
 </style>
 </head>
 <body class='typora-export' >
-<div  id='write'  class = 'is-mac'><h1><a name='header-n0' class='md-header-anchor '></a>Dreamgoing技术信仰，价值务实</h1><blockquote><p>记录，生活，学习，最简单的笔记🍎  </p></blockquote><h2><a name='header-n43' class='md-header-anchor '></a>目录</h2><h4><a name='header-n96' class='md-header-anchor '></a>Linux</h4><ul><li><a href='./Linux%E7%9B%91%E6%8E%A7.html'>Linux监控</a></li></ul><h4><a name='header-n101' class='md-header-anchor '></a>golang</h4><ul><li><a href='./golang%E5%B0%8F%E6%8A%80%E5%B7%A7.html'>golang小技巧</a></li></ul><ul><li><a href='./go%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%BC%8F.html'>go并发编程模式</a></li></ul><h4><a name='header-n105' class='md-header-anchor '></a>python</h4><ul><li><a href='./gevent%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html'>gevent学习笔记</a></li><li><a href='./python%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B.html'>python函数式编程</a></li></ul><h4><a name='header-n161' class='md-header-anchor '></a>其他</h4><ul><li><a href='./influxdb%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html'>influxdb学习笔记</a></li></ul><h2><a name='header-n66' class='md-header-anchor '></a>学习资源</h2><ul><li><a href='http://callistaenterprise.se/blogg/teknik/2017/02/17/go-blog-series-part1/'>golang 搭建整套微服务Blog</a></li></ul><h2><a name='header-n39' class='md-header-anchor '></a>关于</h2><ul><li>90后，工作一年，HUST,  backend,  python，golang，分布式~ </li><li>Email: <a href='mailto:ruoxuanwanggoing@gmail.com' target='_blank' class='url'>ruoxuanwanggoing@gmail.com</a></li></ul><p>&nbsp;</p><p>&nbsp;</p></div>
+<div  id='write'  class = 'is-mac'><h1><a name='header-n0' class='md-header-anchor '></a>InfluxDB学习笔记</h1><blockquote><p>记录和学习InfluxDB过程中遇到的一些问题</p></blockquote><p>&nbsp;</p><h2><a name='header-n5' class='md-header-anchor '></a>介绍</h2><p><code>InfluxDB</code>: 是时间序列数据库，通常配合<code>statsd</code>, <code>grafana</code>构成监控系统。关键点在于时间序列，是以时间序列为主键，依据此特性可以构造监控。</p><p>&nbsp;</p><h2><a name='header-n8' class='md-header-anchor '></a>关键概念</h2><p>&nbsp;</p><ul><li><code>database</code>: 数据库，即类似于<code>MySQL</code>中的数据库。</li><li><code>measurement</code>: 存储相关<code>field</code>的描述，类似于SQL中的表</li><li><code>retention policy</code>: 描述了InfluxDB保存数据的时间和集群副本数量</li><li><code>field</code>: &lt;k,v&gt; InfluxDB数据结果所必须的一部分，field字段没有索引。field字段的值通常不用来作为查询的元数据</li><li><code>tag</code>: &lt;k,v&gt;  tag不是InfluxDB中所必须的字段，但是使用tag在需要频繁查询的字段上面，会提高性能。tag是带索引的。</li><li><code>continuous query</code> (CQ): 这个一个在数据库中自动周期运行的InfluxQL的查询。Continuous query在<code>select</code>语句里需要一个函数，并且一定会包含一个<code>GROUP BY time()</code>的语法。</li></ul><h2><a name='header-n23' class='md-header-anchor '></a>语法</h2><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="bash"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="bash"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">&lt;measurement&gt;[,&lt;tag_key&gt;<span class="cm-operator">=</span>&lt;tag_value&gt;[,&lt;tag_key&gt;<span class="cm-operator">=</span>&lt;tag_value&gt;]] &lt;field_key&gt;<span class="cm-operator">=</span>&lt;field_value&gt;[,&lt;field_key&gt;<span class="cm-operator">=</span>&lt;field_value&gt;] [&lt;timestamp&gt;]</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 52px;"></div><div class="CodeMirror-gutters" style="display: none; height: 52px;"></div></div></div></pre><p>&nbsp;</p><p>&nbsp;</p><h2><a name='header-n27' class='md-header-anchor '></a>存储引擎</h2><h3><a name='header-n28' class='md-header-anchor '></a>LSM Tree(Log Structured Merge-Tree)</h3><p>LSM Tree的数据结构主要分为两种保存在内存中的称为<code>MemTable</code>, 保存在磁盘上称为<code>SSTable</code>, 其基本原理为：</p><ul><li>写操作直接作用于MemTable，因此写性能接近于写入内存</li><li>每层的SSTable文件达到一定程度之后，进行合并操作，然后放置到更高一层，合并操作在实现上一般是策略驱动、可插件化的。比如Cassandra的合并策略可以选择<code>SizeTieredCompactionStrategy</code>或<code>LeveledCompactionStrategy</code>.</li></ul><p><img src='./image/LSM-level.jpg' alt='' referrerPolicy='no-referrer' /></p><p><img src='./image/LSM-compact.jpg' alt='' referrerPolicy='no-referrer' /></p><ul><li>SSTable合并类似于简单的归并排序：根据key值确定要merge的文件，然后进行合并。因此，合并一个文件到更高层，可能会需要写多个文件。存在一定程度的写放大。是非常昂贵的I/O操作行为。Cassandra除了提供策略进行合并文件的选择，还提供了合并时I/O的限制，以期减少合并操作对上层业务的影响。</li><li>读操作优先判断key是否在MemTable, 如果不在的话，则把覆盖该key range的所有SSTable都查找一遍。简单，但是低效。因此，在工程实现上，一般会为SSTable加入索引——布隆过滤器（Bloom Filter）。它有一个特性：如果bloom说一个key不存在，就一定不存在，而当bloom说一个key存在于这个文件，可能是不存在的。实现层面上，布隆过滤器就是<code>key--比特位</code>的映射。理想情况下，当然是一个key对应一个比特实现全映射，但是太消耗内存。因此，一般通过控制假阳性概率来节约内存，代价是牺牲了一定的读性能。对于我们的应用场景，我们将该概率从0.99降低到0.8，布隆过滤器的内存消耗从2GB+下降到了300MB，数据读取速度有所降低，但在感知层面可忽略。</li></ul><h2><a name='header-n42' class='md-header-anchor '></a>应用场景</h2><h4><a name='header-n43' class='md-header-anchor '></a>特点：</h4><ul><li>高吞吐读写</li><li>大量数据删除(过期删除)</li><li>大部分数据都为追加，插入很少更新</li></ul><h4><a name='header-n51' class='md-header-anchor '></a>其他：</h4><p>LSM Tree的数据库一大把（HBase, Cassandra, RockDB, LevelDB, SQLite...）</p><p> </p><p> </p><p> </p><p> </p><p> </p></div>
 </body>
 </html>
