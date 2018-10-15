@@ -1,6 +1,10 @@
 # Dreamgoing技术信仰，价值务实
 
->记录，生活，学习，最简单的笔记:apple:  
+>记录，生活，学习:apple:  
+>
+>本博客内容为自己在工作学习过程中的知识总结~
+
+
 
 ## 目录
 
@@ -18,6 +22,7 @@
 
 + [gevent学习笔记](./gevent学习笔记.html)
 + [python函数式编程](./python函数式编程.html)
++ [python装饰器](./Python装饰器.html)
 
 #### 其他
 
