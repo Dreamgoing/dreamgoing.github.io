@@ -29,6 +29,7 @@
 
 + [influxdb学习笔记](./influxdb学习笔记.html)
 + [加密算法相关知识](./加密算法相关知识.html)
++ [MySQL学习笔记](./mysql学习笔记.html)
 
 ## 学习资源
 
