@@ -1,0 +1,510 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>C++ 多态实现</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857143; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; padding-bottom: 70px; overflow-x: visible; }
+.first-line-indent #write div, .first-line-indent #write li, .first-line-indent #write p { text-indent: 2em; }
+.first-line-indent #write div :not(p):not(div), .first-line-indent #write div.md-htmlblock-container, .first-line-indent #write p *, .first-line-indent pre { text-indent: 0px; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+@media screen and (max-width: 500px) { 
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write > blockquote:first-child, #write > div:first-child, #write > figure:first-child, #write > ol:first-child, #write > p:first-child, #write > pre:first-child, #write > ul:first-child { margin-top: 30px; }
+#write li > figure:first-child { margin-top: -20px; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; }
+button, input, select, textarea { color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 2; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.701961); color: rgb(85, 85, 85); border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px !important; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 80px; }
+.CodeMirror-gutters { border-right-width: 0px; background-color: inherit; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; position: relative !important; background-position: inherit inherit; background-repeat: inherit inherit; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; background-position: 0px 0px; background-repeat: initial initial; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print { 
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid-page; break-before: avoid-page; }
+  #write { margin-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { padding-left: 1cm; padding-right: 1cm; padding-bottom: 0px; break-after: avoid-page; }
+  .typora-export #write::after { height: 0px; }
+  @page { margin: 20mm 0px; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background-color: rgb(204, 204, 204); display: block; overflow-x: hidden; background-position: initial initial; background-repeat: initial initial; }
+p > img:only-child { display: block; margin: auto; }
+p > .md-image:only-child { display: inline-block; width: 100%; text-align: center; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) { 
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background-color: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; background-position: initial initial; background-repeat: initial initial; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; }
+a.md-print-anchor { white-space: pre !important; border: none !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; text-shadow: initial !important; background-position: 0px 0px !important; background-repeat: initial initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="mermaid"] svg, [lang="flow"] svg { max-width: 100%; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom-width: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+
+
+.CodeMirror { height: auto; }
+.CodeMirror.cm-s-inner { background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
+.CodeMirror-scroll { overflow-y: hidden; overflow-x: auto; z-index: 3; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-gutters { border-right-width: 1px; border-right-style: solid; border-right-color: rgb(221, 221, 221); background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; white-space: nowrap; background-position: inherit inherit; background-repeat: inherit inherit; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: red; }
+.cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: hidden; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 30px; z-index: 3; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; border: none !important; background-position: 0px 0px !important; background-repeat: initial initial !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-width: 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; word-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; background-position: 0px 0px; background-repeat: initial initial; }
+.CodeMirror-wrap pre { word-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right-width: 30px; border-right-style: solid; border-right-color: transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right-style: none; width: auto; }
+.CodeMirror-linebackground { position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right-style: none; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.cm-searching { background-color: rgba(255, 255, 0, 0.4); background-position: initial initial; background-repeat: initial initial; }
+@media print { 
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
+
+
+html {
+	font-size: 19px;
+}
+
+html, body {
+	margin: auto;
+	background: #fefefe;
+}
+body {
+	font-family: "Vollkorn", Palatino, Times;
+	color: #333;
+	line-height: 1.4;
+	text-align: justify;
+}
+#write {
+	max-width: 960px;
+	margin: 0 auto;
+	margin-bottom: 2em;
+	line-height: 1.53;
+}
+
+#write>h2:first-child,
+#write>h3:first-child,
+#write>h4:first-child,
+#write>p:first-child{
+	margin-top: 1.2em;
+}
+
+/* Typography
+-------------------------------------------------------- */
+
+#write>h1:first-child,
+h1 {
+	margin-top: 1.6em;
+	font-weight: normal;
+}
+
+h1 {
+	font-size:3em;
+}
+
+h2 {
+	margin-top:2em;
+	font-weight: normal;
+}
+
+h3 {
+	font-weight: normal;
+	font-style: italic;
+	margin-top: 3em;
+}
+
+h1, 
+h2, 
+h3{
+	text-align: center;
+}
+
+h2:after{
+	border-bottom: 1px solid #2f2f2f;
+    content: '';
+    width: 100px;
+    display: block;
+    margin: 0 auto;
+    height: 1px;
+}
+
+h1+h2, h2+h3 {
+	margin-top: 0.83em;
+}
+
+p,
+.mathjax-block {
+	margin-top: 0;
+	-webkit-hypens: auto;
+	-moz-hypens: auto;
+	hyphens: auto;
+}
+ul {
+	list-style: square;
+	padding-left: 1.2em;
+}
+ol {
+	padding-left: 1.2em;
+}
+blockquote {
+	margin-left: 1em;
+	padding-left: 1em;
+	border-left: 1px solid #ddd;
+}
+code,
+pre {
+	font-family: "Consolas", "Menlo", "Monaco", monospace, serif;
+	font-size: .9em;
+	background: white;
+}
+.md-fences{
+	margin-left: 1em;
+	padding-left: 1em;
+	border: 1px solid #ddd;
+	padding-bottom: 8px;
+	padding-top: 6px;
+	margin-bottom: 1.5em;
+}
+
+a {
+	color: #2484c1;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+a img {
+	border: none;
+}
+h1 a,
+h1 a:hover {
+	color: #333;
+	text-decoration: none;
+}
+hr {
+	color: #ddd;
+	height: 1px;
+	margin: 2em 0;
+	border-top: solid 1px #ddd;
+	border-bottom: none;
+	border-left: 0;
+	border-right: 0;
+}
+.ty-table-edit {
+	background: #ededed;
+    padding-top: 4px;
+}
+table {
+	margin-bottom: 1.333333rem
+}
+table th,
+table td {
+	padding: 8px;
+	line-height: 1.333333rem;
+	vertical-align: top;
+	border-top: 1px solid #ddd
+}
+table th {
+	font-weight: bold
+}
+table thead th {
+	vertical-align: bottom
+}
+table caption+thead tr:first-child th,
+table caption+thead tr:first-child td,
+table colgroup+thead tr:first-child th,
+table colgroup+thead tr:first-child td,
+table thead:first-child tr:first-child th,
+table thead:first-child tr:first-child td {
+	border-top: 0
+}
+table tbody+tbody {
+	border-top: 2px solid #ddd
+}
+
+.task-list{
+	padding:0;
+}
+
+.md-task-list-item {
+	padding-left: 1.6rem;
+}
+
+.md-task-list-item > input:before {
+	content: '\221A';
+	display: inline-block;
+	width: 1.33333333rem;
+  	height: 1.6rem;
+	vertical-align: middle;
+	text-align: center;
+	color: #ddd;
+	background-color: #fefefe;
+}
+
+.md-task-list-item > input:checked:before,
+.md-task-list-item > input[checked]:before{
+	color: inherit;
+}
+.md-tag {
+	color: inherit;
+	font: inherit;
+}
+#write pre.md-meta-block {
+	min-height: 35px;
+	padding: 0.5em 1em;
+}
+#write pre.md-meta-block {
+	white-space: pre;
+	background: #f8f8f8;
+	border: 0px;
+	color: #999;
+	
+	width: 100vw;
+	max-width: calc(100% + 60px);
+	margin-left: -30px;
+	border-left: 30px #f8f8f8 solid;
+	border-right: 30px #f8f8f8 solid;
+
+	margin-bottom: 2em;
+	margin-top: -1.3333333333333rem;
+	padding-top: 26px;
+	padding-bottom: 10px;
+	line-height: 1.8em;
+	font-size: 0.9em;
+	font-size: 0.76em;
+	padding-left: 0;
+}
+.md-img-error.md-image>.md-meta{
+	vertical-align: bottom;
+}
+#write>h5.md-focus:before {
+	top: 2px;
+}
+
+.md-toc {
+	margin-top: 40px;
+}
+
+.md-toc-content {
+	padding-bottom: 20px;
+}
+
+.outline-expander:before {
+	color: inherit;
+	font-size: 14px;
+	top: auto;
+	content: "\f0da";
+	font-family: FontAwesome;
+}
+
+.outline-expander:hover:before,
+.outline-item-open>.outline-item>.outline-expander:before {
+  	content: "\f0d7";
+}
+
+/** source code mode */
+#typora-source {
+	font-family: Courier, monospace;
+    color: #6A6A6A;
+}
+
+.html-for-mac #typora-sidebar {
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+
+.cm-s-typora-default .cm-header, 
+.cm-s-typora-default .cm-property,
+.CodeMirror.cm-s-typora-default div.CodeMirror-cursor {
+	color: #428bca;
+}
+
+.cm-s-typora-default .cm-atom, .cm-s-typora-default .cm-number {
+	color: #777777;
+}
+
+.typora-node .file-list-item-parent-loc, 
+.typora-node .file-list-item-time, 
+.typora-node .file-list-item-summary {
+	font-family: arial, sans-serif;
+}
+
+.md-task-list-item>input {
+    margin-left: -1.3em;
+    margin-top: calc(1rem - 12px);
+}
+
+.md-mathjax-midline {
+	background: #fafafa;
+}
+
+.md-fences .code-tooltip {
+	bottom: -2em !important;
+}
+
+ .typora-export p, .typora-export .footnote-line {white-space: normal;} 
+</style>
+</head>
+<body class='typora-export' >
+<div  id='write'  class = 'is-mac'><h1><a name='header-n0' class='md-header-anchor '></a>C++ 多态机制实现</h1><blockquote><p>compiler implement late binding mechanism</p></blockquote><h2><a name='header-n4' class='md-header-anchor '></a>迟绑定是如何实现的(How C++ implements late binding)</h2><p><strong>关键字virtual告诉编译器不应该执行早期绑定，相反的，应该自动的安装所有必要的机制去执行迟绑定</strong></p><blockquote><p>The keyword virtual tells the compiler it should not perform early binding. Instead, it should automatically install all the mechanisms necessary to perform late binding.</p></blockquote><p><strong>为了实现迟绑定，典型的编译器为每个类类创建一个单一的表，这个表包涵了虚函数，即VTABLE</strong></p><blockquote><p>To accomplish this, the typical compiler[54] creates a single table (called the VTABLE) for each class that contains virtual functions.</p></blockquote><p><strong>编译器对特定的类放置虚函数的地址在虚函数表中</strong></p><blockquote><p>The compiler places the addresses of the virtual functions for that particular class in the VTABLE.</p></blockquote><p><strong>在每个带有虚函数的类中，隐藏着一个被称为虚函数的指针，(缩写为 VPTR ),该指针指向当前对象的虚函数表</strong></p><blockquote><p>In each class with virtual functions, it secretly places a pointer, called the vpointer (abbreviated as VPTR), which points to the VTABLE for that object.</p></blockquote><p><strong>当通过基类指针进行虚函数调用时，也称为 多态调用 ，编译器将会悄悄的插入代码去获取VPTR虚函数指针并且查找该函数在虚函数表中的地址，这样就可以调用正确的函数并且导致迟绑定的发生</strong></p><blockquote><p>When you make a virtual function call through a base-class pointer (that is, when you make a polymorphic call), the compiler quietly inserts code to fetch the VPTR and look up the function address in the VTABLE, thus calling the correct function and causing late binding to take place.</p></blockquote><p><strong>经过以上所有，对每个类设置虚函数表VTABLE，初始化虚函数指针VPTR,为虚函数调用插入代码都是自动发生的，所有不需要担心这些</strong></p><blockquote><p>All of this – setting up the VTABLE for each class, initializing the VPTR, inserting the code for the virtual function call – happens automatically, so you don’t have to worry about it.</p></blockquote><p><strong>即使编译器不知道对象的确切的类型，通过虚函数可以实现对象的正确函数调用</strong></p><blockquote><p>With virtual functions, the proper function gets called for an object, even if the compiler cannot know the specific type of the object.</p></blockquote><h2><a name='header-n26' class='md-header-anchor '></a>存储类型信息(Storing type information)</h2><p><strong>如下是查看带有虚函数的类和不带虚函数的类的大小差别</strong></p><blockquote><p>here’s an example to examine the sizes of classes that use virtual functions compared with those that don’t:</p></blockquote><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="c++" style="page-break-inside: unset;"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="c++"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">//</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// Created by 王若璇 on 17/3/26.</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">//</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">//: C15:Sizes.cpp</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// Object sizes with/without virtual functions</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-meta">#include &lt;iostream&gt;</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">using</span> <span class="cm-keyword">namespace</span> <span class="cm-def">std</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">class</span> <span class="cm-def">NoVirtual</span> {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">int</span> <span class="cm-variable">a</span>; <span class="cm-comment">//如果注释掉int a则该类的对象大小为1</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">public</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">void</span> <span class="cm-variable">x</span>() <span class="cm-keyword">const</span> {}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">int</span> <span class="cm-variable">i</span>() <span class="cm-keyword">const</span> { <span class="cm-keyword">return</span> <span class="cm-number">1</span>; }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">};</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">class</span> <span class="cm-def">OneVirtual</span> {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">int</span> <span class="cm-variable">a</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">int</span> <span class="cm-variable">b</span>; <span class="cm-comment">///void* 指针为8字节，故为8字节对齐 总大小为16字节</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">public</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">virtual</span> <span class="cm-variable-3">void</span> <span class="cm-variable">x</span>() <span class="cm-keyword">const</span> {}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">int</span> <span class="cm-variable">i</span>() <span class="cm-keyword">const</span> { <span class="cm-keyword">return</span> <span class="cm-number">1</span>; }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">};</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">class</span> <span class="cm-def">TwoVirtuals</span> {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">int</span> <span class="cm-variable">a</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">public</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">virtual</span> <span class="cm-variable-3">void</span> <span class="cm-variable">x</span>() <span class="cm-keyword">const</span> {}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">virtual</span> <span class="cm-variable-3">int</span> <span class="cm-variable">i</span>() <span class="cm-keyword">const</span> { <span class="cm-keyword">return</span> <span class="cm-number">1</span>; }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">};</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">///sizeof 函数实际也是传参数，同样产生栈变量</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable-3">int</span> <span class="cm-def">main</span>() {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">cout</span> <span class="cm-operator">&lt;&lt;</span> <span class="cm-string">"int: "</span> <span class="cm-operator">&lt;&lt;</span> <span class="cm-keyword">sizeof</span>(<span class="cm-variable-3">int</span>) <span class="cm-operator">&lt;&lt;</span> <span class="cm-variable">endl</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">cout</span> <span class="cm-operator">&lt;&lt;</span> <span class="cm-string">"NoVirtual: "</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-operator">&lt;&lt;</span> <span class="cm-keyword">sizeof</span>(<span class="cm-variable">NoVirtual</span>) <span class="cm-operator">&lt;&lt;</span> <span class="cm-variable">endl</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">cout</span> <span class="cm-operator">&lt;&lt;</span> <span class="cm-string">"void* : "</span> <span class="cm-operator">&lt;&lt;</span> <span class="cm-keyword">sizeof</span>(<span class="cm-variable-3">void*</span>) <span class="cm-operator">&lt;&lt;</span> <span class="cm-variable">endl</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">cout</span> <span class="cm-operator">&lt;&lt;</span> <span class="cm-string">"OneVirtual: "</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-operator">&lt;&lt;</span> <span class="cm-keyword">sizeof</span>(<span class="cm-variable">OneVirtual</span>) <span class="cm-operator">&lt;&lt;</span> <span class="cm-variable">endl</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">cout</span> <span class="cm-operator">&lt;&lt;</span> <span class="cm-string">"TwoVirtuals: "</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-operator">&lt;&lt;</span> <span class="cm-keyword">sizeof</span>(<span class="cm-variable">TwoVirtuals</span>) <span class="cm-operator">&lt;&lt;</span> <span class="cm-variable">endl</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">} <span class="cm-comment">///:~</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 1092px;"></div><div class="CodeMirror-gutters" style="display: none; height: 1092px;"></div></div></div></pre><p>output</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">int: 4</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">NoVirtual: 4</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">void* : 8</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">OneVirtual: 16</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">TwoVirtuals: 16</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 156px;"></div><div class="CodeMirror-gutters" style="display: none; height: 156px;"></div></div></div></pre><p><strong>没有虚函数的类，该类的大小等于一个int成员变量的大小。有一个虚函数的的类，该类的大小等于没有虚函数类的大小加一个void指针的大小.</strong></p><blockquote><p>With no virtual functions, the size of the object is exactly what you’d expect: the size of a single[55] int. With a single virtual function in OneVirtual, the size of the object is the size of NoVirtual plus the size of a void pointer.</p></blockquote><p><strong>以上结果证明了：如果一个类有一个或者多个虚函数，编译器就会插入一个指针，即VPTR。一个虚函数和两个虚函数之间没有区别，因为VPTR指针指向函数表。所有的虚函数地址可以被包含到一个函数表中。</strong></p><blockquote><p>It turns out that the compiler inserts a single pointer (the VPTR) into the structure if you have one or more virtual functions. There is no size difference between OneVirtual and TwoVirtuals. That’s because the VPTR points to a table of function addresses. You need only one table because all the virtual function addresses are contained in that single table.</p></blockquote><p><strong>这个例子要求至少一个成员数据变量，如果没有数据成员，c++编译器将会强制的使得对象为一个非0大小，因为每一个对象都必须有一个独立的地址</strong></p><blockquote><p>This example required at least one data member. If there had been no data members, the C++ compiler would have forced the objects to be a nonzero size because each object must have a distinct address.</p></blockquote><p>##图形化显示虚函数表(Picturing virtual function)</p><p><strong>为了确切的理解当我们使用虚函数时，背后的机制。使用图形化的方法有助于可视化虚函数幕布后面的活动</strong></p><blockquote><p>To understand exactly what’s going on when you use a virtual function, it’s helpful to visualize the activities going on behind the curtain.</p></blockquote><p>以上一篇C++ 多态介绍中，最后的包含指向基类指针的数组为例：</p><p><img src='./image/TIC2Vo16.gif' alt='activities going on behind curtain' referrerPolicy='no-referrer' /></p><p><strong>每次创建一个包含了虚函数的类，或者从包含虚函数的类派生出一个新的类时，编译器会创建一个独一无二的该类的VTABLE虚函数表，如上图右边所示。</strong></p><blockquote><p>Each time you create a class that contains virtual functions, or you derive from a class that contains virtual functions, the compiler creates a unique VTABLE for that class, seen on the right of the diagram.</p></blockquote><p><strong>在虚函数表中放置着所有被声明为虚函数的地址，无论该虚函数是被声明在该类中，或者被声明在基类中。如果派生类没有重写被定义在基类中的虚函数，编译器将会在派生类的虚函数表中使用该函数的基类地址。例如在Brass类中的ajust()方法。</strong></p><blockquote><p>In that table it places the addresses of all the functions that are declared virtual in this class or in the base class. If you don’t override a function that was declared virtual in the base class, the compiler uses the address of the base-class version in the derived class. (You can see this in the adjust entry in the Brass VTABLE.)</p></blockquote><p><strong>当使用单一继承时，每一个对象都只含有一个VPTR。虚表指针必须初始化为指向合适虚函数表的首地址.(这件事情发生在构造函数中)</strong></p><blockquote><p>There is only one VPTR for each object when using simple inheritance like this. The VPTR must be initialized to point to the starting address of the appropriate VTABLE. (This happens in the constructor, which you’ll see later in more detail.)</p></blockquote><p><strong>一旦虚函数指针被初始化指向正确的虚函数表，对象就会知道它的类型是什么。但是这种自知是没有价值的，除非在虚函数调用的情况下。</strong></p><blockquote><p>Once the VPTR is initialized to the proper VTABLE, the object in effect “knows” what type it is. But this self-knowledge is worthless unless it is used at the point a virtual function is called.</p></blockquote><p><strong>当通过一个基类地址调用虚函数时（这种情况下，编译器没有所有必要的信息去执行早期绑定），一些特别的事情发生了。与通过特定的地址进行简单的汇编调用这种典型的函数调用不同，编译器会执行不同的代码去实现函数调用，下图是一个Brass对象通过基类指针调用adjust()的过程图（同样引用类型也会得到同样的结果）：</strong></p><blockquote><p>When you call a virtual function through a base class address (the situation when the compiler doesn’t have all the information necessary to perform early binding), something special happens. Instead of performing a typical function call, which is simply an assembly-language CALL to a particular address, the compiler generates different code to perform the function call. Here’s what a call to adjust( ) for a Brass object looks like, if made through an Instrument pointer (An Instrument reference produces the same result):</p></blockquote><p><img src='./image/TIC2Vo17.gif' alt='through base class pointer to implement function call' referrerPolicy='no-referrer' /></p><p><strong>通过基类指针找到派生类对象，再有派生类对象中的vptr找到对应的VTABLE再在VTABLE遍历找到合适的方法即adjust()</strong></p><p><strong>因为获得VPTR虚表指针和决定实际函数地址出现在运行时期，所以这就得到了想要的迟绑定。对对象发送信息，对象会弄明白怎样处理它。</strong></p><blockquote><p>Because the fetching of the VPTR and the determination of the actual function address occur at runtime, you get the desired late binding. You send a message to the object, and the object figures out what to do with it.</p></blockquote><p>##内部机制(Under the hood)
+<strong>看虚函数调用生成的汇编代码是有帮助的，因此就会发现迟绑定确实是在发生。如下是adjust()虚函数调用的例子，代码参考上一篇《C++ 多态介绍》</strong></p><blockquote><p>It can be helpful to see the assembly-language code generated by a virtual function call, so you can see that late-binding is indeed taking place. Here’s the output from one compiler for the call</p></blockquote><blockquote><p>i.adjust(1);</p></blockquote><p><strong>inside the function f(Instrument&amp; i):</strong></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="asm"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="asm"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">push</span> &nbsp;<span class="cm-keyword">1</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">push</span> &nbsp;<span class="cm-variable">si</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">mov</span> &nbsp; <span class="cm-variable">bx</span>, word ptr [<span class="cm-variable">si</span>]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">call</span> &nbsp;<span class="cm-keyword">word</span> <span class="cm-keyword">ptr</span> [<span class="cm-variable">bx</span>+4]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">add</span> &nbsp; <span class="cm-variable">sp</span>, 4</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 130px;"></div><div class="CodeMirror-gutters" style="display: none; height: 130px;"></div></div></div></pre><p><strong>c++函数调用的参数和c一样，参数都是从右至左进栈（这个顺序是为了支持c语言变量列表）,所以参数1第一个进栈。在这个函数中si包含了当前对象的地址，它也会进栈因为它是该对象利益的首地址</strong></p><blockquote><p>The arguments of a C++ function call, like a C function call, are pushed on the stack from right to left (this order is required to support C’s variable argument lists), so the argument 1 is pushed on the stack first.At this point in the function, the register si (part of the Intel X86 processor architecture) contains the address of i. This is also pushed on the stack because it is the starting address of the object of interest.</p></blockquote><p><strong>注意上述首地址与this的值有关，this指针在每次成员函数调用之前都会默默的作为参数进栈。因此成员函数就会知道哪个特定的对象正在执行操作。这也是为什么会看到在成员函数调用之前会有多于一个数量的参数进栈的原因。（除了静态成员函数不涉及这些问题）</strong></p><blockquote><p>Remember that the starting address corresponds to the value of this, and this is quietly pushed on the stack as an argument before every member function call, so the member function knows which particular object it is working on. So you’ll always see one more than the number of arguments pushed on the stack before a member function call (except for static member functions, which have no this).</p></blockquote><p><strong>现在实际的虚拟函数调用必须被执行。首先，VPTR必须被生产出来，因此VTABLE可以被找到。为此VPTR 被插入到对象的开始的位置，因此this指针的内容与VPTR有关</strong></p><blockquote><p>Now the actual virtual function call must be performed. First, the VPTR must be produced, so the VTABLE can be found. For this compiler the VPTR is inserted at the beginning of the object, so the contents of this correspond to the VPTR. The line:</p></blockquote><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">mov bx, word ptr [si]</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 52px;"></div><div class="CodeMirror-gutters" style="display: none; height: 52px;"></div></div></div></pre><p><strong>获得字类型的指针si,即VPTR，存放在bx寄存器中。</strong></p><blockquote><p>fetches the word that si (that is, this) points to, which is the VPTR. It places the VPTR into the register bx.</p></blockquote><p><strong>在bx寄存器中的VPTR指向VTABLE中的首地址，但是函数的指针并不是VTABLE地址为0的地方，而是偏移地址为2的地方（因为这是上述列表中第三个地址）,对于这种内存模型，每一个函数指针为两个字节，所以编译器会给VPTR＋4来得到正确的函数调用地址</strong></p><blockquote><p>The VPTR contained in bx points to the starting address of the VTABLE, but the function pointer to call isn’t at location zero of the VTABLE, but instead at location two (because it’s the third function in the list). For this memory model each function pointer is two bytes long, so the compiler adds four to the VPTR to calculate where the address of the proper function is.</p></blockquote><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">call word ptr [bx+4]</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 26px;"></div><div class="CodeMirror-gutters" style="display: none; height: 26px;"></div></div></div></pre><p><strong>执行了上述指令之后，完成了虚函数的调用。最后，栈指针将会移动去清理之前函数调用被push进入的参数。在c和c++的汇编代码中，可以经常看到来访者清理参数，但是这项机制可能因为不同的编译器和不同的处理器上面实现有所不同。</strong></p><blockquote><p>Finally, the stack pointer is moved back up to clean off the arguments that were pushed before the call. In C and C++ assembly code you’ll often see the caller clean off the arguments but this may vary depending on processors and compiler implementations.</p></blockquote><h2><a name='header-n95' class='md-header-anchor '></a>处理对象的方式在不同的情况下不同(Object are different)</h2><p>(<strong>most compilers will perform early binding when they are making a call to a virtual function for an object because they know the exact type. Here’s an example:</strong>)
+<strong>当对象调用虚函数时，大多数编译器将会执行早期绑定，因为他们知道确切的类型。</strong></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="c++" style="page-break-inside: unset;"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="c++"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">//: C15:Early.cpp</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// Early binding &amp; virtual functions</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-meta">#include &lt;iostream&gt;</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-meta">#include &lt;string&gt;</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">using</span> <span class="cm-keyword">namespace</span> <span class="cm-def">std</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">class</span> <span class="cm-def">Pet</span> {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">public</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-keyword">virtual</span> <span class="cm-variable">string</span> <span class="cm-variable">speak</span>() <span class="cm-keyword">const</span> { <span class="cm-keyword">return</span> <span class="cm-string">""</span>; }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">};</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">class</span> <span class="cm-def">Dog</span> : <span class="cm-keyword">public</span> <span class="cm-variable">Pet</span> {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">public</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-variable">string</span> <span class="cm-variable">speak</span>() <span class="cm-keyword">const</span> { <span class="cm-keyword">return</span> <span class="cm-string">"Bark!"</span>; }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">};</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable-3">int</span> <span class="cm-def">main</span>() {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-variable">Dog</span> <span class="cm-variable">ralph</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-variable">Pet</span><span class="cm-operator">*</span> <span class="cm-variable">p1</span> <span class="cm-operator">=</span> <span class="cm-operator">&amp;</span><span class="cm-variable">ralph</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-variable">Pet</span><span class="cm-operator">&amp;</span> <span class="cm-variable">p2</span> <span class="cm-operator">=</span> <span class="cm-variable">ralph</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-variable">Pet</span> <span class="cm-variable">p3</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-comment">// Late binding for both:</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-variable">cout</span> <span class="cm-operator">&lt;&lt;</span> <span class="cm-string">"p1-&gt;speak() = "</span> <span class="cm-operator">&lt;&lt;</span> <span class="cm-variable">p1</span><span class="cm-operator">-&gt;</span><span class="cm-variable">speak</span>() <span class="cm-operator">&lt;&lt;</span><span class="cm-variable">endl</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-variable">cout</span> <span class="cm-operator">&lt;&lt;</span> <span class="cm-string">"p2.speak() = "</span> <span class="cm-operator">&lt;&lt;</span> <span class="cm-variable">p2</span>.<span class="cm-variable">speak</span>() <span class="cm-operator">&lt;&lt;</span> <span class="cm-variable">endl</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-comment">// Early binding (probably):</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-variable">cout</span> <span class="cm-operator">&lt;&lt;</span> <span class="cm-string">"p3.speak() = "</span> <span class="cm-operator">&lt;&lt;</span> <span class="cm-variable">p3</span>.<span class="cm-variable">speak</span>() <span class="cm-operator">&lt;&lt;</span> <span class="cm-variable">endl</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">} <span class="cm-comment">///:~</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 728px;"></div><div class="CodeMirror-gutters" style="display: none; height: 728px;"></div></div></div></pre><p><strong>最后一项输出可能是早期绑定，然而，如果编译器不想这样工作的太困难，它仍然可以使用迟绑定得到同样的结果。</strong></p><blockquote><p>However, if the compiler doesn’t want to work so hard, it can still use late binding and the same behavior will occur.</p></blockquote><h2><a name='header-n100' class='md-header-anchor '></a>虚析构函数</h2><p><strong>c++ 基类采用virtual虚析构函数是为了防止内存泄露。当delete 使用基类指针指向派生类的对象时，如果没有使用virtual虚析构函数，则会导致派生类的部分内存没有被释放，只释放了基类的内存。动态绑定机制使得派生类的对象可以正确的释放。</strong></p><h2><a name='header-n101' class='md-header-anchor '></a>总结(Why virtual functions)</h2><p><strong>多态有很多好处，易于扩展等等。但是有时候要注重程序运行的效率，这时候就需要在代码中寻找哪些地方不需要使用多态，使用non-virtual，非虚函数是加速程序更好的选择。</strong></p><blockquote><p>Thus, the virtual keyword is provided for efficiency tuning. When designing your classes, however, you shouldn’t be worrying about efficiency tuning. If you’re going to use polymorphism, use virtual functions everywhere. You only need to look for functions that can be made non-virtual when searching for ways to speed up your code (and there are usually much bigger gains to be had in other areas – a good profiler will do a better job of finding bottlenecks than you will by making guesses).</p></blockquote><p>&nbsp;</p><p>&nbsp;</p><h2><a name='header-n107' class='md-header-anchor '></a>Reference</h2><p><a href='http://www.drbio.cornell.edu/pl47/programming/TICPP-2nd-ed-Vol-one-html/Chapter15.html'>Thinking in c++</a><span>	</span></p></div>
+</body>
+</html>

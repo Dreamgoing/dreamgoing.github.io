@@ -11,6 +11,7 @@
 #### Linux
 
 + [Linux监控](./Linux监控.html)
++ [UNIX-IPC进程间通信](./UNIX-IPC进程间通信.html)
 
 #### golang
 
@@ -26,11 +27,16 @@
 + [Python Metaclass](./Python-metaclass.html)
 + [Celery学习笔记](./Celery学习笔记.html)
 
+#### C++
+
++ [C++多态实现](./C++多态实现.html)
+
 #### 其他
 
 + [influxdb学习笔记](./influxdb学习笔记.html)
 + [加密算法相关知识](./加密算法相关知识.html)
 + [MySQL学习笔记](./mysql学习笔记.html)
++ [HTTP协议](./HTTP协议.html)
 
 ## 学习资源
 
