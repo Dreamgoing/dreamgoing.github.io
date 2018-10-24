@@ -21,7 +21,6 @@
 #### python
 
 + [python小技巧](./python小技巧.html)
-
 + [gevent学习笔记](./gevent学习笔记.html)
 + [python函数式编程](./python函数式编程.html)
 + [python装饰器](./Python装饰器.html)
@@ -33,6 +32,7 @@
 + [C++对象模型与内存结构](c++对象模型与内存结构.html)
 + [C++多态实现](./C++多态实现.html)
 + [C++抽象类和纯虚函数](C++抽象类和纯虚函数.html)
++ [C++智能指针](./C++智能指针.html)
 
 #### 其他
 
