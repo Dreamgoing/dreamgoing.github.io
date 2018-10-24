@@ -16,7 +16,6 @@
 #### golang
 
 + [golang小技巧](./golang小技巧.html)
-
 + [go并发编程模式](./go并发编程模式.html)
 
 #### python
