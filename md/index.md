@@ -40,6 +40,7 @@
 + [加密算法相关知识](./加密算法相关知识.html)
 + [MySQL学习笔记](./mysql学习笔记.html)
 + [HTTP协议](./HTTP协议.html)
++ [Zookeeper](./Zookeeper.html)
 
 ## 学习资源
 
