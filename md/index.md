@@ -28,6 +28,21 @@
 + [python-threading](./Python-threading.html)
 + [Celery学习笔记](./Celery学习笔记.html)
 
+#### 分布式系统
+
++ [6.824-入门介绍](./ 分布式系统6.824-入门介绍.html)
+
++ [6.824-golang并行编程](./6.824-golang并行编程.html)
+
++ [6.824-Raft算法](./分布式系统6.824-Raft.html)
+
++ [6.824-lab2-Raft](./分布式系统6.824-lab2-Raft.html)
+
++ [6.824-主从复制](./分布式系统6.824-主从复制.html)
+
++ [6.824-GFS](./分布式系统6.824-GFS.html)
+
+
 #### C++
 
 + [C++对象模型与内存结构](c++对象模型与内存结构.html)

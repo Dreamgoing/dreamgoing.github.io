@@ -1,0 +1,436 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>分布式系统6.824-GFS</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857143; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; padding-bottom: 70px; overflow-x: visible; }
+.first-line-indent #write div, .first-line-indent #write li, .first-line-indent #write p { text-indent: 2em; }
+.first-line-indent #write div :not(p):not(div), .first-line-indent #write div.md-htmlblock-container, .first-line-indent #write p *, .first-line-indent pre { text-indent: 0px; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+@media screen and (max-width: 500px) { 
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write > blockquote:first-child, #write > div:first-child, #write > figure:first-child, #write > ol:first-child, #write > p:first-child, #write > pre:first-child, #write > ul:first-child { margin-top: 30px; }
+#write li > figure:first-child { margin-top: -20px; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; }
+button, input, select, textarea { color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 2; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.701961); color: rgb(85, 85, 85); border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px !important; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 80px; }
+.CodeMirror-gutters { border-right-width: 0px; background-color: inherit; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; position: relative !important; background-position: inherit inherit; background-repeat: inherit inherit; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; background-position: 0px 0px; background-repeat: initial initial; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print { 
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid-page; break-before: avoid-page; }
+  #write { margin-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { padding-left: 1cm; padding-right: 1cm; padding-bottom: 0px; break-after: avoid-page; }
+  .typora-export #write::after { height: 0px; }
+  @page { margin: 20mm 0px; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background-color: rgb(204, 204, 204); display: block; overflow-x: hidden; background-position: initial initial; background-repeat: initial initial; }
+p > img:only-child { display: block; margin: auto; }
+p > .md-image:only-child { display: inline-block; width: 100%; text-align: center; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) { 
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background-color: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; background-position: initial initial; background-repeat: initial initial; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; }
+a.md-print-anchor { white-space: pre !important; border: none !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; text-shadow: initial !important; background-position: 0px 0px !important; background-repeat: initial initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="mermaid"] svg, [lang="flow"] svg { max-width: 100%; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom-width: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+
+
+html {
+	font-size: 19px;
+}
+
+html, body {
+	margin: auto;
+	background: #fefefe;
+}
+body {
+	font-family: "Vollkorn", Palatino, Times;
+	color: #333;
+	line-height: 1.4;
+	text-align: justify;
+}
+#write {
+	max-width: 960px;
+	margin: 0 auto;
+	margin-bottom: 2em;
+	line-height: 1.53;
+}
+
+#write>h2:first-child,
+#write>h3:first-child,
+#write>h4:first-child,
+#write>p:first-child{
+	margin-top: 1.2em;
+}
+
+/* Typography
+-------------------------------------------------------- */
+
+#write>h1:first-child,
+h1 {
+	margin-top: 1.6em;
+	font-weight: normal;
+}
+
+h1 {
+	font-size:3em;
+}
+
+h2 {
+	margin-top:2em;
+	font-weight: normal;
+}
+
+h3 {
+	font-weight: normal;
+	font-style: italic;
+	margin-top: 3em;
+}
+
+h1, 
+h2, 
+h3{
+	text-align: center;
+}
+
+h2:after{
+	border-bottom: 1px solid #2f2f2f;
+    content: '';
+    width: 100px;
+    display: block;
+    margin: 0 auto;
+    height: 1px;
+}
+
+h1+h2, h2+h3 {
+	margin-top: 0.83em;
+}
+
+p,
+.mathjax-block {
+	margin-top: 0;
+	-webkit-hypens: auto;
+	-moz-hypens: auto;
+	hyphens: auto;
+}
+ul {
+	list-style: square;
+	padding-left: 1.2em;
+}
+ol {
+	padding-left: 1.2em;
+}
+blockquote {
+	margin-left: 1em;
+	padding-left: 1em;
+	border-left: 1px solid #ddd;
+}
+code,
+pre {
+	font-family: "Consolas", "Menlo", "Monaco", monospace, serif;
+	font-size: .9em;
+	background: white;
+}
+.md-fences{
+	margin-left: 1em;
+	padding-left: 1em;
+	border: 1px solid #ddd;
+	padding-bottom: 8px;
+	padding-top: 6px;
+	margin-bottom: 1.5em;
+}
+
+a {
+	color: #2484c1;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+a img {
+	border: none;
+}
+h1 a,
+h1 a:hover {
+	color: #333;
+	text-decoration: none;
+}
+hr {
+	color: #ddd;
+	height: 1px;
+	margin: 2em 0;
+	border-top: solid 1px #ddd;
+	border-bottom: none;
+	border-left: 0;
+	border-right: 0;
+}
+.ty-table-edit {
+	background: #ededed;
+    padding-top: 4px;
+}
+table {
+	margin-bottom: 1.333333rem
+}
+table th,
+table td {
+	padding: 8px;
+	line-height: 1.333333rem;
+	vertical-align: top;
+	border-top: 1px solid #ddd
+}
+table th {
+	font-weight: bold
+}
+table thead th {
+	vertical-align: bottom
+}
+table caption+thead tr:first-child th,
+table caption+thead tr:first-child td,
+table colgroup+thead tr:first-child th,
+table colgroup+thead tr:first-child td,
+table thead:first-child tr:first-child th,
+table thead:first-child tr:first-child td {
+	border-top: 0
+}
+table tbody+tbody {
+	border-top: 2px solid #ddd
+}
+
+.task-list{
+	padding:0;
+}
+
+.md-task-list-item {
+	padding-left: 1.6rem;
+}
+
+.md-task-list-item > input:before {
+	content: '\221A';
+	display: inline-block;
+	width: 1.33333333rem;
+  	height: 1.6rem;
+	vertical-align: middle;
+	text-align: center;
+	color: #ddd;
+	background-color: #fefefe;
+}
+
+.md-task-list-item > input:checked:before,
+.md-task-list-item > input[checked]:before{
+	color: inherit;
+}
+.md-tag {
+	color: inherit;
+	font: inherit;
+}
+#write pre.md-meta-block {
+	min-height: 35px;
+	padding: 0.5em 1em;
+}
+#write pre.md-meta-block {
+	white-space: pre;
+	background: #f8f8f8;
+	border: 0px;
+	color: #999;
+	
+	width: 100vw;
+	max-width: calc(100% + 60px);
+	margin-left: -30px;
+	border-left: 30px #f8f8f8 solid;
+	border-right: 30px #f8f8f8 solid;
+
+	margin-bottom: 2em;
+	margin-top: -1.3333333333333rem;
+	padding-top: 26px;
+	padding-bottom: 10px;
+	line-height: 1.8em;
+	font-size: 0.9em;
+	font-size: 0.76em;
+	padding-left: 0;
+}
+.md-img-error.md-image>.md-meta{
+	vertical-align: bottom;
+}
+#write>h5.md-focus:before {
+	top: 2px;
+}
+
+.md-toc {
+	margin-top: 40px;
+}
+
+.md-toc-content {
+	padding-bottom: 20px;
+}
+
+.outline-expander:before {
+	color: inherit;
+	font-size: 14px;
+	top: auto;
+	content: "\f0da";
+	font-family: FontAwesome;
+}
+
+.outline-expander:hover:before,
+.outline-item-open>.outline-item>.outline-expander:before {
+  	content: "\f0d7";
+}
+
+/** source code mode */
+#typora-source {
+	font-family: Courier, monospace;
+    color: #6A6A6A;
+}
+
+.html-for-mac #typora-sidebar {
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+
+.cm-s-typora-default .cm-header, 
+.cm-s-typora-default .cm-property,
+.CodeMirror.cm-s-typora-default div.CodeMirror-cursor {
+	color: #428bca;
+}
+
+.cm-s-typora-default .cm-atom, .cm-s-typora-default .cm-number {
+	color: #777777;
+}
+
+.typora-node .file-list-item-parent-loc, 
+.typora-node .file-list-item-time, 
+.typora-node .file-list-item-summary {
+	font-family: arial, sans-serif;
+}
+
+.md-task-list-item>input {
+    margin-left: -1.3em;
+    margin-top: calc(1rem - 12px);
+}
+
+.md-mathjax-midline {
+	background: #fafafa;
+}
+
+.md-fences .code-tooltip {
+	bottom: -2em !important;
+}
+
+ .typora-export p, .typora-export .footnote-line {white-space: normal;} 
+</style>
+</head>
+<body class='typora-export' >
+<div  id='write'  class = 'is-mac'><h1><a name='header-n0' class='md-header-anchor '></a>分布式系统6.824-GFS(三)</h1><blockquote><p>即阅读和学习 GFS paper</p></blockquote><h2><a name='header-n4' class='md-header-anchor '></a>GFS</h2><blockquote><p>Google File System</p></blockquote><h2><a name='header-n7' class='md-header-anchor '></a>概述</h2><p>GFS是一个可扩展的分布式文件系统, 为大规模分布式数据密集型应用而生. GFS运行在廉价的普通硬件存储上面, 并提供了良好的容错性, 给大量的客户端提供了高聚合的性能.</p><p>GFS被广泛的运用在Google中. 大规模的GFS数据集群提供了上千万TB级的存储, 并且支持高并发的访问.</p><p>GFS拥有几个主要的特性: <strong>scalability</strong>, <strong>availability</strong>, <strong>rereliability</strong>, <strong>hign performance</strong>, <strong>flexibility</strong></p><h2><a name='header-n11' class='md-header-anchor '></a>介绍</h2><p>GFS在设计和实现的过程中有如下几个点需要考虑, 为了支持高并发的操作, 和大规模的存储集群. </p><h4><a name='header-n13' class='md-header-anchor '></a>1. 容错(fault-tolerance)</h4><p>GFS中组件出错是很正常的事情, 而不是异常. 整个GFS存储包含了大量廉价的存储磁盘和机器. 集群机器的数量问题和质量问题可能会导致部分机器不可用或者无法从当前错误中恢复过来. </p><p>除此之外, 诸如,应用程序bug, 操作系统bug, 人为错误, 磁盘损坏, 内存问题, 数据连接, 网络, 电源供应等等. 都是要考虑的因素, 所以, <code>constant monitoring</code>, <code>error detection</code>, <code>fault tolerance</code> <code>autimatic recovery</code>等这些功能必须集成到GFS中.</p><h4><a name='header-n16' class='md-header-anchor '></a>2. 块大小 (block size)</h4><p>按照传统的标准来说, 文件通常是GB级别. 每一个文件通常许多应用的对象, 诸如<code>WEB document</code>. 对于GFS来说通常需要管理快速增长的TB级别的数据. 因此如果按照kb级别划分块来管理亿级别数量级的文件,过于笨重. 所以需要重新考虑每一个文件块即<code>block</code>的大小, <code>64MB</code>是一个比较合适的大小.</p><h4><a name='header-n18' class='md-header-anchor '></a>3. 追加写 (append)</h4><p>通常情况下,大部分的文件操作是在原有的文件上面追加新的数据, 而不是重写原有文件. 随机位置对文件的读写基本上不存在. 这些诸如: 数据分析文件(<code>scan</code>), 长期不用过时的文件,中间结果文件, 等等. 都是对原有文件进行追加操作, 或者创建新文件进行追加写入操作. 这样就需要设计一种良好的并发支持和原子性保证,以支持特殊情况下客户端错误操作的容错性.</p><h4><a name='header-n20' class='md-header-anchor '></a>4. 平衡各方面因素 (co-design)</h4><p>提高了灵活度可以提高API的性能, 但是降低了一致性. 因此需要找到一个平衡点, 原子性追加写可以保证整个GFS的分布式一致性, 但是又需要额外的锁和同步的开销, 分布式锁对于GFS来说是性能上面一个很大的开销. 所以可以舍弃原子性追加写操作, 通过其他方法来实现并发操作, 这样就可以提高性能.</p><h2><a name='header-n22' class='md-header-anchor '></a>设计</h2><h3><a name='header-n23' class='md-header-anchor '></a>1. 假设</h3><p>为了设计符合具体需求的GFS, 做出了如下一些假设:</p><ul><li>整个系统的底层存储由普通廉价硬件组成, 必须保证系统的持续监控, 自我检查, 容错, 和快速恢复.</li><li>系统存储着大量GB级别的大文件, 必须对这些文件的操作进行优化.</li><li>系统主要包含两种读方式: 大文件流式读, 小文件随机读.</li><li>同样的系统包含两种写方式: 大文件流式写, 小文件可以随机写, 随机写不保证高效.</li><li>系统必须实现一种定义明确的语义来实现多个客户端对同一个文件进行追加写操作. GFS使用生产者-消费者队列来聚合结果. 用最少的同步开销来保证原子性. </li><li>高可用的带宽比低风险的带宽更加重要.</li></ul><h3><a name='header-n38' class='md-header-anchor '></a>2. 接口</h3><p>GFS提供了一套类似的文件操作接口, 诸如<code>create, delete, open, close, read, write</code>. GFS并没有实现标准POSIX的API. </p><p>GFS提供了<code>snapshot</code>和<code>record append</code>操作. 快照操作可以用低的开销创建一个文件或者目录树的副本. 记录追加操作(record append)允许多个客户端同时并发的向同一个文件进行<code>append</code>操作, 并保证每个独立客户端的追加写操作的原子性. 系统使用生产者-消费者队列来聚合结果, 而不是添加额外的锁.</p><h3><a name='header-n41' class='md-header-anchor '></a>3. 架构</h3><p>GFS集群包含了一个单一<code>master</code>和多个<code>chunkservers</code>. 这些<code>server</code>都可以被多个客户端同时访问, 可以理解为在普通linux机器上面运行用户级进程.</p><p>文件被分割成固定大小的块<code>chunk</code>, 每一个块在创建的时候, 就会被<code>master</code>执行特殊的函数<code>chuck handle</code>来生成一个全局唯一的64位的ID, 用来标识<code>chuck</code>. 为了保证<code>chuck</code>在分布式系统中的可靠性, 默认的GFS存储3份备份在不同的机器上面, 还可以根据不同的<code>namespace</code>来设置不通的备份策略.</p><p><code>master</code>存储着所有系统的<code>metadata</code>. 这些<code>metadata</code>包含了 名字空间<code>(namespace)</code>, 权限控制信息<code>(access control information)</code>, 文件到块的映射<code>(mapping from files to chunk)</code>, 当前块的位置信息, <code>(current locations of chunks)</code>. </p><p><code>master</code>控制着整个系统级别的活动. 块租约管理<code>(chuck lease management)</code>, 孤儿块垃圾回收 <code>(garbage collection of orphaned chunks)</code>, 块在<code>chunkserver</code>中迁移 <code>(chunk migration between chunkserver)</code>. <code>master</code> 定期地使用<code>HeartBeat</code>来对每一个<code>chuckserver</code>进行状态收集和发送指令. </p><p>GFS客户端代码与<code>master</code>进行交互获取<code>metadata</code>, 对于数据的操作直接与<code>chunkserver</code>进行交流. </p><p><img src='./image/GFS_architecture.png' alt='GFS architecture' referrerPolicy='no-referrer' /></p><p>根据上图所示的架构可以看出客户端通过<code>master</code>获取关键的数据, 通过<code>chunkserver</code>来进进行实际的数据流操作.</p><h3><a name='header-n49' class='md-header-anchor '></a>4. 块大小</h3><p>块大小是设计整体架构中的一个关键参数. 选择64MB作为块大小, 有如下几个优点. </p><ul><li>比经典的<code>linux</code>文件块大很大, 保证了对较大文件操作的高效性</li><li>懒惰分配空间避免了浪费空间, 如<code>(copy on write)</code></li><li>较大的文件块可以减少与<code>master</code>进行通信交互的次数</li><li>可以通过TCP长连接来减少网络上面的开销</li></ul><h3><a name='header-n60' class='md-header-anchor '></a>5. 元数据(meatdata)</h3><p><code>master</code>存储着三个主要类型的元数据:</p><ul><li>文件和块的名字空间</li><li>文件到块的映射</li><li>每一个块和其备份的位置</li></ul><p>所有这些元数据都保存在<code>master</code>的内存中, <code>名字空间</code>和<code>文件到块的映射</code>会被<code>log</code>操作持久化到本地, 每一个块和其备份的位置不会被持久化, 当<code>master</code>启动时, 或者<code>chunkserver</code>加入整个GFS集群时, 由<code>master</code>主动去轮询每一个<code>chunkserver</code>获取其位置.</p><ul><li>存储在内存中中, 使得对于<code>metadata</code>的操作变得更快.</li><li>采用轮询的方式去请求每个块的位置, 相较于采用持久化存储一样简单, 节省了同步的开销. 在处理异常情况下更加鲁棒.</li><li>日志操作是至关重要的, 它不仅仅持久化<code>metadata</code>而且还记录的并发操作的顺序, 还可以用来记录<code>checkpoint</code>和<code>recovery</code></li></ul><h2><a name='header-n77' class='md-header-anchor '></a>系统交互</h2><p>设计系统时, 需要尽可能简化<code>master</code>与<code>chunkserver</code>操作, 来达到我们的需求. </p><h3><a name='header-n79' class='md-header-anchor '></a>1. 租约和修改顺序 <code>(Leases and Mutation Order)</code></h3><p><code>Mutation</code>: 是指修改<code>metadata</code>或者<code>chunk</code>块的操作, 诸如写操作, 追加写, 随机写等.   每一个<code>Mutation</code>都会在所有<code>chunk</code>的副本(备份)上面执行. 使用租约<code>(Leases)</code>来维持所有修改<code>mutation</code>在所有<code>chunk</code>和其副本上面的一致性.  首先<code>master</code>将租约赋予<code>chunk</code>的某一个备份上面, 这个备份即为<code>primary</code>. <code>primary</code>串行化所有修改顺序, 依次在<code>Secondary</code>和<code>primary</code>上面执行. </p><p>如下图为一个基本的写入流程:</p><p><img src='./Write_control.png' alt='Write_control' referrerPolicy='no-referrer' /></p><ol start='' ><li>客户端首先请求<code>master</code>获得当前正在租约的<code>chunkserver</code>和其备份的位置, 如果<code>master</code>没有相应的租约, 则<code>master</code>会新选个租约.</li><li><code>master</code>回复客户端租约的<code>primary</code>和<code>secondary</code>的ID.  客户端缓存数据. </li><li>客户端将之前缓存的数据上传到任意的备份服务器上面, 这个顺序可以是任意的. 每个<code>chunkserver</code>使用一个LRU数据缓存来存储这些数据, 直到这些数据被使用或者超时. </li><li>当所有的备份服务器都接收到数据之后, 客户端向<code>primary</code>发送一个写入请求. 这个请求包含了在备份服务器上之前上传的数据的信息. <code>primary</code>将从所有客户端接收的对数据进行的修改操作进行串行化. 之后对该数据进行串行化操作.</li><li><code>primary</code>将串行化的操作数字, 发送到<code>secondary</code>. <code>secondary</code>执行同样的操作.</li><li><code>secondary</code>完成之后通知<code>primary</code>已完成.</li><li><code>primary</code>回复客户端, 任何发生在备份服务器中的错误, 都会被报告给客户端. (如果<code>primary</code>出现错误, 则将不会将生成的串行操作序列发送给其他的<code>secondary</code>). 如果说客户端收到相应的错误, 则客户端可以编写相应的代码进行相应的重试操作.</li></ol><h3><a name='header-n99' class='md-header-anchor '></a>2. 数据流 <code>(Data Flow)</code></h3><p>将控制流和数据流分离的主要作用是为了更加高效的利用网络资源. 当控制流从<code>primary</code>到<code>secondary</code>时, 数据流则会通过线性的传递到所有的<code>chunkserver</code>上面. 为了避免
+网络带宽资源的瓶颈, 我们需要对数据流的流向进行一个很好的规划. 例如, 未接受到数据流的<code>chunkserver</code>的机器可以从最近的一个机器上面获取数据, 即以一种特定的网络拓扑, 这样可以减少弱网络等风险.</p><h3><a name='header-n101' class='md-header-anchor '></a>3. 原子记录追加 <code>(Atomic Record Appends)</code></h3><p>GFS提供了一个原子追加操作叫做<code>Record Append</code>记录追加. 传统的写方法中, 当多个客户端同时并发的对同一个文件进行操作时, 通常是不可串行化的. </p><p><code>Record append</code>被分布式应用中重度使用. <strong>客户端</strong> 需要提供额外的复杂昂贵的同步机制, 诸如分布式锁. 在GFS中, 使用 <strong>多生产者-单一消费者队列</strong> 去整合并发操作的结果. 某一个客户端对于文件的一次<code>Record append</code>是原子性的.</p><p>如果<code>Record append</code>在某一备份服务器上面失败了, 则客户端进行重试操作. 在GFS的并发保证中, 定义了每次<code>Record append</code>的偏移量, 如果失败了则不会出现重复写入的情况, GFS会对每次写入的情况进行校验, 这样就保证了原子性和一致性.</p><h3><a name='header-n105' class='md-header-anchor '></a>4. 快照 <code>(Snapshot)</code></h3><p>快照操作是在极短的时间内对文件或者目录进行一次副本的操作, 最小化影响当前正在进行中的修改操作<code>mutation</code>. 可以用来快速创建大数据集的一个分支副本, 或者说可以创建检查点这样就可以实现提交和回滚.</p><p>和AFS的实现类似, GFS的快照技术使用了标准的写时复制<code>copy-on-write</code>. 当<code>master</code>接收到一个快照请求时, 首先<code>master</code>会注销当前关于该文件所有的未完成的租约<code>(Lease)</code>. 所有之后租约的写入操作都会与<code>master</code>进行一次交互, 这样就给予了<code>master</code>创建一个新的副本的时间, 较少的影响租约操作.</p><p>快照操作可以在<code>chunkserver</code>的本地创建副本, 这样就可节省网络带宽, 更加快速的完成复制操作.</p><h2><a name='header-n109' class='md-header-anchor '></a>Master操作</h2><p>master 执行所有名字空间的操作, 管理块和副本, 协同系统级别的活动, 回收未使用的存储空间, 负载均衡.</p><h3><a name='header-n111' class='md-header-anchor '></a>1. 名字空间管理和锁 <code>(Namespace Management and Locking)</code></h3><p>简单的来说就是根据文件的路径前缀加锁, 来达到对特定的区域文件的并发操作, 不影响其他区域的正常操作. 即在前缀名字空间加读锁, 在具体某个操作加具体的锁 <code>(写操作加写锁, 读操作加读锁)</code>. </p><p>例如: 对<code>/d1/d2/d3/leaf</code>进行写操作, 则对<code>/d1</code>, <code>/d1/d2/</code>, <code>/d1/d2/d3</code>加读锁, 对<code>/d1/d2/d3/leaf</code>加写锁.  这样可以提高系统的并发性.</p><ul><li>读锁: 可以被多个线程同时请求到, 但是这些线程都不能进行写操作. 读锁和写锁不能同时共存.</li><li>写锁: 写锁如果被一个线程请求到, 则其他线程都不能请求该资源. </li><li>读写锁: 即<code>multipe readers/single-writer lock</code>. 当发生写操作时, 所有读操作将会被阻塞直到写操作完成.</li></ul><h3><a name='header-n121' class='md-header-anchor '></a>2. 副本放置 <code>(Replica Placement)</code></h3><p>GFS集群是一个高度的具有层级的分布式系统. 通常来说, GFS集群有上千台机器分布在不同的区域或者机房. 在不同的区域的两台机器进行交互可能会进行很多次网络的转换, 这样的效率会比较低. </p><p>因此, 多级分布式系统需要考虑数据的分布, 来达到可扩展性, 可靠性, 和可用性. 备份副本存放的位置的主要策略是为了两个目的:</p><ul><li>最大化数据的可靠性和可用性</li><li>最大化利用网络带宽资源</li></ul><p>副本的放置需要放置在不同的区域, 这样当一个区域的机器崩溃之后, 其他其余保证了数据的可用性, 和可靠性. 但是写操作通常需要跨不同的区域, 这个代价可以承受.</p><h3><a name='header-n131' class='md-header-anchor '></a>3. 块创建, 再复制, 再平衡 <code>(Creation, Re-relication, Rebalancing)</code></h3><p>当<code>master</code>创建一个<code>chunk</code>之后, 需要考虑如下几个因素:</p><ul><li>将新创建的<code>chunk</code>放置到低于平均磁盘空间占用率的机器上.</li><li>限制最近在同一个<code>chunkserver</code>上创建<code>chunk</code>的数量, 可以平衡在<code>chunkserver</code>上面的并发数量</li></ul><p><code>master</code>可以再复杂<code>chunk</code>, 当块<code>chunk</code>的备份数量低于用户定义的目标时. </p><p><code>master</code>会定期的再平衡所有的副本. 会检查当前分布式的副本的负载, 将一部分副本移动到较为合适的位置, 这样就可以实现再次的负载均衡.</p><h3><a name='header-n140' class='md-header-anchor '></a>4. 垃圾回收 <code>(Garbage Collection)</code></h3><p>当文件被删除之后, <code>master</code>将会立刻记录删除操作. 不会立刻回收资源, 这个文件仅仅被重命名为一个隐藏文件包含了删除的时间戳. 当<code>master</code>例行遍历文件系统时, 如果此类隐藏文件已经存在了3天<code>(可以配置的参数)</code>, 则会删除这些文件. </p><p><code>master</code>在遍历<code>chunk</code>的名字空间时, 会识别哪些孤儿<code>chunk</code>, 并且擦除这些<code>chunk</code>的metadata信息. 在例行的<code>HeartBeat</code>消息中, <code>chunkserver</code>会向<code>master</code>汇报它所有的<code>chunk</code>, <code>master</code>会向<code>chunkserver</code>发送不再使用的<code>chunk</code>信息,<code>chunkserver</code>则会以很低的代价删除这些<code>chunk</code>. </p><h3><a name='header-n143' class='md-header-anchor '></a>5. 脏备份检测 <code>(Stale Replica Detection)</code></h3><p><code>chunk</code>备份可能会成为脏块, 如果<code>chunkserver</code>奔溃或者丢失了修改<code>mutation</code>. 对于每一个<code>chunk</code>, <code>master</code>维护一个块版本<code>chunk version number</code>用来区分最新的块和脏块.</p><p>发现了脏块, <code>master</code>则会对其进行垃圾回收.</p><h2><a name='header-n146' class='md-header-anchor '></a>高可用性 <code>(High Availability)</code></h2><p>对于大规模GFS集群, 保证高可用的方法是实现: 快速恢复, 备份</p><h3><a name='header-n148' class='md-header-anchor '></a>1. 快速恢复 <code>(Fast Recovery)</code> </h3><p><code>master</code>和<code>chunkserver</code>都被设计成不管什么原因被终结,都可以在几秒内存储状态和快速的恢复. 进程在被终止之后, 可以很快得读取终止前存储的状态, 并且重新连接服务器重启服务进行重试操作.</p><h3><a name='header-n150' class='md-header-anchor '></a>2. 块备份 <code>(Chunk Relication)</code></h3><p>块备份通常备份在不同的区域的不同<code>Chunkserver</code>上面, 用户可以对不同的名字空间定义不同的备份策略. </p><h3><a name='header-n152' class='md-header-anchor '></a>3. <code>master</code> 备份 <code>(Master Replication)</code></h3><p>为了提高可靠性, <code>master</code>的状态也会被备份. <code>master</code>的日志和检查点都会被备份在不同的机器上面. 一次修改<code>mutation</code>当被从log缓冲输入到磁盘中时, 可以说提交<code>commit</code>了这次修改. </p><p><code>master</code>进程主管着所有修改以及系统后台的一些操作,诸如 垃圾回收等等. 当<code>master</code>进程奔溃之后, 可以根据持久化存储的日志和状态, 快速的重启<code>master</code>进程. </p><p>当<code>master</code>上面的硬件比如磁盘坏掉之后, 外部基础监控会重启一台带有<code>master</code>的进程的机器, 可以根据持久化状态和日志恢复之前<code>master</code>进程. 使用DNS可以创建链接使得服务可用.</p><p><code>shadow master</code>即只读<code>master</code>, 该<code>master</code>提供了最基础,最低的可用性. 即提供了只读服务, 保证了当<code>primary master</code>奔溃之后, 可以保证最低的服务可用. 类似于服务降级. </p><p><code>shadow master</code>和<code>secondary master</code>类似, 也会不断的读取日志和操作序列, 并且在启动时, 轮询所有<code>chunkserver</code>的状态, 获取所有<code>chunk</code>的信息和位置.</p><h2><a name='header-n159' class='md-header-anchor '></a>Reference</h2><p><a href='https://pdos.csail.mit.edu/6.824/papers/gfs.pdf'>GFS paper</a></p></div>
+</body>
+</html>
