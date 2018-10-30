@@ -12,6 +12,7 @@
 
 + [Linux监控](./Linux监控.html)
 + [UNIX-IPC进程间通信](./UNIX-IPC进程间通信.html)
++ [Linux调度算法介绍](./调度算法介绍.html)
 
 #### golang
 
@@ -31,17 +32,11 @@
 #### 分布式系统
 
 + [6.824-入门介绍](./分布式系统6.824-入门介绍.html)
-
 + [6.824-golang并行编程](./6.824-golang并行编程.html)
-
 + [6.824-Raft算法](./分布式系统6.824-Raft.html)
-
 + [6.824-lab2-Raft](./分布式系统6.824-lab2-Raft.html)
-
 + [6.824-主从复制](./分布式系统6.824-主从复制.html)
-
 + [6.824-Spinnaker](./分布式系统6.824-Spinnaker.html)
-
 + [6.824-GFS](./分布式系统6.824-GFS.html)
 
 
