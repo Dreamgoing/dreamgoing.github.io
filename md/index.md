@@ -10,6 +10,7 @@
 
 #### Linux
 
++ [Linux命令行技巧](./Linux命令行技巧.html)
 + [Linux监控](./Linux监控.html)
 + [UNIX-IPC进程间通信](./UNIX-IPC进程间通信.html)
 + [Linux调度算法介绍](./调度算法介绍.html)
