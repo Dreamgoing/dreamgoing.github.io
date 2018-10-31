@@ -55,6 +55,7 @@
 + [HTTP协议](./HTTP协议.html)
 + [Zookeeper](./Zookeeper.html)
 + [docker基础用法](./docker基础用法.html)
++ [ redis学习笔记](./redis学习笔记.html)
 
 ## 学习资源
 
