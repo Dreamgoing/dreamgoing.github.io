@@ -28,6 +28,7 @@
 + [python Metaclass](./Python-metaclass.html)
 + [python-threading](./Python-threading.html)
 + [Celery学习笔记](./Celery学习笔记.html)
++ [SQLAIchemy学习笔记](./SQLAIchemy学习笔记.html)
 
 #### 分布式系统
 
