@@ -58,6 +58,7 @@
 + [MySQL学习笔记](./mysql学习笔记.html)
 + [HTTP协议](./HTTP协议.html)
 + [Zookeeper](./Zookeeper.html)
++ [etcd学习笔记](./etcd学习笔记.html)
 + [docker基础用法](./docker基础用法.html)
 + [redis学习笔记](./redis学习笔记.html)
 + [IP协议](./IP协议.html)
