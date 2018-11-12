@@ -50,19 +50,21 @@
 + [C++抽象类和纯虚函数](C++抽象类和纯虚函数.html)
 + [C++智能指针](./C++智能指针.html)
 
+#### 数据存储
++ [MySQL学习笔记](./mysql学习笔记.html)
++ [数据库索引](./数据库索引.html)
++ [Zookeeper](./Zookeeper.html)
++ [etcd学习笔记](./etcd学习笔记.html)
++ [influxdb学习笔记](./influxdb学习笔记.html)
++ [redis学习笔记](./redis学习笔记.html)
+
 #### 其他
 
 + [BloomFilter](./BloomFilter.html)
 + [外部排序External-Sorting](./外部排序External-Sorting.html)
-+ [influxdb学习笔记](./influxdb学习笔记.html)
 + [加密算法相关知识](./加密算法相关知识.html)
-+ [MySQL学习笔记](./mysql学习笔记.html)
-+ [ 数据库索引](./数据库索引.html)
 + [HTTP协议](./HTTP协议.html)
-+ [Zookeeper](./Zookeeper.html)
-+ [etcd学习笔记](./etcd学习笔记.html)
 + [docker基础用法](./docker基础用法.html)
-+ [redis学习笔记](./redis学习笔记.html)
 + [IP协议](./IP协议.html)
 
 ## 学习资源
