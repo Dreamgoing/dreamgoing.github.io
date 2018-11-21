@@ -31,6 +31,7 @@
 + [Celery学习笔记](./Celery学习笔记.html)
 + [SQLAIchemy学习笔记](./SQLAIchemy学习笔记.html)
 + [WorkerThread设计](./WorkerThread设计.html)
++ [Django学习笔记](./Django学习笔记.html)
 
 #### 分布式系统
 
