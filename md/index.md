@@ -2,7 +2,7 @@
 
 >记录，生活，学习:apple:  
 >
->本博客内容为自己在工作学习过程中的知识总结~
+>本博客内容为自己在工作学习过程中的知识总结, 如无特殊说明, 均为自己的原创总结~
 
 
 
@@ -32,6 +32,7 @@
 + [SQLAIchemy学习笔记](./SQLAIchemy学习笔记.html)
 + [WorkerThread设计](./WorkerThread设计.html)
 + [Django学习笔记](./Django学习笔记.html)
++ [Django-Logging日志](./Django-Logging日志.html)
 
 #### 分布式系统
 
