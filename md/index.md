@@ -77,6 +77,7 @@
 ## 关于
 
 + 90后，工作一年，HUST,  backend,  python，golang，分布式~ 
++ [cv](./resume.pdf)
 + Email: ruoxuanwanggoing@gmail.com
 
 
