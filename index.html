@@ -2,33 +2,34 @@
 <html>
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
-<title>index</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: rgb(255, 255, 255); --text-color: rgb(51, 51, 51); --select-text-bg-color: rgb(181, 214, 252); --select-text-font-color: auto; --monospace: 'Lucida Console', Consolas, Courier, monospace; }
-html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+<title>index</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
 body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857143; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
 iframe { margin: auto; }
 a.url { word-break: break-all; }
 a:active, a:hover { outline: 0px; }
 .in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
-#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; padding-bottom: 70px; overflow-x: visible; }
-.first-line-indent #write div, .first-line-indent #write li, .first-line-indent #write p { text-indent: 2em; }
-.first-line-indent #write div :not(p):not(div), .first-line-indent #write div.md-htmlblock-container, .first-line-indent #write p *, .first-line-indent pre { text-indent: 0px; }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
 .for-image #write { padding-left: 8px; padding-right: 8px; }
 body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export p { white-space: pre-wrap; }
 @media screen and (max-width: 500px) { 
   body.typora-export { padding-left: 0px; padding-right: 0px; }
   .CodeMirror-sizer { margin-left: 0px !important; }
   .CodeMirror-gutters { display: none !important; }
 }
-#write > blockquote:first-child, #write > div:first-child, #write > figure:first-child, #write > ol:first-child, #write > p:first-child, #write > pre:first-child, #write > ul:first-child { margin-top: 30px; }
 #write li > figure:first-child { margin-top: -20px; }
 #write ol, #write ul { position: relative; }
 img { max-width: 100%; vertical-align: middle; }
-button, input, select, textarea { color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; line-height: inherit; }
+button, input, select, textarea { color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; }
 input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
 *, ::after, ::before { box-sizing: border-box; }
 #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
 #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
-h1, h2, h3, h4, h5, h6 { page-break-after: avoid; page-break-inside: avoid; orphans: 2; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 2; }
 p { orphans: 4; }
 h1 { font-size: 2rem; }
 h2 { font-size: 1.8rem; }
@@ -45,9 +46,9 @@ sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inh
 #write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
 figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
 figure > table { margin: 0px !important; }
-tr { page-break-inside: avoid; page-break-after: auto; }
+tr { break-inside: avoid; break-after: auto; }
 thead { display: table-header-group; }
-table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; page-break-inside: auto; text-align: left; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
 table.md-table td { min-width: 80px; }
 .CodeMirror-gutters { border-right-width: 0px; background-color: inherit; }
 .CodeMirror { text-align: left; }
@@ -59,13 +60,13 @@ div.hr:focus { cursor: none; }
 #write.fences-no-line-wrapping pre { white-space: pre; }
 #write pre.ty-contain-cm { white-space: normal; }
 .CodeMirror-gutters { margin-right: 4px; }
-.md-fences { font-size: 0.9rem; display: block; page-break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; position: relative !important; background-position: inherit inherit; background-repeat: inherit inherit; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; position: relative !important; background-position: inherit inherit; background-repeat: inherit inherit; }
 .md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
 #write .md-fences.mock-cm { white-space: pre-wrap; }
 .md-fences.md-fences-with-lineno { padding-left: 0px; }
 #write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
 .md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
-.CodeMirror-line, twitterwidget { page-break-inside: avoid; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
 .footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
 .footnotes + .footnotes { margin-top: 0px; }
 .md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; background-position: 0px 0px; background-repeat: initial initial; }
@@ -78,19 +79,19 @@ blockquote > :first-child, li > :first-child { margin-top: 0px; }
 .footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
 #write .footnote-line { white-space: pre-wrap; }
 @media print { 
-  body, html { border: 1px solid transparent; height: 99%; page-break-after: avoid; page-break-before: avoid; }
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid-page; break-before: avoid-page; }
   #write { margin-top: 0px; border-color: transparent !important; }
   .typora-export * { -webkit-print-color-adjust: exact; }
   html.blink-to-pdf { font-size: 13px; }
-  .typora-export #write { padding-left: 1cm; padding-right: 1cm; padding-bottom: 0px; page-break-after: avoid; }
+  .typora-export #write { padding-left: 1cm; padding-right: 1cm; padding-bottom: 0px; break-after: avoid-page; }
   .typora-export #write::after { height: 0px; }
   @page { margin: 20mm 0px; }
 }
 .footnote-line { margin-top: 0.714em; font-size: 0.7em; }
 a img, img a { cursor: pointer; }
 pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background-color: rgb(204, 204, 204); display: block; overflow-x: hidden; background-position: initial initial; background-repeat: initial initial; }
-p > img:only-child { display: block; margin: auto; }
-p > .md-image:only-child { display: inline-block; width: 100%; text-align: center; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
 #write .MathJax_Display { margin: 0.8em 0px 0px; }
 .md-math-block { width: 100%; }
 .md-math-block:not(:empty)::after { display: none; }
@@ -104,7 +105,7 @@ p > .md-image:only-child { display: inline-block; width: 100%; text-align: cente
 .md-toc-content::after, .md-toc::after { display: none; }
 .md-toc-item { display: block; color: rgb(65, 131, 196); }
 .md-toc-item a { text-decoration: none; }
-.md-toc-inner:hover { }
+.md-toc-inner:hover { text-decoration: underline; }
 .md-toc-inner { display: inline-block; cursor: pointer; }
 .md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
 .md-toc-h2 .md-toc-inner { margin-left: 2em; }
@@ -121,7 +122,7 @@ p > .md-image:only-child { display: inline-block; width: 100%; text-align: cente
 a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
 .footnote-line a:not(.reversefootnote) { color: inherit; }
 .md-attr { display: none; }
-.md-fn-count::after { content: '.'; }
+.md-fn-count::after { content: "."; }
 code, pre, samp, tt { font-family: var(--monospace); }
 kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background-color: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; background-position: initial initial; background-repeat: initial initial; }
 .md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
@@ -133,8 +134,9 @@ a.md-print-anchor { white-space: pre !important; border: none !important; displa
 .MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
 .MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
 .MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
-.MathJax_SVG * { -webkit-transition: none; transition: none; }
-.os-windows.monocolor-emoji .md-emoji { font-family: 'Segoe UI Symbol', sans-serif; }
+.MathJax_SVG * { transition: none; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
 .md-diagram-panel > svg { max-width: 100%; }
 [lang="mermaid"] svg, [lang="flow"] svg { max-width: 100%; }
 [lang="mermaid"] .node text { font-size: 1rem; }
@@ -163,13 +165,7 @@ body {
 	margin: 0 auto;
 	margin-bottom: 2em;
 	line-height: 1.53;
-}
-
-#write>h2:first-child,
-#write>h3:first-child,
-#write>h4:first-child,
-#write>p:first-child{
-	margin-top: 1.2em;
+	padding-top: 40px;
 }
 
 /* Typography
@@ -425,10 +421,14 @@ table tbody+tbody {
 	bottom: -2em !important;
 }
 
+.dropdown-menu .divider {
+	border-color: #e5e5e5;
+}
+
  .typora-export p, .typora-export .footnote-line {white-space: normal;} 
 </style>
 </head>
 <body class='typora-export' >
-<div  id='write'  class = 'is-mac'><h1><a name='header-n0' class='md-header-anchor '></a>Dreamgoing</h1><blockquote><p>记录，生活，学习🍎  </p><p>本博客内容为自己在工作学习过程中的知识总结, 如无特殊说明, 均为自己的原创总结~</p></blockquote><p>&nbsp;</p><h2><a name='header-n6' class='md-header-anchor '></a>目录</h2><h4><a name='header-n7' class='md-header-anchor '></a>Linux</h4><ul><li><a href='./Linux%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8A%80%E5%B7%A7.html'>Linux命令行技巧</a></li><li><a href='./Linux%E7%9B%91%E6%8E%A7.html'>Linux监控</a></li><li><a href='./UNIX-IPC%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1.html'>UNIX-IPC进程间通信</a></li><li><a href='./%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D.html'>Linux调度算法介绍</a></li></ul><h4><a name='header-n17' class='md-header-anchor '></a>golang</h4><ul><li><a href='./golang%E5%B0%8F%E6%8A%80%E5%B7%A7.html'>golang小技巧</a></li><li><a href='./go%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%BC%8F.html'>go并发编程模式</a></li></ul><h4><a name='header-n23' class='md-header-anchor '></a>python</h4><ul><li><a href='./python%E5%B0%8F%E6%8A%80%E5%B7%A7.html'>python小技巧</a></li><li><a href='./gevent%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html'>gevent学习笔记</a></li><li><a href='./python%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B.html'>python函数式编程</a></li><li><a href='./Python%E8%A3%85%E9%A5%B0%E5%99%A8.html'>python装饰器</a></li><li><a href='./Python-metaclass.html'>python Metaclass</a></li><li><a href='./Python-threading.html'>python-threading</a></li><li><a href='./Celery%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html'>Celery学习笔记</a></li><li><a href='./SQLAIchemy%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html'>SQLAIchemy学习笔记</a></li><li><a href='./WorkerThread%E8%AE%BE%E8%AE%A1.html'>WorkerThread设计</a></li><li><a href='./Django%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html'>Django学习笔记</a></li><li><a href='./Django-Logging%E6%97%A5%E5%BF%97.html'>Django-Logging日志</a></li></ul><h4><a name='header-n47' class='md-header-anchor '></a>分布式系统</h4><ul><li><a href='./%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F6.824-%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D.html'>6.824-入门介绍</a></li><li><a href='./6.824-golang%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B.html'>6.824-golang并行编程</a></li><li><a href='./%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F6.824-Raft.html'>6.824-Raft算法</a></li><li><a href='./%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F6.824-lab2-Raft.html'>6.824-lab2-Raft</a></li><li><a href='./%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F6.824-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6.html'>6.824-主从复制</a></li><li><a href='./%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F6.824-Spinnaker.html'>6.824-Spinnaker</a></li><li><a href='./%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F6.824-GFS.html'>6.824-GFS</a></li></ul><h4><a name='header-n64' class='md-header-anchor '></a>C++</h4><ul><li><a href='c++%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84.html'>C++对象模型与内存结构</a></li><li><a href='./C++%E5%A4%9A%E6%80%81%E5%AE%9E%E7%8E%B0.html'>C++多态实现</a></li><li><a href='C++%E6%8A%BD%E8%B1%A1%E7%B1%BB%E5%92%8C%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0.html'>C++抽象类和纯虚函数</a></li><li><a href='./C++%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88.html'>C++智能指针</a></li></ul><h4><a name='header-n74' class='md-header-anchor '></a>数据存储</h4><ul><li><a href='./mysql%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html'>MySQL学习笔记</a></li><li><a href='./%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95.html'>数据库索引</a></li><li><a href='./Zookeeper.html'>Zookeeper</a></li><li><a href='./etcd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html'>etcd学习笔记</a></li><li><a href='./influxdb%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html'>influxdb学习笔记</a></li><li><a href='./redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html'>redis学习笔记</a></li></ul><h4><a name='header-n88' class='md-header-anchor '></a>其他</h4><ul><li><a href='./%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%8D%83%E4%B8%87%E7%BA%A7%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB.html'>记一次千万级数据迁移</a></li><li><a href='./BloomFilter.html'>BloomFilter</a></li><li><a href='./%E5%A4%96%E9%83%A8%E6%8E%92%E5%BA%8FExternal-Sorting.html'>外部排序External-Sorting</a></li><li><a href='./%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86.html'>加密算法相关知识</a></li><li><a href='./HTTP%E5%8D%8F%E8%AE%AE.html'>HTTP协议</a></li><li><a href='./docker%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95.html'>docker基础用法</a></li><li><a href='./IP%E5%8D%8F%E8%AE%AE.html'>IP协议</a></li></ul><h2><a name='header-n104' class='md-header-anchor '></a>学习资源</h2><ul><li><a href='http://callistaenterprise.se/blogg/teknik/2017/02/17/go-blog-series-part1/'>golang 搭建整套微服务Blog</a></li></ul><h2><a name='header-n108' class='md-header-anchor '></a>关于</h2><ul><li>90后，工作一年，HUST,  backend,  python，golang，分布式~ </li><li><a href='./resume.pdf'>cv</a></li><li>Email: <a href='mailto:ruoxuanwanggoing@gmail.com' target='_blank' class='url'>ruoxuanwanggoing@gmail.com</a></li></ul><p>&nbsp;</p><p>&nbsp;</p></div>
+<div  id='write'  class = 'is-mac'><h1><a name='header-n0' class='md-header-anchor '></a>Dreamgoing</h1><blockquote><p>记录，生活，学习🍎  </p><p>大脑为高速缓存有缓存失效期(Expiraion Time)，本博客为磁盘持久化存储，以备日后查阅~</p></blockquote><p>&nbsp;</p><h2><a name='header-n6' class='md-header-anchor '></a>目录</h2><h4><a name='header-n7' class='md-header-anchor '></a>Linux</h4><ul><li><a href='./Linux%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8A%80%E5%B7%A7.html'>Linux命令行技巧</a></li><li><a href='./Linux%E7%9B%91%E6%8E%A7.html'>Linux监控</a></li><li><a href='./UNIX-IPC%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1.html'>UNIX-IPC进程间通信</a></li><li><a href='./%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D.html'>Linux调度算法介绍</a></li></ul><h4><a name='header-n17' class='md-header-anchor '></a>golang</h4><ul><li><a href='./golang%E5%B0%8F%E6%8A%80%E5%B7%A7.html'>golang小技巧</a></li><li><a href='./go%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%BC%8F.html'>go并发编程模式</a></li></ul><h4><a name='header-n23' class='md-header-anchor '></a>python</h4><ul><li><a href='./python%E5%B0%8F%E6%8A%80%E5%B7%A7.html'>python小技巧</a></li><li><a href='./gevent%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html'>gevent学习笔记</a></li><li><a href='./python%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B.html'>python函数式编程</a></li><li><a href='./Python%E8%A3%85%E9%A5%B0%E5%99%A8.html'>python装饰器</a></li><li><a href='./Python-metaclass.html'>python Metaclass</a></li><li><a href='./Python-threading.html'>python-threading</a></li><li><a href='./Celery%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html'>Celery学习笔记</a></li><li><a href='./SQLAIchemy%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html'>SQLAIchemy学习笔记</a></li><li><a href='./WorkerThread%E8%AE%BE%E8%AE%A1.html'>WorkerThread设计</a></li><li><a href='./Django%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html'>Django学习笔记</a></li><li><a href='./Django-Logging%E6%97%A5%E5%BF%97.html'>Django-Logging日志</a></li></ul><h4><a name='header-n47' class='md-header-anchor '></a>分布式系统</h4><ul><li><a href='./%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F6.824-%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D.html'>6.824-入门介绍</a></li><li><a href='./6.824-golang%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B.html'>6.824-golang并行编程</a></li><li><a href='./%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F6.824-Raft.html'>6.824-Raft算法</a></li><li><a href='./%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F6.824-lab2-Raft.html'>6.824-lab2-Raft</a></li><li><a href='./%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F6.824-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6.html'>6.824-主从复制</a></li><li><a href='./%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F6.824-Spinnaker.html'>6.824-Spinnaker</a></li><li><a href='./%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F6.824-GFS.html'>6.824-GFS</a></li></ul><h4><a name='header-n64' class='md-header-anchor '></a>C++</h4><ul><li><a href='c++%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84.html'>C++对象模型与内存结构</a></li><li><a href='./C++%E5%A4%9A%E6%80%81%E5%AE%9E%E7%8E%B0.html'>C++多态实现</a></li><li><a href='C++%E6%8A%BD%E8%B1%A1%E7%B1%BB%E5%92%8C%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0.html'>C++抽象类和纯虚函数</a></li><li><a href='./C++%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88.html'>C++智能指针</a></li></ul><h4><a name='header-n74' class='md-header-anchor '></a>数据存储</h4><ul><li><a href='./mysql%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html'>MySQL学习笔记</a></li><li><a href='./%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95.html'>数据库索引</a></li><li><a href='./Zookeeper.html'>Zookeeper</a></li><li><a href='./etcd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html'>etcd学习笔记</a></li><li><a href='./influxdb%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html'>influxdb学习笔记</a></li><li><a href='./redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html'>redis学习笔记</a></li></ul><h4><a name='header-n88' class='md-header-anchor '></a>其他</h4><ul><li><a href='./%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%8D%83%E4%B8%87%E7%BA%A7%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB.html'>记一次千万级数据迁移</a></li><li><a href='./BloomFilter.html'>BloomFilter</a></li><li><a href='./%E5%A4%96%E9%83%A8%E6%8E%92%E5%BA%8FExternal-Sorting.html'>外部排序External-Sorting</a></li><li><a href='./%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86.html'>加密算法相关知识</a></li><li><a href='./HTTP%E5%8D%8F%E8%AE%AE.html'>HTTP协议</a></li><li><a href='./docker%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95.html'>docker基础用法</a></li><li><a href='./IP%E5%8D%8F%E8%AE%AE.html'>IP协议</a></li></ul><h2><a name='header-n104' class='md-header-anchor '></a>学习资源</h2><ul><li><a href='http://callistaenterprise.se/blogg/teknik/2017/02/17/go-blog-series-part1/'>golang 搭建整套微服务Blog</a></li></ul><h2><a name='header-n108' class='md-header-anchor '></a>关于</h2><ul><li>90后，工作一年，HUST,  backend,  python，golang，分布式~ </li><li><a href='./resume.pdf'>cv</a></li><li>Email: <a href='mailto:ruoxuanwanggoing@gmail.com' target='_blank' class='url'>ruoxuanwanggoing@gmail.com</a></li></ul><p>&nbsp;</p><p>&nbsp;</p></div>
 </body>
 </html>
