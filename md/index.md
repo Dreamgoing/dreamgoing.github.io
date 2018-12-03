@@ -26,6 +26,7 @@
 + [gevent学习笔记](./gevent学习笔记.html)
 + [python函数式编程](./python函数式编程.html)
 + [python装饰器](./Python装饰器.html)
++ [Python内存管理]( ./Python内存管理.html)
 + [python Metaclass](./Python-metaclass.html)
 + [python-threading](./Python-threading.html)
 + [Celery学习笔记](./Celery学习笔记.html)
@@ -33,6 +34,7 @@
 + [WorkerThread设计](./WorkerThread设计.html)
 + [Django学习笔记](./Django学习笔记.html)
 + [Django-Logging日志](./Django-Logging日志.html)
+
 
 #### 分布式系统
 
