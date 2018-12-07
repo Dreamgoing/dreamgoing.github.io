@@ -14,6 +14,8 @@
 + [Linux监控](./Linux监控.html)
 + [UNIX-IPC进程间通信](./UNIX-IPC进程间通信.html)
 + [Linux调度算法介绍](./调度算法介绍.html)
++ [Nginx学习笔记](./Nginx学习笔记.html)
++ [Openresty学习笔记](./Openresty学习笔记.html)
 
 #### golang
 
