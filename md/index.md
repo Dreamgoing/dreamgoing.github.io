@@ -16,6 +16,7 @@
 + [Linux调度算法介绍](./调度算法介绍.html)
 + [Nginx学习笔记](./Nginx学习笔记.html)
 + [Epoll学习笔记](./epoll.html)
++ [Reactor事件驱动网络模型](./reactor.html)
 + [OpenResty学习笔记](./Openresty学习笔记.html)
 
 #### golang
