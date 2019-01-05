@@ -2,34 +2,33 @@
 <html>
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
-<title>linux内存管理</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; }
-html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+<title>linux内存管理</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: rgb(255, 255, 255); --text-color: rgb(51, 51, 51); --select-text-bg-color: rgb(181, 214, 252); --select-text-font-color: auto; --monospace: 'Lucida Console', Consolas, Courier, monospace; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
 body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857143; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
 iframe { margin: auto; }
 a.url { word-break: break-all; }
 a:active, a:hover { outline: 0px; }
 .in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
-#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; }
-#write.first-line-indent p { text-indent: 2em; }
-#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
-#write.first-line-indent li { margin-left: 2em; }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; padding-bottom: 70px; overflow-x: visible; }
+.first-line-indent #write div, .first-line-indent #write li, .first-line-indent #write p { text-indent: 2em; }
+.first-line-indent #write div :not(p):not(div), .first-line-indent #write div.md-htmlblock-container, .first-line-indent #write p *, .first-line-indent pre { text-indent: 0px; }
 .for-image #write { padding-left: 8px; padding-right: 8px; }
 body.typora-export { padding-left: 30px; padding-right: 30px; }
-.typora-export .footnote-line, .typora-export p { white-space: pre-wrap; }
 @media screen and (max-width: 500px) { 
   body.typora-export { padding-left: 0px; padding-right: 0px; }
   .CodeMirror-sizer { margin-left: 0px !important; }
   .CodeMirror-gutters { display: none !important; }
 }
+#write > blockquote:first-child, #write > div:first-child, #write > figure:first-child, #write > ol:first-child, #write > p:first-child, #write > pre:first-child, #write > ul:first-child { margin-top: 30px; }
 #write li > figure:first-child { margin-top: -20px; }
 #write ol, #write ul { position: relative; }
 img { max-width: 100%; vertical-align: middle; }
-button, input, select, textarea { color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; }
+button, input, select, textarea { color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; line-height: inherit; }
 input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
 *, ::after, ::before { box-sizing: border-box; }
 #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
 #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
-h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 2; }
+h1, h2, h3, h4, h5, h6 { page-break-after: avoid; page-break-inside: avoid; orphans: 2; }
 p { orphans: 4; }
 h1 { font-size: 2rem; }
 h2 { font-size: 1.8rem; }
@@ -46,9 +45,9 @@ sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inh
 #write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
 figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
 figure > table { margin: 0px !important; }
-tr { break-inside: avoid; break-after: auto; }
+tr { page-break-inside: avoid; page-break-after: auto; }
 thead { display: table-header-group; }
-table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; page-break-inside: auto; text-align: left; }
 table.md-table td { min-width: 80px; }
 .CodeMirror-gutters { border-right-width: 0px; background-color: inherit; }
 .CodeMirror { text-align: left; }
@@ -60,13 +59,13 @@ div.hr:focus { cursor: none; }
 #write.fences-no-line-wrapping pre { white-space: pre; }
 #write pre.ty-contain-cm { white-space: normal; }
 .CodeMirror-gutters { margin-right: 4px; }
-.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; position: relative !important; background-position: inherit inherit; background-repeat: inherit inherit; }
+.md-fences { font-size: 0.9rem; display: block; page-break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; position: relative !important; background-position: inherit inherit; background-repeat: inherit inherit; }
 .md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
 #write .md-fences.mock-cm { white-space: pre-wrap; }
 .md-fences.md-fences-with-lineno { padding-left: 0px; }
 #write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
 .md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
-.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.CodeMirror-line, twitterwidget { page-break-inside: avoid; }
 .footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
 .footnotes + .footnotes { margin-top: 0px; }
 .md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; background-position: 0px 0px; background-repeat: initial initial; }
@@ -79,19 +78,19 @@ blockquote > :first-child, li > :first-child { margin-top: 0px; }
 .footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
 #write .footnote-line { white-space: pre-wrap; }
 @media print { 
-  body, html { border: 1px solid transparent; height: 99%; break-after: avoid-page; break-before: avoid-page; }
+  body, html { border: 1px solid transparent; height: 99%; page-break-after: avoid; page-break-before: avoid; }
   #write { margin-top: 0px; border-color: transparent !important; }
   .typora-export * { -webkit-print-color-adjust: exact; }
   html.blink-to-pdf { font-size: 13px; }
-  .typora-export #write { padding-left: 1cm; padding-right: 1cm; padding-bottom: 0px; break-after: avoid-page; }
+  .typora-export #write { padding-left: 1cm; padding-right: 1cm; padding-bottom: 0px; page-break-after: avoid; }
   .typora-export #write::after { height: 0px; }
   @page { margin: 20mm 0px; }
 }
 .footnote-line { margin-top: 0.714em; font-size: 0.7em; }
 a img, img a { cursor: pointer; }
 pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background-color: rgb(204, 204, 204); display: block; overflow-x: hidden; background-position: initial initial; background-repeat: initial initial; }
-p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
-p > .md-image:only-child { display: inline-block; width: 100%; }
+p > img:only-child { display: block; margin: auto; }
+p > .md-image:only-child { display: inline-block; width: 100%; text-align: center; }
 #write .MathJax_Display { margin: 0.8em 0px 0px; }
 .md-math-block { width: 100%; }
 .md-math-block:not(:empty)::after { display: none; }
@@ -105,7 +104,7 @@ p > .md-image:only-child { display: inline-block; width: 100%; }
 .md-toc-content::after, .md-toc::after { display: none; }
 .md-toc-item { display: block; color: rgb(65, 131, 196); }
 .md-toc-item a { text-decoration: none; }
-.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner:hover { }
 .md-toc-inner { display: inline-block; cursor: pointer; }
 .md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
 .md-toc-h2 .md-toc-inner { margin-left: 2em; }
@@ -122,7 +121,7 @@ p > .md-image:only-child { display: inline-block; width: 100%; }
 a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
 .footnote-line a:not(.reversefootnote) { color: inherit; }
 .md-attr { display: none; }
-.md-fn-count::after { content: "."; }
+.md-fn-count::after { content: '.'; }
 code, pre, samp, tt { font-family: var(--monospace); }
 kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background-color: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; background-position: initial initial; background-repeat: initial initial; }
 .md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
@@ -134,9 +133,8 @@ a.md-print-anchor { white-space: pre !important; border: none !important; displa
 .MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
 .MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
 .MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
-.MathJax_SVG * { transition: none; }
-.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; }
-.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.MathJax_SVG * { -webkit-transition: none; transition: none; }
+.os-windows.monocolor-emoji .md-emoji { font-family: 'Segoe UI Symbol', sans-serif; }
 .md-diagram-panel > svg { max-width: 100%; }
 [lang="mermaid"] svg, [lang="flow"] svg { max-width: 100%; }
 [lang="mermaid"] .node text { font-size: 1rem; }
@@ -165,7 +163,13 @@ body {
 	margin: 0 auto;
 	margin-bottom: 2em;
 	line-height: 1.53;
-	padding-top: 40px;
+}
+
+#write>h2:first-child,
+#write>h3:first-child,
+#write>h4:first-child,
+#write>p:first-child{
+	margin-top: 1.2em;
 }
 
 /* Typography
@@ -421,14 +425,10 @@ table tbody+tbody {
 	bottom: -2em !important;
 }
 
-.dropdown-menu .divider {
-	border-color: #e5e5e5;
-}
-
  .typora-export p, .typora-export .footnote-line {white-space: normal;} 
 </style>
 </head>
 <body class='typora-export' >
-<div  id='write'  class = 'is-mac'><h1><a name='header-n171' class='md-header-anchor '></a>linux内存管理</h1><blockquote><p>面向基础底层的知识，深入学习linux内存管理相关知识。</p></blockquote><h2><a name='header-n175' class='md-header-anchor '></a>概述</h2><p>首先介绍一下概况性的观点，然后继续深入实现，关于内存管理机制，有个比较通用的观点，即为了高效的管理对象，通常会使用<strong>内存池</strong>(对象池)的概念。例如：</p><ul><li>在Python的内存管理机制上面，即用到了&quot;大对象内存直接alloc, 小对象使用内存池分级进行管理&quot;是一种比较复杂的内存管理机制</li><li>在Nginx中也使用了内存池的概念，即Nginx对每个TCP连接都分配了一个内存池，HTTP框架会对每一次HTTP请求再分配一次内存池，请求结束后销毁整个内存池，并把曾经分配的内存一次性归还给操作系统</li></ul><p>内存管理的高效性：</p><ul><li>减少了操作系统分配内存，回收内存的开销</li><li>减少了内存碎片，提高了内存有效利用率</li></ul><h2><a name='header-n188' class='md-header-anchor '></a>基础的概念</h2><ul><li>BIOS(<strong>Basic Input/Output System</strong>)：中的一些数据一般在物理地址前1MB,  主要职责为计算机启动引导时系统自检，并加载操作系统启动的引导程序</li><li>内核：通常启动之后的物理地址是BIOS之后从<code>0x00100000</code>地址开始 (低地址)</li><li>MMU(<strong>memory management unit</strong>):CPU的一个单独模块，用来将虚拟地址转换为实际物理地址的组件，MMU通常使用内存中的一个组件，通常称为页表(page table)或<strong>PTE</strong>(page table entry)来管理虚拟地址到实际物理地址的映射。（硬件层面）</li><li>PTE(<strong>page table entry</strong>)：页表存储着映射信息，页表实现了页表置换算法，用来存储最常用的页映射，即LRU(<strong>least recently used</strong>)算法。当映射缺失时，则会向CPU发送一个<code>Page Fault</code>即 <strong>缺页中断</strong>, CPU则会在物理内存(RAM)中寻找一个空闲的页, 并更新PTE。如果没有可用的空闲页，则CPU会选择PTE页表中的页，置换到磁盘上并在PTE页面设置标志，这就是通常所说的页面调度(<strong>paging</strong>)，将内存页换出到磁盘或者<code>swap</code>空间。（软件层面，虚拟内存）</li><li>linux使用三级页表完成虚拟地址到实际物理地址的转换，为了加速这样的转换通常的体系结构层面使用了TLB来加速转换</li><li>TLB(<strong>Translation lookaside buffer</strong>): 是保存虚拟地址到物理地址的一个缓存，是MMU的一部分，存储在CPU和CPU cache之间，有效的减少了通过转换去获取物理地址的次数。</li></ul><h2><a name='header-n202' class='md-header-anchor '></a>架构</h2><h4><a name='header-n230' class='md-header-anchor '></a>内存分配架构</h4><p><img src='./image/virtual-memory-system.png' alt='' referrerPolicy='no-referrer' /></p><h4><a name='header-n204' class='md-header-anchor '></a>Slab &amp; Buddy allocator</h4><p><code>Slab allocator</code>: 具有相同大小的内存集合，通过一次性申请较大的内存空间，并将其等分为大小相同的块，来避免内存碎片。</p><p><code>Buddy system</code> 伙伴系统:即分配的每个对象都带有一个<code>buddy</code>伙伴，当对象被释放时，伙伴系统会将其内存进行合并。当有小对象需要分配内存时，伙伴系统将会把大内存块分割成小内存块分配出去。伙伴系统<code>buddy system</code>对内存块的切分合并的思想，主要为了内存分配和归还的复用（re-use）。</p><p>总而言之：</p><ul><li><code>Slab</code>：申请的大的内存块会被划分成相等大小的块，以链表的形式存储维护，不会对内存块进行合并和分隔，对于频繁固定大小内存的分配和释放十分高效</li><li><code>Buddy</code>: 按需分配不同大小的内存，分配和归还涉及内存块的合并和分隔</li></ul><p>linux内核内存管理提供了灵活的伙伴内存管理系统<code>Buddy allocator system</code>，在此之上并提供了不同的Slab管理不同的结构。例如：<code>task_struct</code>, <code>inode_struct</code> 等等。</p><h4><a name='header-n233' class='md-header-anchor '></a>page&amp;zone关系</h4><p>对于linux内核中每个物理页，都由一个<code>page struct</code>用来维护。<code>page struct</code>维护了当前页的一些信息。并使用<code>mem_map</code>对进程的每个虚拟页到物理页做映射管理。</p><p><img src='./image/linux_node_page.png' alt='' referrerPolicy='no-referrer' /></p><h2><a name='header-n206' class='md-header-anchor '></a>实现</h2><p>&nbsp;</p><h2><a name='header-n208' class='md-header-anchor '></a>Reference</h2><ul><li>《linux内核设计与实现》</li><li><a href='http://students.mimuw.edu.pl/ZSO/Wyklady/05_pamiec/5_pamiec_en.html'>Buddy allocator, Slab allocator</a></li><li><a href='http://www.secretmango.com/jimb/Whitepapers/slabs/slab.html'>overview linux memory management-slabs</a></li><li><a href='https://www.kernel.org/doc/gorman/html/understand/understand001.html'>gorman linux kernel tutorial（推荐）</a></li><li><a href='https://en.wikipedia.org/wiki/Slab_allocation'>slab allocation wiki</a></li><li><a href='https://sylvanassun.github.io/2017/10/29/2017-10-29-virtual_memory/'>虚拟内存</a></li><li><a href='https://stackoverflow.com/questions/26016361/linux-page-table-management-and-mmu'>stackoverflow linux-page-table-management-and-mmu</a></li><li><a href='https://stackoverflow.com/questions/37404769/whats-the-difference-between-slab-and-buddy-system'>stackoverflow slab vs buddy</a></li><li><a href='https://coolshell.cn/articles/10427.html'>cool shell伙伴内存分配</a></li></ul></div>
+<div  id='write'  class = 'is-mac'><h1><a name='header-n84' class='md-header-anchor '></a>linux内存管理</h1><blockquote><p>面向基础底层的知识，深入学习linux内存管理，内存寻址，操作系统等相关知识。基于linux内核2.6版本。</p><p>“咬定青山不放松，立根原在破岩中。千磨万击还坚韧，任尔东西南北风。” -- 郑板桥 《竹石》 </p></blockquote><h2><a name='header-n88' class='md-header-anchor '></a>概述</h2><p>首先介绍一下概况性的观点，然后继续深入实现，关于内存管理机制，有个比较通用的观点，即为了高效的管理对象，通常会使用类似于<strong>内存池</strong>(对象池)的概念。例如：</p><ul><li>在Python的内存管理机制上面，即用到了&quot;大对象内存直接alloc, 小对象使用内存池分级进行管理&quot;是一种比较复杂的内存管理机制</li><li>在Nginx中也使用了内存池的概念，即Nginx对每个TCP连接都分配了一个内存池，HTTP框架会对每一次HTTP请求再分配一次内存池，请求结束后销毁整个内存池，并把曾经分配的内存一次性归还给操作系统</li></ul><p>内存管理的高效性：</p><ul><li>减少了操作系统分配内存，回收内存的开销</li><li>减少了内存碎片，提高了内存有效利用率</li><li>对于频繁使用的数据结构，使用内存管理去缓存</li></ul><h2><a name='header-n103' class='md-header-anchor '></a>基础的概念</h2><ul><li>BIOS(<strong>Basic Input/Output System</strong>)：中的一些数据一般在物理地址前1MB,  主要职责为计算机启动引导时系统自检，并加载操作系统启动的引导程序</li><li>内核：通常启动之后的物理地址是BIOS之后从<code>0x00100000</code>地址开始 (低地址)</li><li>MMU(<strong>memory management unit</strong>):CPU的一个单独模块，用来将虚拟地址转换为实际物理地址的组件，MMU通常使用内存中的一个组件，通常称为页表(page table)或<strong>PTE</strong>(page table entry)来管理虚拟地址到实际物理地址的映射。（硬件层面）</li><li>PTE(<strong>page table entry</strong>)：页表存储着映射信息，页表实现了页表置换算法，用来存储最常用的页映射，即LRU(<strong>least recently used</strong>)算法。当映射缺失时，则会向CPU发送一个<code>Page Fault</code>即 <strong>缺页中断</strong>, CPU则会在物理内存(RAM)中寻找一个空闲的页, 并更新PTE。如果没有可用的空闲页，则CPU会选择PTE页表中的页，置换到磁盘上并在PTE页面设置标志，这就是通常所说的页面调度(<strong>paging</strong>)，将内存页换出到磁盘或者<code>swap</code>空间。（软件层面，虚拟内存）</li><li>linux使用三级页表完成虚拟地址到实际物理地址的转换，为了加速这样的转换通常的体系结构层面使用了TLB来加速转换</li><li>TLB(<strong>Translation lookaside buffer</strong>): 是保存虚拟地址到物理地址的一个缓存，是MMU的一部分，存储在CPU和CPU cache之间，有效的减少了通过转换去获取物理地址的次数。</li></ul><h2><a name='header-n117' class='md-header-anchor '></a>架构</h2><blockquote><p>自上而下，介绍linux内存分配的整体架构</p></blockquote><h4><a name='header-n118' class='md-header-anchor '></a>1. 内存分配架构</h4><p>整体架构如下图所示，结合图示介绍几个基本概念：</p><p><strong>用户内存空间</strong></p><p>首先内存空间分为<strong>用户内存空间</strong> 和 <strong>内核内存空间</strong>, 用户内存空间也称为进程的地址空间，即对于每个用户进程可见。用户内存空间由低地址到高地址依次为: </p><ul><li>可执行文件代码的内存映射, 代码段(<strong>text section</strong>)</li><li>可执行文件的已初始化全局变量的内存映射，数据段(<strong>data section</strong>)</li><li>可执行文件未初始化的全局变量，bbs段的零页(<strong>bbs segment</strong>)</li><li>内存堆区(<strong>heap</strong>)</li><li>共享内存段，C库，或一些动态链接库</li><li>内存栈区(<strong>stack</strong>) 高地址 =&gt; 低地址</li></ul><p><strong>内核内存空间</strong></p><p>内核不能像用户空间那样奢侈的使用内存，内核空间通过对内存化分不同的区域来管理内存，通常划分的区域为<code>ZONE_DMA</code>,<code>ZONE_NORMAL</code>,<code>ZONE_HIGHEM</code>, 在每个区域中又通过<code>slab</code>层来管理内存。内核管理内存的最小单位是物理页，通常在32位体系结构中支持<code>4kb</code>的物理页。</p><p>下图可以看到内核分配内存主要有两组接口函数，<code>kmalloc kfree</code>, <code>vmalloc vfree</code></p><ul><li>kmalloc: 返回一个指向内存块的指针，所分配的内存在物理上连续的</li><li>vmalloc：所分配的内存在虚拟地址空间上是连续的，并不会保证在物理RAM上是连续的。在性能上，vmalloc为了将物理上不连续的页转换成虚拟地址上连续的页，必须专门建立页表项，这就会导致TLB的缓存失效，影响性能。因此只有在少数情况下才会使用vmalloc，例如将模块动态加载到内核中。</li></ul><p>内核在管理栈空间时，使用了4kb或8kb比较小的栈来管理，并使用独立的中断栈对每个进程提供中断处理程序的栈，提供中断处理的效率。</p><p>&nbsp;</p><p><img src='./image/virtual-memory-system.png' alt='' referrerPolicy='no-referrer' /></p><p>总而言之：整体架构上，对于用户内存空间linux使用我们所熟知的<strong>虚拟内存管理</strong>的方式对内存进行管理，而对于内核使用Slab或者vmalloc的方式对内存进行管理。在此之上，liunx统一使用<code>Buddy System</code>提供了更加灵活的内存管理方式。</p><h4><a name='header-n227' class='md-header-anchor '></a>2. Slab &amp; Buddy allocator</h4><p>Slab 和 Buddy 是linux内核中基础的内存分配器，相辅相成，各自负责不同的职责。</p><p><code>Slab allocator</code>: 具有相同大小的内存集合，通过一次性申请较大的内存空间，并将其等分为大小相同的块，来避免内存碎片。</p><p><code>Buddy system</code> 伙伴系统:即分配的每个对象都带有一个<code>buddy</code>伙伴，当对象被释放时，伙伴系统会将其内存进行合并。当有小对象需要分配内存时，伙伴系统将会把大内存块分割成小内存块分配出去。伙伴系统<code>buddy system</code>对内存块的切分合并的思想，主要为了内存分配和归还的复用（re-use）。</p><p>总而言之：</p><ul><li><code>Slab</code>：申请的大的内存块会被划分成相等大小的块，以链表的形式存储维护，不会对内存块进行合并和分隔，对于频繁固定大小内存的分配和释放十分高效。slab会以高速缓存组的形式管理诸如<code>task struct</code>,<code>inode struct</code>这些固定大小而又频繁使用的数据结构。</li><li><code>Buddy</code>: 按需分配不同大小的内存，分配和归还涉及内存块的合并和分割</li></ul><p>linux内核内存管理提供了灵活的伙伴内存管理系统<code>Buddy allocator system</code>，在此之上并提供了不同的Slab管理不同的结构，例如：<code>task_struct</code>, <code>inode_struct</code> 等等。</p><h4><a name='header-n134' class='md-header-anchor '></a>3. page&amp;zone关系</h4><p><code>Slab</code> <code>Buddy</code>为linux内核管理内存的方式，在其底层对于每个物理页使用高速缓存组<code>zone</code>和物理页<code>page</code>的方式进行管理。下图即为：</p><p>对于linux内核中每个物理页，都由一个<code>page struct</code>用来维护。<code>page struct</code>维护了当前页的一些信息。并使用<code>mem_map</code>对进程的每个虚拟页到物理页做映射管理。</p><p><img src='./image/linux_node_page.png' alt='' referrerPolicy='no-referrer' /></p><h2><a name='header-n137' class='md-header-anchor '></a>内存寻址</h2><p>&nbsp;</p><h2><a name='header-n139' class='md-header-anchor '></a>Reference</h2><ul><li>《linux内核设计与实现》</li><li><a href='http://students.mimuw.edu.pl/ZSO/Wyklady/05_pamiec/5_pamiec_en.html'>Buddy allocator, Slab allocator</a></li><li><a href='http://www.secretmango.com/jimb/Whitepapers/slabs/slab.html'>overview linux memory management-slabs</a></li><li><a href='https://www.kernel.org/doc/gorman/html/understand/understand001.html'>gorman linux kernel tutorial（推荐）</a></li><li><a href='https://en.wikipedia.org/wiki/Slab_allocation'>slab allocation wiki</a></li><li><a href='https://sylvanassun.github.io/2017/10/29/2017-10-29-virtual_memory/'>虚拟内存</a></li><li><a href='https://stackoverflow.com/questions/26016361/linux-page-table-management-and-mmu'>stackoverflow linux-page-table-management-and-mmu</a></li><li><a href='https://stackoverflow.com/questions/37404769/whats-the-difference-between-slab-and-buddy-system'>stackoverflow slab vs buddy</a></li><li><a href='https://coolshell.cn/articles/10427.html'>cool shell伙伴内存分配</a></li></ul></div>
 </body>
 </html>
