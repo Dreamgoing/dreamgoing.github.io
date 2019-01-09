@@ -69,15 +69,17 @@
 + [influxdb学习笔记](./influxdb学习笔记.html)
 + [redis学习笔记](./redis学习笔记.html)
 
-#### 其他
+#### 基础
 
-+ [记一次千万级数据迁移](./记一次千万级数据迁移.html)
++ [记一次千万级数据迁移 （个人技术分享）](./记一次千万级数据迁移.html)
 + [BloomFilter](./BloomFilter.html)
 + [外部排序External-Sorting](./外部排序External-Sorting.html)
 + [加密算法相关知识](./加密算法相关知识.html)
 + [HTTP协议](./HTTP协议.html)
++ [TCP和UDP区别](./TCP和UDP区别.html)
 + [docker基础用法](./docker基础用法.html)
 + [IP协议](./IP协议.html)
++ [thread线程知识](./thread线程.html)
 
 ## 学习资源
 
