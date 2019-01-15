@@ -146,6 +146,79 @@ iframe { max-width: 100%; width: 100%; border: none; }
 .highlight td, .highlight tr { border: 0px; }
 
 
+.CodeMirror { height: auto; }
+.CodeMirror.cm-s-inner { background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
+.CodeMirror-scroll { overflow-y: hidden; overflow-x: auto; z-index: 3; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-gutters { border-right-width: 1px; border-right-style: solid; border-right-color: rgb(221, 221, 221); background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; white-space: nowrap; background-position: inherit inherit; background-repeat: inherit inherit; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: red; }
+.cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: hidden; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 30px; z-index: 3; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; border: none !important; background-position: 0px 0px !important; background-repeat: initial initial !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-width: 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; word-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; background-position: 0px 0px; background-repeat: initial initial; }
+.CodeMirror-wrap pre { word-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right-width: 30px; border-right-style: solid; border-right-color: transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right-style: none; width: auto; }
+.CodeMirror-linebackground { position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right-style: none; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.cm-searching { background-color: rgba(255, 255, 0, 0.4); background-position: initial initial; background-repeat: initial initial; }
+@media print { 
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
+
+
 html {
 	font-size: 19px;
 }
@@ -429,6 +502,6 @@ table tbody+tbody {
 </style>
 </head>
 <body class='typora-export' >
-<div  id='write'  class = 'is-mac'><h1><a name='header-n0' class='md-header-anchor '></a>Linux TCP实现</h1><h2><a name='header-n2' class='md-header-anchor '></a>TCP-FSM</h2><p>在TCP状态转换图中，需要注意两个状态:</p><ul><li>被动关闭方：CLOSE_WAIT, 如果server出现大量CLOSE_WAIT则说明，应用层没有调用close关闭连接，会造成文件描述符泄漏<code>fd leak</code></li><li>主动关闭方：TIME_WAIT,TIME_WAIT 其实是一个正常的状态，系统超过一定时间之后会把 TIME_WAIT状态的 socket 变成 closed。如果系统中存在 TIME_WAIT太多的 socket，会造成分配 fd 变慢，让真个服务变得 lag。这时候需要调整 tcp 栈的参数。</li></ul><p>&nbsp;</p><p><img src='./image/tcp-fsm.jpg' alt='' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>多次HTTP请求不一定以为着建立多次TCP连接，即可以复用上一次的TCP连接，通常keep-alive进行配置。</p><h2><a name='header-n31' class='md-header-anchor '></a>TIME_WAIT 的意义</h2><p>time_wait 存在的目的：</p><h4><a name='header-n33' class='md-header-anchor '></a>1. 可靠地实现 TCP 全双工的连接中止</h4><p>TCP协议在关闭连接的四次握手过程中，最终的ACK是由主动关闭连接的一端（后面统称A端）发出的，如果这个ACK丢失，对方（后面统称B端）将重发出最终的FIN，因此A端必须维护状态信息（TIME_WAIT）允许它重发最终的ACK。如果A端不维持TIME_WAIT状态，而是处于CLOSED 状态，那么A端将响应RST，B端收到RST后将解释成一个错误。</p><p>因而，要实现TCP全双工连接的正常终止，必须处理终止过程中四个分节任何一个分节的丢失情况，主动关闭连接的A端必须维持TIME_WAIT状态 。</p><h4><a name='header-n36' class='md-header-anchor '></a>2. 让老的重复 TCP 包在网络中消失</h4><p>TCP包可能由于路由器异常而“迷途”，在迷途期间，TCP发送端可能因确认超时而重发这个包，迷途的包在路由器修复后也会被送到最终目的地，这个迟到的迷途包到达时可能会引起问题。在关闭“前一个连接”之后，马上又重新建立起一个相同的IP和端口之间的“新连接”，“前一个连接”的迷途重复分组在“前一个连接”终止后到达，而被“新连接”收到了。为了避免这个情况，TCP协议不允许处于TIME_WAIT状态的连接启动一个新的可用连接，因为TIME_WAIT状态持续2MSL，就可以保证当成功建立一个新TCP连接的时候，来自旧连接重复分组已经在网络中消逝。</p><p>知识点：为什么需要等待2MSL。MSL 是 Maximum Segment Lifetime。每个具体TCP实现必须选择一个报文段最大生存时间MSL(<strong>Maximum Segment Lifetime</strong>)。它是任何报文段被丢弃前在网络内的最长时间。假设我们在 time_wait 等待的时间小于 2MSL，会出现这样的情况：主动关闭方给对端发送了一个包，只要这个包在 MSL 内到达对端，对端就会回 ACK，如果这个 ACK 也在 MSL 之内回来，那么就可能对新的连接（这里的新连接指的是和原先那个IP/端口都相同的连接）造成影响。如果等待时间是 2MSL，保证一个包和它的ACK在不被网络丢弃的情况下都可以被老的连接收到，而往返一次最大的时间就是 2MSL，如果这次往返时间大于 2MSL，最终的包回被丢弃，也就无法对新连接造成影响。</p><h2><a name='header-n11' class='md-header-anchor '></a>架构</h2><p><img src='./image/TCP-ring-buffer.png' alt='' referrerPolicy='no-referrer' /></p><h2><a name='header-n3' class='md-header-anchor '></a>Reference</h2><ul><li><a href='https://dirtysalt.github.io/html/tcp-on-linux.html'>tcp on linux</a></li></ul></div>
+<div  id='write'  class = 'is-mac'><h1><a name='header-n571' class='md-header-anchor '></a>Linux TCP实现</h1><h2><a name='header-n573' class='md-header-anchor '></a>TCP-FSM</h2><p>在TCP状态转换图中，需要注意两个状态:</p><ul><li>被动关闭方：CLOSE_WAIT, 如果server出现大量CLOSE_WAIT则说明，应用层没有调用close关闭连接，会造成文件描述符泄漏<code>fd leak</code></li><li>主动关闭方：TIME_WAIT,TIME_WAIT 其实是一个正常的状态，系统超过一定时间之后会把 TIME_WAIT状态的 socket 变成 closed。如果系统中存在 TIME_WAIT太多的 socket，会造成分配 fd 变慢，让真个服务变得 lag。这时候需要调整 tcp 栈的参数。</li><li>TCP四次分手中被动关闭的一方通常会将ACK和FIN合并成一个报文发送，在实际中可能会看到“三次分手”的情况</li></ul><p>&nbsp;</p><p><img src='./image/tcp-fsm.jpg' alt='' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>多次HTTP请求不一定以为着建立多次TCP连接，即可以复用上一次的TCP连接，通常keep-alive进行配置。</p><h2><a name='header-n586' class='md-header-anchor '></a>TIME_WAIT 的意义</h2><p>time_wait 存在的目的，或者说为什么TIME_WAIT状态必须等到2MSL时间呢：</p><h4><a name='header-n588' class='md-header-anchor '></a>1. 可靠地实现 TCP 全双工的连接中止</h4><p>TCP协议在关闭连接的四次握手过程中，最终的ACK是由主动关闭连接的一端（后面统称A端）发出的，如果这个ACK丢失，对方（后面统称B端）将重发出最终的FIN，因此A端必须维护状态信息（TIME_WAIT）允许它重发最终的ACK。如果A端不维持TIME_WAIT状态，而是处于CLOSED 状态，那么A端将响应RST，B端收到RST后将解释成一个错误。</p><p>简单的来说: 为了主动关闭的一方A端最后一个ACK报文达到B端。因为这个报文有可能丢失，因而使处在LAST-ACK状态的B收不到A发送的最后一个ACK，则B会超时重传FIN+ACK报文，而A就能在2MSL时间内收到这个重传的FIN+ACK报文段。接着A重传一次确认，重新启动2MSL计时器。最终A和B都会正常进入到CLOSED的状态。</p><p>如果A在TIME-WAIT状态不等待一段时间，而是在发送完ACK报文段后立即释放连接，那么就无法收到B重传的FIN-ACK报文段，因而也不会再发送一次ACK确认报文段，这样B就无法按照正常步骤进入CLOSED状态。</p><p>因而，要实现TCP全双工连接的正常终止，必须处理终止过程中四个分节任何一个分节的丢失情况，主动关闭连接的A端必须维持TIME_WAIT状态 。</p><h4><a name='header-n593' class='md-header-anchor '></a>2. 让老的重复 TCP 包在网络中消失</h4><p>TCP包可能由于路由器异常而“迷途”，在迷途期间，TCP发送端可能因确认超时而重发这个包，迷途的包在路由器修复后也会被送到最终目的地，这个迟到的迷途包到达时可能会引起问题。在关闭“前一个连接”之后，马上又重新建立起一个相同的IP和端口之间的“新连接”，“前一个连接”的迷途重复分组在“前一个连接”终止后到达，而被“新连接”收到了。为了避免这个情况，TCP协议不允许处于TIME_WAIT状态的连接启动一个新的可用连接，因为TIME_WAIT状态持续2MSL，就可以保证当成功建立一个新TCP连接的时候，来自旧连接重复分组已经在网络中消逝。</p><p>知识点：为什么需要等待2MSL。MSL 是 Maximum Segment Lifetime。每个具体TCP实现必须选择一个报文段最大生存时间MSL(<strong>Maximum Segment Lifetime</strong>)。它是任何报文段被丢弃前在网络内的最长时间。假设我们在 time_wait 等待的时间小于 2MSL，会出现这样的情况：主动关闭方给对端发送了一个包，只要这个包在 MSL 内到达对端，对端就会回 ACK，如果这个 ACK 也在 MSL 之内回来，那么就可能对新的连接（这里的新连接指的是和原先那个IP/端口都相同的连接）造成影响。如果等待时间是 2MSL，保证一个包和它的ACK在不被网络丢弃的情况下都可以被老的连接收到，而往返一次最大的时间就是 2MSL，如果这次往返时间大于 2MSL，最终的包回被丢弃，也就无法对新连接造成影响。</p><h2><a name='header-n596' class='md-header-anchor '></a>TCP接收&amp;发送报文</h2><h4><a name='header-n597' class='md-header-anchor '></a>接收报文</h4><p>下图描述了整个linux在接收TCP报文的实现，整个数据包packet的接收从下往上经过了三层：网卡驱动，系统内核空间，最后到达用户态空间。</p><ul><li>首先linux中用sk_buff数据结构描述packet</li><li>NIC( <strong>network interface cards</strong>) 即网卡检测到有packet到达，从Kernel Memory分配sk_buff数据结构，调用DMA(<strong>Direct memory access</strong>) Engine（注：DMA允许特定硬件直接操作主存。）将包放到sk_buff里面。NIC检测packet到达和packet的发送，不是触发，都是通过poll轮询的方式完成</li><li>Ring Buffer将数据包放置到内核内存区，Ring Buffer的大小固定，不包含实际的数据包，仅包含了指向sk_buff的描述符。当Ring Buffer满时，新来的数据包会被丢弃。</li><li>一旦数据包被成功接收，NIC发起中断，内核的中断处理程序会将数据包传递给IP层，经过IP层的处理，数据包会被放入队列等待TCP层处理。每个数据包经过TCP层的一系列复杂步骤，更新TCP 状态机等等。</li><li>最终到达recv Buffer。TCP层返回ACK确认。用户空间则调用系统调用read(), 读取相应的报文内容。</li><li>recv Buffer的大小可以通过修改<code>/proc/sys/net/ipv4/tcp_rmem</code>来修改，<code>cat /proc/sys/net/ipv4/tcp_rmem</code>返回三个值，依次为最小，默认，最大</li></ul><p><img src='./image/TCP-ring-buffer.png' alt='' referrerPolicy='no-referrer' /></p><h4><a name='header-n613' class='md-header-anchor '></a>发送报文</h4><p>TCP发送报文和接收报文路径相反，数据包的发送从上至下也经过了三层：用户态空间，系统内核空间，网卡驱动。</p><ul><li>应用先将数据写入TCP send Buffer。</li><li>TCP层将send Buffer中的数据构建成TCP 数据包转给IP层</li><li>IP层会将TCP数据包进行处理，并放入QDist（queueing discipline）队列。数据包放入QDist之后，指向数据包的描述符sk_buff被放入Ring Buffer，随后网卡驱动调用DMA Engine将数据包发送到网络链路上。</li></ul><h2><a name='header-n622' class='md-header-anchor '></a>TCP &amp; HTTP 性能聚焦</h2><p>在实际业务开发中，其实接触的更多的是HTTP，HTTP底层是TCP协议。使用HTTP协议时，通常会关注几个性能点。</p><h4><a name='header-n624' class='md-header-anchor '></a>TCP连接的握手时延</h4><p>HTTP协议是无状态的，没建立一个TCP连接，都会经过<strong>TCP三次握手的流程</strong> 。 大量频繁建立HTTP连接，且没有使用到连接复用的技术话，会显著的影响性能。因此在HTTP/1.0+之后HTTP协议加入了keep-alive头部，实现了TCP连接的复用，减少了每次建立HTTP连接三次握手和四次分手的开销。</p><p>HTTP/1.1 逐渐停止了对keep-alive连接的支持，用持久化连接(persistent connection)的改进型设计取代了它，其目的和keep-alive是一致的，在持久化连接中，客户端接除非收到了<code>Connection: close</code> 首部，才会断开TCP连接。不然HTTP/1.1连接就仍然维持在打开的状态。客户端和服务器端都可以随时关闭空闲的连接，因此不发送<code>Connection: close</code>并不意味着服务器承诺永远会将此连接保持为打开状态。</p><h4><a name='header-n627' class='md-header-anchor '></a>TCP慢启动和拥塞控制</h4><p>TCP数据传输的性能还取决于TCP连接的试用期(age)。TCP连接会随着时间的进行自我“调谐”，起初会限制传输最大速度，如果数据成功传输，即可以提高传输速度，这种“调谐”称之为TCP慢启动(slow start), 用于防止因特网的突然过载和拥塞。慢启动的拥塞窗口的算法如下：</p><p>RTT(Round-Trip time)</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="bash"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="bash"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">Initially cwnd <span class="cm-operator">=</span> <span class="cm-number">1</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">After <span class="cm-number">1</span> RTT, <span class="cm-def">cwnd</span><span class="cm-operator">=</span><span class="cm-number">2</span>^1 <span class="cm-operator">=</span> <span class="cm-number">2</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">2</span> RTT, cwnd <span class="cm-operator">=</span> <span class="cm-number">2</span>^2 <span class="cm-operator">=</span> <span class="cm-number">4</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">3</span> RTT, cwnd <span class="cm-operator">=</span> <span class="cm-number">2</span>^3 <span class="cm-operator">=</span> <span class="cm-number">8</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 104px;"></div><div class="CodeMirror-gutters" style="display: none; height: 104px;"></div></div></div></pre><p>&nbsp;</p><p>TCP的<strong>拥塞控制</strong> (congestion control) 主要由两个部分构成拥塞窗口(cwnd), 和接受端的(rwnd)来控制。TCP的拥塞控制主要有三种状态构成: 慢启动(<strong>Slow Start</strong>)，拥塞避免(<strong>Congestion Avoidance</strong>)，快恢复(<strong>Fast Recovery</strong>). 其主要状态转换图如下：</p><ul><li><strong>MSS(Maximum segment size)：</strong>定义在TCP header中，表示TCP最大报文长度，通常默认为536</li><li><strong>ssthresh(Slow start thresh):</strong> 慢启动阈值，与cwnd，dupACKcount一起协同拥塞控制</li></ul><p><img src='./image/tcp-congestion-control.png' alt='' referrerPolicy='no-referrer' /></p><h4><a name='header-n639' class='md-header-anchor '></a>Nagle算法与TCP_NODELAY</h4><p>Nagle算法本质即为TCP层在试图发送一个分组之前，将大量TCP数据绑定在一起，以提高网络效率。Nagle算法可能会引发几种性能问题：</p><ul><li>小的HTTP报文可能无法填满一个分组，可能会因为等待那些永远不会到来的额外数据而产生时延。</li><li>Nagle算法与<strong>延迟确认</strong>之间会存在交互问题，会导致延迟确认的分组延迟100-200 毫秒</li></ul><p>可以在TCP参数栈中设置TCP_NODELAY来禁用Nagle算法</p><h4><a name='header-n647' class='md-header-anchor '></a>TIME_WAIT和端口耗尽</h4><p>&nbsp;</p><h2><a name='header-n649' class='md-header-anchor '></a>Reference</h2><ul><li>《计算机网络第六版》</li><li><a href='https://dirtysalt.github.io/html/tcp-on-linux.html'>tcp on linux</a></li><li><a href='http://www.ece.virginia.edu/cheetah/documents/papers/TCPlinux.pdf'>TCPlinux</a></li><li><a href='http://blog.sina.com.cn/s/blog_e59371cc0102vg4n.html'>Linux TCP队列相关参数总结</a></li><li><a href='https://stackoverflow.com/questions/30818925/tcp-congestion-control-fast-recovery-in-graph'>TCP congestion control - Fast Recovery in graph</a></li><li><a href='http://www.mathcs.emory.edu/~cheung/Courses/558a/Syllabus/6-transport/TCP.html'>Congestion Avoidance in TCP</a></li></ul></div>
 </body>
 </html>
