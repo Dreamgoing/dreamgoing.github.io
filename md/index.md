@@ -40,6 +40,8 @@
 + [WorkerThread设计](./WorkerThread设计.html)
 + [Django学习笔记](./Django学习笔记.html)
 + [Django-Logging日志](./Django-Logging日志.html)
++ [Django源码阅读(一)-View](./Django源码阅读(一)-View.html)
++ [Django源码阅读(二)-Signal](./Django源码阅读(二)-Signal.html)
 
 
 #### 分布式系统
