@@ -9,17 +9,18 @@ iframe { margin: auto; }
 a.url { word-break: break-all; }
 a:active, a:hover { outline: 0px; }
 .in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
-#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; padding-bottom: 70px; overflow-x: visible; }
-.first-line-indent #write div, .first-line-indent #write li, .first-line-indent #write p { text-indent: 2em; }
-.first-line-indent #write div :not(p):not(div), .first-line-indent #write div.md-htmlblock-container, .first-line-indent #write p *, .first-line-indent pre { text-indent: 0px; }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
 .for-image #write { padding-left: 8px; padding-right: 8px; }
 body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
 @media screen and (max-width: 500px) { 
   body.typora-export { padding-left: 0px; padding-right: 0px; }
   .CodeMirror-sizer { margin-left: 0px !important; }
   .CodeMirror-gutters { display: none !important; }
 }
-#write > blockquote:first-child, #write > div:first-child, #write > figure:first-child, #write > ol:first-child, #write > p:first-child, #write > pre:first-child, #write > ul:first-child { margin-top: 30px; }
 #write li > figure:first-child { margin-top: -20px; }
 #write ol, #write ul { position: relative; }
 img { max-width: 100%; vertical-align: middle; }
@@ -48,7 +49,7 @@ figure > table { margin: 0px !important; }
 tr { break-inside: avoid; break-after: auto; }
 thead { display: table-header-group; }
 table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
-table.md-table td { min-width: 80px; }
+table.md-table td { min-width: 32px; }
 .CodeMirror-gutters { border-right-width: 0px; background-color: inherit; }
 .CodeMirror { text-align: left; }
 .CodeMirror-placeholder { opacity: 0.3; }
@@ -79,18 +80,18 @@ blockquote > :first-child, li > :first-child { margin-top: 0px; }
 #write .footnote-line { white-space: pre-wrap; }
 @media print { 
   body, html { border: 1px solid transparent; height: 99%; break-after: avoid-page; break-before: avoid-page; }
-  #write { margin-top: 0px; border-color: transparent !important; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
   .typora-export * { -webkit-print-color-adjust: exact; }
   html.blink-to-pdf { font-size: 13px; }
-  .typora-export #write { padding-left: 1cm; padding-right: 1cm; padding-bottom: 0px; break-after: avoid-page; }
+  .typora-export #write { padding-left: 32px; padding-right: 32px; padding-bottom: 0px; break-after: avoid-page; }
   .typora-export #write::after { height: 0px; }
   @page { margin: 20mm 0px; }
 }
 .footnote-line { margin-top: 0.714em; font-size: 0.7em; }
 a img, img a { cursor: pointer; }
 pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background-color: rgb(204, 204, 204); display: block; overflow-x: hidden; background-position: initial initial; background-repeat: initial initial; }
-p > img:only-child { display: block; margin: auto; }
-p > .md-image:only-child { display: inline-block; width: 100%; text-align: center; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
 #write .MathJax_Display { margin: 0.8em 0px 0px; }
 .md-math-block { width: 100%; }
 .md-math-block:not(:empty)::after { display: none; }
@@ -104,7 +105,7 @@ p > .md-image:only-child { display: inline-block; width: 100%; text-align: cente
 .md-toc-content::after, .md-toc::after { display: none; }
 .md-toc-item { display: block; color: rgb(65, 131, 196); }
 .md-toc-item a { text-decoration: none; }
-.md-toc-inner:hover { }
+.md-toc-inner:hover { text-decoration: underline; }
 .md-toc-inner { display: inline-block; cursor: pointer; }
 .md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
 .md-toc-h2 .md-toc-inner { margin-left: 2em; }
@@ -128,6 +129,7 @@ kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 
 code { text-align: left; }
 a.md-print-anchor { white-space: pre !important; border: none !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; text-shadow: initial !important; background-position: 0px 0px !important; background-repeat: initial initial !important; }
 .md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
 .md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
 .MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
 .MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
@@ -164,13 +166,7 @@ body {
 	margin: 0 auto;
 	margin-bottom: 2em;
 	line-height: 1.53;
-}
-
-#write>h2:first-child,
-#write>h3:first-child,
-#write>h4:first-child,
-#write>p:first-child{
-	margin-top: 1.2em;
+	padding-top: 40px;
 }
 
 /* Typography
@@ -426,11 +422,15 @@ table tbody+tbody {
 	bottom: -2em !important;
 }
 
- .typora-export p, .typora-export .footnote-line {white-space: normal;} 
+.dropdown-menu .divider {
+	border-color: #e5e5e5;
+}
+
+ .typora-export li, .typora-export p, .typora-export,  .footnote-line {white-space: normal;} 
 </style>
 </head>
 <body class='typora-export' >
-<div  id='write'  class = 'is-mac'><h1><a name='header-n0' class='md-header-anchor '></a>分布式系统6.824-Spinnaker(七)</h1><blockquote><p>即阅读和学习论文 Using paxos to Build a Scalable, Consistent and Highly Available Datastore</p></blockquote><h2><a name='header-n5' class='md-header-anchor '></a>概述</h2><p><code>Spinnaker</code>是一个实验性质的数据存储, 运行在数据中心的普通集群机器上面, 有如下几个特点: </p><ul><li>键值分片<code>key-based range partitioning</code></li><li>3中方法的备份<code>3-way replication</code></li><li>事物型读写API可以选择强一致性或者时间线一致性<code>transactional get-put API</code></li></ul><p><code>Spinnaker</code>使用了以paxos为基础的备份协议, 它保证了在集群中有大部分机器没有宕机时, 读写的可用性, 与传统的<code>Master-slave</code>不同, 传统的<code>Master-slave</code>当大部分机器宕机时, 仍然会执行错误的操作.</p><h2><a name='header-n15' class='md-header-anchor '></a>介绍</h2><h3><a name='header-n16' class='md-header-anchor '></a>CAP理论</h3><p>一个分布式系统最多只能同时满足, 一致性(<code>Consistency</code>), 可用性(<code>Availablity</code>), 分区容错性(<code>Partition tolerance</code>)之中的两种.</p><ul><li>其中传统的数据库, 通常满足CA, 即<code>ACID</code>, <code>Atomicity, Consistency, Isolation, and Durablility</code></li><li>分布式NoSQL, 满足PA, 即<code>BASE</code>, 即<code>Basically Available, Soft State, Evental consistency</code></li></ul><h3><a name='header-n23' class='md-header-anchor '></a>主备复制的缺点 <code>Master-Slave Replication</code></h3><p>在传统的主备同步复制策略中<code>2-way synchronous replication</code>, 两个节点中的一个节点被指派为<code>Master</code>节点, 所有的写操作都会被路由到<code>Master</code>节点上面. <code>Master</code>先将日志传输到<code>Salve</code>上面, 只有当<code>Salve</code>保存日志到本地并给<code>Master</code>返回成功, <code>Master</code>才会强制提交本次操作.</p><p>对于特殊情况:</p><ul><li>如果<code>Salve</code>奔溃了, <code>Master</code>可以在没有<code>Salve</code>的情况继续正常工作.</li><li>如果<code>Master</code>奔溃了, <code>Salve</code>上面的状态是最新状态, 可以替代<code>Master</code>正常工作</li></ul><p><code>Master-Slave</code>的同步复制模型可以处理一般情况下的单一节点奔溃. 但是由一个数据库奔溃导致的问题, 往往可以导致发生一系列连续的错误. 即当主备都发生奔溃之后, <code>Master-Slave</code>会导致数据的不一致性, 
-<code>Paxos</code>和<code>Raft</code>这种分布式一致性算法可以很好的解决此类问题.</p><h3><a name='header-n32' class='md-header-anchor '></a>强一致性和最终一致性 <code>Strong vs. Eventual Consistency</code></h3><p>在分布式系统中, 一致性模型描述了不同的<code>replica</code>节点之间如何进行同步. </p><ul><li><strong>强一致性</strong> : 保证了所有对于应用服务的<code>replica</code>是相同的, 即状态和数据.</li><li><strong>强一致性</strong> 对于整个软件系统来说是十分重要的, 但是根据<code>CAP</code>理论, 即在不牺牲可用性或者数据分片性的情况下是不可能达到强一致性的.</li></ul><p><code>Dynamo</code> 使用最终一致性以及高可用性和数据分片在 <strong>跨数据中心的集群</strong> 上面, 对于最终一致性, <code>Dynamo</code>使用向量锁来实现即<code>vector lock</code>.</p><h2><a name='header-n41' class='md-header-anchor '></a>数据模型和API</h2><p><code>Spinnaker</code>的数据模型和api与<code>BigTable</code>比较类似. 数据被一行一行的存储, 每一个以其key作为唯一主键进行区分. 每一行数据可以有任何数量的列作为其<code>corresponding values</code>. 其中列的名字和值对于<code>Spinnaker</code>来说是不可见的字节.</p><h3><a name='header-n44' class='md-header-anchor '></a>API</h3><h4><a name='header-n45' class='md-header-anchor '></a>1. <code>get(key, colname, consistent)</code></h4><p>读取某个<code>key</code>对应的某一列的值和其<code>version</code>. <code>consistent</code>为标志位</p><ul><li><code>consistent</code>: True 则选择强一致性模型选择最新的一个数据.</li><li><code>consistent</code>: False 则选择时间线一致性模型<code>timeline consistency</code>, 为了更好的性能则有可能会返回一个脏数据.</li></ul><h4><a name='header-n53' class='md-header-anchor '></a>2. <code>put(key, colname, colvalue)</code></h4><p>插入某一<code>key</code>对应的一个列的k,v</p><h4><a name='header-n55' class='md-header-anchor '></a>3. <code>delete(key, colname)</code></h4><p>删除某一<code>key</code>对应一个列的看,v</p><h4><a name='header-n57' class='md-header-anchor '></a>4. <code>conditionalPut(key, colname, value, v)</code></h4><p>在某一个key对应的行中插入某个新的列, 如果当前行的version等于v则成功, 否则返回错误.</p><h4><a name='header-n59' class='md-header-anchor '></a>5. <code>conditionalDelete(key, colname, v)</code></h4><p>类似于<code>conditional put</code></p><h3><a name='header-n61' class='md-header-anchor '></a>Version</h3><p><code>version number</code>是单调递增的整数, 通过<code>spinnaker</code>来管理, 并且通过<code>get</code>操作获得. <code>verison number</code>用在条件插入和条件删除, 提供了对于某一行进行简单方式的读写修改事务. 即相当于使用<code>version number</code>优化了并发控制.</p><h2><a name='header-n63' class='md-header-anchor '></a>架构</h2><p><code>Spinnaker</code>的集群架构和<code>BigTable</code>有相似的地方, 对于集群的分割都采用<code>range partition</code>.</p><p><img src='./image/spinnaker_cluster.png' alt='Spinnaker-cluster-example' referrerPolicy='no-referrer' /></p><h3><a name='header-n66' class='md-header-anchor '></a>节点结构 <code>Node Architecture</code></h3><p><code>Spinnaker</code>的<code>Node</code>主要由如下几个组件构成. 其中所有的组件都是线程安全的, 并且每个节点上面都有3个<code>key range</code>的数据. <span>	</span> 一个分片的读头部日志可以由指定的logging硬件来处理, 这样可以提高效率. 每个log都被LSN(log sequence number)唯一的确定. 为了共享同样的log, 在同一个节点上面的log使用同一节点的逻辑LSN. <code>Commit Queue</code>是一个主要的内存数据结构用来跟踪写的队列. 写操作当接受到logging节点上面的ack有效的信号时, 则该写操作则会被提交. 同时这次提交也会被存储到提交队列中.</p><p>注意: <code>Commit Queue</code>是在内存中用来记录操作的序号, 不会存储具体log信息</p><p><img src='./image/spinnaker_node.png' alt='' referrerPolicy='no-referrer' /></p><p>已提交的写操作在<code>memtable</code>中, <code>memtable</code>的作用是定期的对数据进行排序并且写入不可变的磁盘存储中即<code>SSTables</code>的数据结构中. <code>SSTable</code>以key和<code>colunm name</code>来作为索引, 这样可以提高操作的效率. 在后台小块的<code>SSTable</code>将会被合并成大的块, 这样可以提高读的效率. <code>SStable</code>的数据结构是以<code>Big Table</code>作为设计基础.  </p><h3><a name='header-n71' class='md-header-anchor '></a>Zookeeper</h3><p><code>Zookeeper</code> 被用来处理错误容灾, 和分布式微服务. <code>Zookeeper</code>提供了一个中心化的地方去存储<code>meta data</code>即配置文件, 并且管理诸如节点奔溃这样的事件. </p><p><code>Zookeeper</code>在设计上面简化的<code>Spinnker</code>, 最初<code>Zookeeper</code>的设计使得可以很容易的实现分布式锁, 屏障(<code>barriers</code>), 以及组关系(<code>membership</code>)等.</p><h2><a name='header-n74' class='md-header-anchor '></a>备份协议 <code>The Replication Protocol</code></h2><p>这一章节描述了<code>Spinnker</code>的备份协议, 该备份协议运行在一个集群的机器上面. 具体如下图:</p><p>每个备份集群有一个已选出的<code>leader</code>和其他两个<code>follower</code>, 备份协议有两段组成,分别是: <code>leader election</code>和<code>quorum phase</code>.</p><ul><li><code>leader election</code>: 即领导选举</li><li><code>quorum phase</code>: 即领导向<code>followers</code>发出写的请求, <code>followers</code>接受并返回<code>ack</code>. 在没有失败的情况发生时, 通常只有<code>quorum phase</code>执行.</li></ul><p><img src='./image/spinnker-replication.png' alt='' referrerPolicy='no-referrer' /></p><p>上图表示整个备份协议的具体过程:</p><ul><li><ol start='' ><li>首先当客户端要进行写操作时, 根据<code>key</code>找到对应的<code>key-range</code>, 将此次操作路由到对应的<code>leader</code>上面, 然后<code>leader</code>节点将写操作放进入<code>commit queue</code>, 并且并行的写入本地磁盘, 并向<code>followers</code>节点发出写入请求.</li></ol></li><li><ol start='2' ><li><code>followers</code>接受到了请求的消息, 将log写入本地磁盘, 并且将写操作放入<code>commit queue</code></li></ol></li><li><ol start='3' ><li>当<code>leader</code>接受到了至少1个节点的<code>ack</code>, 则这个时候<code>leader</code>将写操作放入<code>memtable</code>, 真实有效的提交本次写操作. 持久化本次的log.</li></ol></li><li><ol start='4' ><li>最后<code>leader</code>返回给客户成功的<code>response</code></li></ol></li></ul></div>
+<div  id='write'  class = 'is-mac'><h1><a name='header-n106' class='md-header-anchor '></a>分布式系统6.824-Spinnaker(七)</h1><blockquote><p>即阅读和学习论文 Using paxos to Build a Scalable, Consistent and Highly Available Datastore</p></blockquote><h2><a name='header-n111' class='md-header-anchor '></a>概述</h2><p><code>Spinnaker</code>是一个实验性质的数据存储, 运行在数据中心的普通集群机器上面, 有如下几个特点: </p><ul><li>键值分片<code>key-based range partitioning</code></li><li>3中方法的备份<code>3-way replication</code></li><li>事物型读写API可以选择强一致性或者时间线一致性<code>transactional get-put API</code></li></ul><p><code>Spinnaker</code>使用了以paxos为基础的备份协议, 它保证了在集群中有大部分机器没有宕机时, 读写的可用性, 与传统的<code>Master-slave</code>不同, 传统的<code>Master-slave</code>当大部分机器宕机时, 仍然会执行错误的操作.</p><h2><a name='header-n121' class='md-header-anchor '></a>介绍</h2><h3><a name='header-n122' class='md-header-anchor '></a>CAP理论</h3><p>一个分布式系统最多只能同时满足, 一致性(<code>Consistency</code>), 可用性(<code>Availablity</code>), 分区容错性(<code>Partition tolerance</code>)之中的两种.</p><ul><li>其中传统的数据库, 通常满足<strong>CA</strong>, 即<code>ACID</code>, <code>Atomicity, Consistency, Isolation, and Durablility</code></li><li>分布式NoSQL, 满足<strong>PA</strong>, 即<code>BASE</code>, 即<code>Basically Available, Soft State, Evental consistency</code></li><li>CP(一致性和分区容错性): 等待分区节点响应可能会导致延时错误。如果业务需要原子读写，CP是一个不错的选择</li><li>AP(可用性和分区容错性): 响应节点上的数据的最近版本可能并不是最新的。当分区解析完成之后，写入操作还需要一定时间的传播。如果业务需要<strong>最终一致性</strong>, 或者当有外部故障时，要求系统继续运行保障系统的高可用，AP是一个不错的选择</li></ul><h3><a name='header-n131' class='md-header-anchor '></a>主备复制的缺点 <code>Master-Slave Replication</code></h3><p>在传统的主备同步复制策略中<code>2-way synchronous replication</code>, 两个节点中的一个节点被指派为<code>Master</code>节点, 所有的写操作都会被路由到<code>Master</code>节点上面. <code>Master</code>先将日志传输到<code>Salve</code>上面, 只有当<code>Salve</code>保存日志到本地并给<code>Master</code>返回成功, <code>Master</code>才会强制提交本次操作.</p><p>对于特殊情况:</p><ul><li>如果<code>Salve</code>奔溃了, <code>Master</code>可以在没有<code>Salve</code>的情况继续正常工作.</li><li>如果<code>Master</code>奔溃了, <code>Salve</code>上面的状态是最新状态, 可以替代<code>Master</code>正常工作</li></ul><p><code>Master-Slave</code>的同步复制模型可以处理一般情况下的单一节点奔溃. 但是由一个数据库奔溃导致的问题, 往往可以导致发生一系列连续的错误. 即当主备都发生奔溃之后, <code>Master-Slave</code>会导致数据的不一致性, 
+<code>Paxos</code>和<code>Raft</code>这种分布式一致性算法可以很好的解决此类问题.</p><h3><a name='header-n140' class='md-header-anchor '></a>强一致性和最终一致性 <code>Strong vs. Eventual Consistency</code></h3><p>在分布式系统中, 一致性模型描述了不同的<code>replica</code>节点之间如何进行同步. </p><ul><li><strong>强一致性</strong> : 保证了所有对于应用服务的<code>replica</code>是相同的, 即状态和数据.</li><li><strong>强一致性</strong> 对于整个软件系统来说是十分重要的, 但是根据<code>CAP</code>理论, 即在不牺牲可用性或者数据分片性的情况下是不可能达到强一致性的.</li></ul><p><code>Dynamo</code> 使用最终一致性以及高可用性和数据分片在 <strong>跨数据中心的集群</strong> 上面, 对于最终一致性, <code>Dynamo</code>使用向量锁来实现即<code>vector lock</code>.</p><h2><a name='header-n149' class='md-header-anchor '></a>数据模型和API</h2><p><code>Spinnaker</code>的数据模型和api与<code>BigTable</code>比较类似. 数据被一行一行的存储, 每一个以其key作为唯一主键进行区分. 每一行数据可以有任何数量的列作为其<code>corresponding values</code>. 其中列的名字和值对于<code>Spinnaker</code>来说是不可见的字节.</p><h3><a name='header-n152' class='md-header-anchor '></a>API</h3><h4><a name='header-n153' class='md-header-anchor '></a>1. <code>get(key, colname, consistent)</code></h4><p>读取某个<code>key</code>对应的某一列的值和其<code>version</code>. <code>consistent</code>为标志位</p><ul><li><code>consistent</code>: True 则选择强一致性模型选择最新的一个数据.</li><li><code>consistent</code>: False 则选择时间线一致性模型<code>timeline consistency</code>, 为了更好的性能则有可能会返回一个脏数据.</li></ul><h4><a name='header-n161' class='md-header-anchor '></a>2. <code>put(key, colname, colvalue)</code></h4><p>插入某一<code>key</code>对应的一个列的k,v</p><h4><a name='header-n163' class='md-header-anchor '></a>3. <code>delete(key, colname)</code></h4><p>删除某一<code>key</code>对应一个列的看,v</p><h4><a name='header-n165' class='md-header-anchor '></a>4. <code>conditionalPut(key, colname, value, v)</code></h4><p>在某一个key对应的行中插入某个新的列, 如果当前行的version等于v则成功, 否则返回错误.</p><h4><a name='header-n167' class='md-header-anchor '></a>5. <code>conditionalDelete(key, colname, v)</code></h4><p>类似于<code>conditional put</code></p><h3><a name='header-n169' class='md-header-anchor '></a>Version</h3><p><code>version number</code>是单调递增的整数, 通过<code>spinnaker</code>来管理, 并且通过<code>get</code>操作获得. <code>verison number</code>用在条件插入和条件删除, 提供了对于某一行进行简单方式的读写修改事务. 即相当于使用<code>version number</code>优化了并发控制. Version的并发控制类似于MySQL中的多版本并发控制的实现。</p><h2><a name='header-n171' class='md-header-anchor '></a>架构</h2><p><code>Spinnaker</code>的集群架构和<code>BigTable</code>有相似的地方, 对于集群的分割都采用<code>range partition</code>.</p><p><img src='./image/spinnaker_cluster.png' alt='Spinnaker-cluster-example' referrerPolicy='no-referrer' /></p><h3><a name='header-n174' class='md-header-anchor '></a>节点结构 <code>Node Architecture</code></h3><p><code>Spinnaker</code>的<code>Node</code>主要由如下几个组件构成. 其中所有的组件都是线程安全的, 并且每个节点上面都有3个<code>key range</code>的数据. <span>	</span> 一个分片的读头部日志可以由指定的logging硬件来处理, 这样可以提高效率. 每个log都被LSN(log sequence number)唯一的确定. 为了共享同样的log, 在同一个节点上面的log使用同一节点的逻辑LSN. <code>Commit Queue</code>是一个主要的内存数据结构用来跟踪写的队列. 写操作当接受到logging节点上面的ack有效的信号时, 则该写操作则会被提交. 同时这次提交也会被存储到提交队列中.</p><p>注意: <code>Commit Queue</code>是在内存中用来记录操作的序号, 不会存储具体log信息</p><p><img src='./image/spinnaker_node.png' alt='' referrerPolicy='no-referrer' /></p><p>已提交的写操作在<code>memtable</code>中, <code>memtable</code>的作用是定期的对数据进行排序并且写入不可变的磁盘存储中即<code>SSTables</code>的数据结构中. <code>SSTable</code>以key和<code>colunm name</code>来作为索引, 这样可以提高操作的效率. 在后台小块的<code>SSTable</code>将会被合并成大的块, 这样可以提高读的效率. <code>SStable</code>的数据结构是以<code>Big Table</code>作为设计基础.  </p><h3><a name='header-n179' class='md-header-anchor '></a>Zookeeper</h3><p><code>Zookeeper</code> 被用来处理错误容灾, 和分布式微服务. <code>Zookeeper</code>提供了一个中心化的地方去存储<code>meta data</code>即配置文件, 并且管理诸如节点奔溃这样的事件. </p><p><code>Zookeeper</code>在设计上面简化的<code>Spinnker</code>, 最初<code>Zookeeper</code>的设计使得可以很容易的实现分布式锁, 屏障(<code>barriers</code>), 以及组关系(<code>membership</code>)等.</p><h2><a name='header-n182' class='md-header-anchor '></a>备份协议 <code>The Replication Protocol</code></h2><p>这一章节描述了<code>Spinnker</code>的备份协议, 该备份协议运行在一个集群的机器上面. 具体如下图:</p><p>每个备份集群有一个已选出的<code>leader</code>和其他两个<code>follower</code>, 备份协议有两段组成,分别是: <code>leader election</code>和<code>quorum phase</code>.</p><ul><li><code>leader election</code>: 即领导选举</li><li><code>quorum phase</code>: 即领导向<code>followers</code>发出写的请求, <code>followers</code>接受并返回<code>ack</code>. 在没有失败的情况发生时, 通常只有<code>quorum phase</code>执行.</li></ul><p><img src='./image/spinnker-replication.png' alt='' referrerPolicy='no-referrer' /></p><p>上图表示整个备份协议的具体过程:</p><ul><li><ol start='' ><li>首先当客户端要进行写操作时, 根据<code>key</code>找到对应的<code>key-range</code>, 将此次操作路由到对应的<code>leader</code>上面, 然后<code>leader</code>节点将写操作放进入<code>commit queue</code>, 并且并行的写入本地磁盘, 并向<code>followers</code>节点发出写入请求.</li></ol></li><li><ol start='2' ><li><code>followers</code>接受到了请求的消息, 将log写入本地磁盘, 并且将写操作放入<code>commit queue</code></li></ol></li><li><ol start='3' ><li>当<code>leader</code>接受到了至少1个节点的<code>ack</code>, 则这个时候<code>leader</code>将写操作放入<code>memtable</code>, 真实有效的提交本次写操作. 持久化本次的log.</li></ol></li><li><ol start='4' ><li>最后<code>leader</code>返回给客户成功的<code>response</code></li></ol></li></ul></div>
 </body>
 </html>
