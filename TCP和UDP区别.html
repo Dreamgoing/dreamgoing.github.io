@@ -2,20 +2,20 @@
 <html>
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
-<title>TCP和UDP区别</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; }
-html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+<title>TCP和UDP区别</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: rgb(255, 255, 255); --text-color: rgb(51, 51, 51); --select-text-bg-color: rgb(181, 214, 252); --select-text-font-color: auto; --monospace: 'Lucida Console', Consolas, Courier, monospace; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
 body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857143; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
 iframe { margin: auto; }
 a.url { word-break: break-all; }
 a:active, a:hover { outline: 0px; }
 .in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
-#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
 #write.first-line-indent p { text-indent: 2em; }
 #write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
 #write.first-line-indent li { margin-left: 2em; }
 .for-image #write { padding-left: 8px; padding-right: 8px; }
 body.typora-export { padding-left: 30px; padding-right: 30px; }
-.typora-export .footnote-line, .typora-export p { white-space: pre-wrap; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
 @media screen and (max-width: 500px) { 
   body.typora-export { padding-left: 0px; padding-right: 0px; }
   .CodeMirror-sizer { margin-left: 0px !important; }
@@ -24,12 +24,12 @@ body.typora-export { padding-left: 30px; padding-right: 30px; }
 #write li > figure:first-child { margin-top: -20px; }
 #write ol, #write ul { position: relative; }
 img { max-width: 100%; vertical-align: middle; }
-button, input, select, textarea { color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; }
+button, input, select, textarea { color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; line-height: inherit; }
 input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
 *, ::after, ::before { box-sizing: border-box; }
 #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
 #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
-h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 2; }
+h1, h2, h3, h4, h5, h6 { page-break-after: avoid; page-break-inside: avoid; orphans: 2; }
 p { orphans: 4; }
 h1 { font-size: 2rem; }
 h2 { font-size: 1.8rem; }
@@ -46,10 +46,10 @@ sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inh
 #write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
 figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
 figure > table { margin: 0px !important; }
-tr { break-inside: avoid; break-after: auto; }
+tr { page-break-inside: avoid; page-break-after: auto; }
 thead { display: table-header-group; }
-table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
-table.md-table td { min-width: 80px; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; page-break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
 .CodeMirror-gutters { border-right-width: 0px; background-color: inherit; }
 .CodeMirror { text-align: left; }
 .CodeMirror-placeholder { opacity: 0.3; }
@@ -60,13 +60,13 @@ div.hr:focus { cursor: none; }
 #write.fences-no-line-wrapping pre { white-space: pre; }
 #write pre.ty-contain-cm { white-space: normal; }
 .CodeMirror-gutters { margin-right: 4px; }
-.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; position: relative !important; background-position: inherit inherit; background-repeat: inherit inherit; }
+.md-fences { font-size: 0.9rem; display: block; page-break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; position: relative !important; background-position: inherit inherit; background-repeat: inherit inherit; }
 .md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
 #write .md-fences.mock-cm { white-space: pre-wrap; }
 .md-fences.md-fences-with-lineno { padding-left: 0px; }
 #write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
 .md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
-.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.CodeMirror-line, twitterwidget { page-break-inside: avoid; }
 .footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
 .footnotes + .footnotes { margin-top: 0px; }
 .md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; background-position: 0px 0px; background-repeat: initial initial; }
@@ -79,11 +79,11 @@ blockquote > :first-child, li > :first-child { margin-top: 0px; }
 .footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
 #write .footnote-line { white-space: pre-wrap; }
 @media print { 
-  body, html { border: 1px solid transparent; height: 99%; break-after: avoid-page; break-before: avoid-page; }
-  #write { margin-top: 0px; border-color: transparent !important; }
+  body, html { border: 1px solid transparent; height: 99%; page-break-after: avoid; page-break-before: avoid; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
   .typora-export * { -webkit-print-color-adjust: exact; }
   html.blink-to-pdf { font-size: 13px; }
-  .typora-export #write { padding-left: 1cm; padding-right: 1cm; padding-bottom: 0px; break-after: avoid-page; }
+  .typora-export #write { padding-left: 32px; padding-right: 32px; padding-bottom: 0px; page-break-after: avoid; }
   .typora-export #write::after { height: 0px; }
   @page { margin: 20mm 0px; }
 }
@@ -122,21 +122,22 @@ p > .md-image:only-child { display: inline-block; width: 100%; }
 a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
 .footnote-line a:not(.reversefootnote) { color: inherit; }
 .md-attr { display: none; }
-.md-fn-count::after { content: "."; }
+.md-fn-count::after { content: '.'; }
 code, pre, samp, tt { font-family: var(--monospace); }
 kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background-color: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; background-position: initial initial; background-repeat: initial initial; }
 .md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
 code { text-align: left; }
 a.md-print-anchor { white-space: pre !important; border: none !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; text-shadow: initial !important; background-position: 0px 0px !important; background-repeat: initial initial !important; }
 .md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
 .md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
 .MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
 .MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
 .MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
 .MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
-.MathJax_SVG * { transition: none; }
+.MathJax_SVG * { -webkit-transition: none; transition: none; }
 .MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; }
-.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.os-windows.monocolor-emoji .md-emoji { font-family: 'Segoe UI Symbol', sans-serif; }
 .md-diagram-panel > svg { max-width: 100%; }
 [lang="mermaid"] svg, [lang="flow"] svg { max-width: 100%; }
 [lang="mermaid"] .node text { font-size: 1rem; }
@@ -425,12 +426,12 @@ table tbody+tbody {
 	border-color: #e5e5e5;
 }
 
- .typora-export p, .typora-export .footnote-line {white-space: normal;} 
+ .typora-export li, .typora-export p, .typora-export,  .footnote-line {white-space: normal;} 
 </style>
 </head>
 <body class='typora-export' >
-<div  id='write'  class = 'is-mac'><h1><a name='header-n0' class='md-header-anchor '></a>TCP和UDP</h1><h2><a name='header-n2' class='md-header-anchor '></a>简介</h2><p>TCP(Transmission Control Protocol) 传输控制协议
-UDP(User Datagram Protocol) 用户数据报协议</p><p>TCP和UDP都是OSI模型中的运输层的协议，运输层向上面的应用层提供通信服务，它属于面向通信部分的最高层，同时也是用户功能的最底层。从运输层的角度来看，通信的真正的端点并不是主机而是主机中的进程。</p><p>网络层为主机之间提供逻辑通信，而运输层为应用进程之间提供端到端的逻辑通信</p><h2><a name='header-n5' class='md-header-anchor '></a>UDP</h2><p>UDP不提供复杂的控制机制，利用IP提供面向无连接的通信服务。并且它是将应用程序发来的数据在收到的那一刻，立刻按照原样发送到网络上的一种机制。</p><p>UDP有两个字段：数据字段和首部字段构成。</p><p>首部字段8字节，由4部分组成:</p><ul><li>源端口</li><li>目的端口</li><li>长度</li><li>检验和</li></ul><h2><a name='header-n17' class='md-header-anchor '></a>TCP</h2><blockquote><p>TCP协议比较复杂</p></blockquote><h3><a name='header-n20' class='md-header-anchor '></a>TCP报文段的首部格式</h3><p>TCP首部的前20个字节是固定的，后面有4n字节是根据需要而增加的选项。</p><p><img src='./image/jellythinkTCP3.jpg' alt='tcp首部' referrerPolicy='no-referrer' /></p><ul><li><p>源端口和目的端口：各占两个字节。</p></li><li><p>序号：占4个字节，mod(1&lt;&lt;32) 运算。表示本报文段第一个数据的字节序号，也叫报文段序号</p></li><li><p>确认号：占4个字节，是期望对方下一个报文段第一个数据字节的序号。若确认号 ＝ N,则表示，到序号N-1为止所有数据都正确收到</p></li><li><p>数据偏移(offset)：占4位，指出TCP报文段的数据起始处距TCP报文段起始处有多远</p></li><li><p>保留：占6位</p></li><li><p>标志位：TCP flags</p><ul><li>紧急URG，当URG为1时，表示紧急指针字段有效。它告诉系统此报文段中有紧急数据，应当尽快传送，而不是按照原来的排队顺序传送，这需要与首部中的紧急指针配合使用，把紧急数据插入到本报文段数据的最前面。</li><li>确认ACK，ACK ＝ 1，确认号字段为有效。TCP规定，在连接建立后，所有传送的报文段都必须把ACK置为1。</li><li>推送PSH，当两个进程进行交互式通信时，有时在一端的进程希望键入一个命令时立刻得到响应，这时候就需要置PSH位1。这样得到消息之后，不必等缓冲区慢直接交付应用程序。</li><li>复位RST,当RST = 1时，表明TCP连接中出现了严重的差错，必须释放连接，然后重新建立运输连接。</li><li>同步SYN，在连接建立时用来同步序号。当SYN = 1,而ACK ＝ 0时，表明这是一个连接请求报文段。对方若同意建立连接，则应在响应的报文段中使用SYN = 1,ACK = 1。因此，SYN置为1就表示这是一个连接请求或者连接接受报文。</li></ul></li><li><p>窗口：占2字节。窗口值为[0,(1&lt;&lt;16)-1]之间的整数。窗口值告诉对方：从本报文首部中的确认号算起，接收方目前允许对方发送的数据量。窗口值处于经常动态变化的状态。</p></li><li><p>检验和：占2字节。检验和字段检验的范围包括首部和数据这两个部分。计算检验和时需要在TCP报文段之前加上12个字节的伪首部。</p></li><li><p>紧急指针：占2字节。仅在URG为1时有效，指出了报文段中的紧急数据字节数（紧急数据结束之后是普通数据）。</p></li><li><p>TCP选项：长度可变，最长达到了40字节。如果没有选项时，TCP的字节长度为20字节。最初规定了一种选项即，MSS(Maximum Segment Size)最大报文段长度。</p></li></ul><h3><a name='header-n54' class='md-header-anchor '></a>TCP的连接</h3><p>每条TCP的连接都有两个端点，TCP连接的端点叫做套接字(socket)或者插口</p><ul><li>套接字socket = (IP 地址：端口号)</li><li>TCP连接 ::={socket1,socket2} = {(IP1:port1),(IP2:port2)}</li></ul><h3><a name='header-n61' class='md-header-anchor '></a>TCP可靠传输的实现</h3><p>TCP通过滑动窗口实现可靠的数据传输。TCP滑动窗口技术通过动态改变窗口大小来调节两台主机间数据传输。每个TCP/IP主机支持全双工数据传输，因此TCP有两个滑动窗口：一个用于接受数据，一个用于发送数据。</p><ul><li><p>发送窗口由如下构成</p><ul><li>已发送收到确认：窗口移动</li><li>已发送但是未收到确认</li><li>允许发送但是尚未发送</li></ul></li><li><p>接受窗口由如下构成</p><ul><li>按序到达的</li><li>未按序到达的</li></ul></li></ul><p>TCP使用滑动窗口机制。发送窗口里面的序号表示允许发送的序号。发送窗口后沿的后面部分表示已发送且已收到了确认。而发送窗口前沿的前面部分表示不允许发送的。发送窗口的后沿变化情况有两种可能，即不动（没有收到新的确认）和前移（收到了新的确认）。发送窗口的前沿通常是不断向前移动的。</p><h2><a name='header-n81' class='md-header-anchor '></a>其他重要概念</h2><h3><a name='header-n82' class='md-header-anchor '></a>停止等待协议</h3><p>停止等待协议能够在不可靠的传输网络上面实现可靠的通信。每发送完一个分组就停止发送，等待对方确认。在收到确认后再发送下一个分组。分组需要编号。</p><p>超时重传是指：只要过了一段时间仍然没有收到确认，就重传前面发送过的分组。因此每发送完一个分组需要设置一个超时计时器，其重传时间应比数据在分组传输的平均往返时间长一些。这种自动重传方式常称为自动重传请求ARQ.</p><p>在停止等待协议中，若接收方收到了重复分组，就丢弃该分组，但同时还需要发送确认。</p><p>连续ARQ协议可以提高信道利用率。发送方维持一个发送窗口，凡位于放送窗口内的分组都可以连续的发送出去，而不需要等待对方的确认。接收方一般采用累积确认，对按序到达的最后一个分组发送确认，表明到这个分组为止所有分组都已经正确收到了</p><h3><a name='header-n87' class='md-header-anchor '></a>拥塞控制</h3><p>在某段时间，若对网络中某一资源的需求超过了该资源所能提供的可用部分，网络的性能就会变坏。这种情况就叫做拥塞。</p><p>为了进行拥塞控制，TCP的发送方要维持一个拥塞窗口 cwnd的状态变量。拥塞窗口的大小取决于网络的拥塞程度，并且在动态的变化中。发送方让自己的发送窗口取为拥塞窗口和接受方的接受窗口之中较小的一个。</p><p>TCP的拥塞控制采用了四种算法,即慢开始，拥塞避免，快重传和快恢复。在网络层，也可以使路由器采用适当的分组丢弃策略（如早期随机检测RED）</p><h2><a name='header-n91' class='md-header-anchor '></a>区别</h2><ul><li>TCP面向连接（如打电话要先拨号建立连接),UDP是无连接的，即发送数据之前不需要建立连接</li><li>TCP提供可靠的服务。也就是说，通过TCP连接传送的数据，无差错，不丢失，不重复，且按序到达;UDP尽最大努力交付，即不保证可靠交付</li><li>TCP面向字节流，实际上是TCP把数据看成一连串无结构的字节流;UDP是面向报文的
-UDP没有拥塞控制，因此网络出现拥塞不会使源主机的发送速率降低（对实时应用很有用，如IP电话，实时视频会议等）</li><li>每一条TCP连接只能是点到点的;UDP支持一对一，一对多，多对一和多对多的交互通信</li><li>TCP首部开销20字节;UDP的首部开销小，只有8个字节</li><li>TCP的逻辑通信信道是全双工的可靠信道，UDP则是不可靠信道</li></ul><p>&nbsp;</p></div>
+<div  id='write'  class = 'is-mac'><h1><a name='header-n112' class='md-header-anchor '></a>TCP和UDP</h1><h2><a name='header-n114' class='md-header-anchor '></a>简介</h2><p>TCP(Transmission Control Protocol) 传输控制协议
+UDP(User Datagram Protocol) 用户数据报协议</p><p>TCP和UDP都是OSI模型中的运输层的协议，运输层向上面的应用层提供通信服务，它属于面向通信部分的最高层，同时也是用户功能的最底层。从运输层的角度来看，通信的真正的端点并不是主机而是主机中的进程。</p><p>网络层为主机之间提供逻辑通信，而运输层为应用进程之间提供端到端的逻辑通信</p><h2><a name='header-n118' class='md-header-anchor '></a>UDP</h2><p>UDP不提供复杂的控制机制，利用IP提供面向无连接的通信服务。并且它是将应用程序发来的数据在收到的那一刻，立刻按照原样发送到网络上的一种机制。</p><p>UDP有两个字段：数据字段和首部字段构成。</p><p>首部字段8字节，由4部分组成:</p><ul><li>源端口</li><li>目的端口</li><li>长度</li><li>检验和</li></ul><h2><a name='header-n131' class='md-header-anchor '></a>TCP</h2><blockquote><p>TCP协议比较复杂</p></blockquote><h3><a name='header-n134' class='md-header-anchor '></a>TCP报文段的首部格式</h3><p>TCP首部的前20个字节是固定的，后面有4n字节是根据需要而增加的选项。</p><p><img src='./image/jellythinkTCP3.jpg' alt='tcp首部' referrerPolicy='no-referrer' /></p><ul><li><p>源端口和目的端口：各占两个字节。</p></li><li><p>序号：占4个字节，mod(1&lt;&lt;32) 运算。表示本报文段第一个数据的字节序号，也叫报文段序号</p></li><li><p>确认号：占4个字节，是期望对方下一个报文段第一个数据字节的序号。若确认号 ＝ N,则表示，到序号N-1为止所有数据都正确收到</p></li><li><p>数据偏移(offset)：占4位，指出TCP报文段的数据起始处距TCP报文段起始处有多远</p></li><li><p>保留：占6位</p></li><li><p>标志位：TCP flags</p><ul><li>紧急URG，当URG为1时，表示紧急指针字段有效。它告诉系统此报文段中有紧急数据，应当尽快传送，而不是按照原来的排队顺序传送，这需要与首部中的紧急指针配合使用，把紧急数据插入到本报文段数据的最前面。</li><li>确认ACK，ACK ＝ 1，确认号字段为有效。TCP规定，在连接建立后，所有传送的报文段都必须把ACK置为1。</li><li>推送PSH，当两个进程进行交互式通信时，有时在一端的进程希望键入一个命令时立刻得到响应，这时候就需要置PSH位1。这样得到消息之后，不必等缓冲区慢直接交付应用程序。</li><li>复位RST,当RST = 1时，表明TCP连接中出现了严重的差错，必须释放连接，然后重新建立运输连接。</li><li>同步SYN，在连接建立时用来同步序号。当SYN = 1,而ACK ＝ 0时，表明这是一个连接请求报文段。对方若同意建立连接，则应在响应的报文段中使用SYN = 1,ACK = 1。因此，SYN置为1就表示这是一个连接请求或者连接接受报文。</li></ul></li><li><p>窗口：占2字节。窗口值为[0,(1&lt;&lt;16)-1]之间的整数。窗口值告诉对方：从本报文首部中的确认号算起，接收方目前允许对方发送的数据量。窗口值处于经常动态变化的状态。</p></li><li><p>检验和：占2字节。检验和字段检验的范围包括首部和数据这两个部分。计算检验和时需要在TCP报文段之前加上12个字节的伪首部。</p></li><li><p>紧急指针：占2字节。仅在URG为1时有效，指出了报文段中的紧急数据字节数（紧急数据结束之后是普通数据）。</p></li><li><p>TCP选项：长度可变，最长达到了40字节。如果没有选项时，TCP的字节长度为20字节。最初规定了一种选项即，MSS(Maximum Segment Size)最大报文段长度。</p></li></ul><h3><a name='header-n169' class='md-header-anchor '></a>TCP的连接</h3><p>每条TCP的连接都有两个端点，TCP连接的端点叫做套接字(socket)或者插口</p><ul><li>套接字socket = (IP 地址：端口号)</li><li>TCP连接 ::={socket1,socket2} = {(IP1:port1),(IP2:port2)}</li></ul><h3><a name='header-n176' class='md-header-anchor '></a>TCP可靠传输的实现</h3><p>TCP通过滑动窗口实现可靠的数据传输。TCP滑动窗口技术通过动态改变窗口大小来调节两台主机间数据传输。每个TCP/IP主机支持全双工数据传输，因此TCP有两个滑动窗口：一个用于接受数据，一个用于发送数据。</p><ul><li><p>发送窗口由如下构成</p><ul><li>已发送收到确认：窗口移动</li><li>已发送但是未收到确认</li><li>允许发送但是尚未发送</li></ul></li><li><p>接受窗口由如下构成</p><ul><li>按序到达的</li><li>未按序到达的</li></ul></li></ul><p>TCP使用滑动窗口机制。发送窗口里面的序号表示允许发送的序号。发送窗口后沿的后面部分表示已发送且已收到了确认。而发送窗口前沿的前面部分表示不允许发送的。发送窗口的后沿变化情况有两种可能，即不动（没有收到新的确认）和前移（收到了新的确认）。发送窗口的前沿通常是不断向前移动的。</p><h2><a name='header-n196' class='md-header-anchor '></a>其他重要概念</h2><h3><a name='header-n197' class='md-header-anchor '></a>停止等待协议</h3><p>停止等待协议能够在不可靠的传输网络上面实现可靠的通信。每发送完一个分组就停止发送，等待对方确认。在收到确认后再发送下一个分组。分组需要编号。</p><p>超时重传是指：只要过了一段时间仍然没有收到确认，就重传前面发送过的分组。因此每发送完一个分组需要设置一个超时计时器，其重传时间应比数据在分组传输的平均往返时间长一些。这种自动重传方式常称为自动重传请求ARQ.</p><p>在停止等待协议中，若接收方收到了重复分组，就丢弃该分组，但同时还需要发送确认。</p><p>连续ARQ协议可以提高信道利用率。发送方维持一个发送窗口，凡位于放送窗口内的分组都可以连续的发送出去，而不需要等待对方的确认。接收方一般采用累积确认，对按序到达的最后一个分组发送确认，表明到这个分组为止所有分组都已经正确收到了</p><h3><a name='header-n202' class='md-header-anchor '></a>拥塞控制</h3><p>在某段时间，若对网络中某一资源的需求超过了该资源所能提供的可用部分，网络的性能就会变坏。这种情况就叫做拥塞。</p><p>为了进行拥塞控制，TCP的发送方要维持一个拥塞窗口 cwnd的状态变量。拥塞窗口的大小取决于网络的拥塞程度，并且在动态的变化中。发送方让自己的发送窗口取为拥塞窗口和接受方的接受窗口之中较小的一个。</p><p>TCP的拥塞控制采用了四种算法,即慢开始，拥塞避免，快重传和快恢复。在网络层，也可以使路由器采用适当的分组丢弃策略（如早期随机检测RED）</p><h2><a name='header-n206' class='md-header-anchor '></a>区别</h2><ul><li>TCP面向连接（如打电话要先拨号建立连接),UDP是无连接的，即发送数据之前不需要建立连接</li><li>TCP提供可靠的服务。也就是说，通过TCP连接传送的数据，无差错，不丢失，不重复，且按序到达;UDP尽最大努力交付，即不保证可靠交付</li><li>TCP面向字节流，实际上是TCP把数据看成一连串无结构的字节流;UDP是面向报文的
+UDP没有拥塞控制，因此网络出现拥塞不会使源主机的发送速率降低（对实时应用很有用，如IP电话，实时视频会议等）</li><li>每一条TCP连接只能是点到点的;UDP支持一对一，一对多，多对一和多对多的交互通信</li><li>TCP首部开销20字节;UDP的首部开销小，只有8个字节</li><li>TCP的逻辑通信信道是全双工的可靠信道，UDP则是不可靠信道</li><li>UDP有一个很重要的点是支持一对一，一对多，多对一，多对多的传输方式。即支持广播</li></ul><p>&nbsp;</p></div>
 </body>
 </html>
