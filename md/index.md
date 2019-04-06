@@ -28,6 +28,7 @@
 + [golang小技巧](./golang小技巧.html)
 + [go并发编程模式](./go并发编程模式.html)
 + [go内存管理](./go内存管理.html)
++ [go pprof分析实战](./golang-profile.html)
 
 #### python
 
