@@ -49,7 +49,6 @@
 + [Django源码阅读(一)-View](./Django源码阅读(一)-View.html)
 + [Django源码阅读(二)-Signal](./Django源码阅读(二)-Signal.html)
 
-
 #### 分布式系统
 
 + [6.824-入门介绍](./分布式系统6.824-入门介绍.html)
@@ -74,6 +73,8 @@
 
 #### 数据存储
 + [MySQL学习笔记](./mysql学习笔记.html)
++ [MySQL Join，Group by算法实现]()
++ [MySQL 查询Plan优化]()
 + [数据库索引](./数据库索引.html)
 + [Zookeeper](./Zookeeper.html)
 + [etcd学习笔记](./etcd学习笔记.html)
