@@ -81,6 +81,10 @@
 + [influxdb学习笔记](./influxdb学习笔记.html)
 + [redis学习笔记](./redis学习笔记.html)
 
+#### 云原生相关 Cloud Native
+
++ [k8s学习笔记](./k8s学习笔记.html)
+
 #### 基础
 
 + [记一次千万级数据迁移 （个人技术分享）](./记一次千万级数据迁移.html)
@@ -99,8 +103,13 @@
 
 ## 关于
 
-+ 90后，工作一年，HUST,  backend,  python，golang，存储，分布式系统~ 
++ 90后，工作一年，HUST,  backend,  python，golang，TypeScript，存储，分布式系统~ 
 + Email: ruoxuanwanggoing@gmail.com (有任何疑问欢迎联系~)
++ 90后，工作一年，HUST,  backend,  python，golang，分布式~ 
++ 知乎：[Dreamgoing](https://www.zhihu.com/people/wang-ruo-xuan-33-78/activities) (欢迎关注交流)
++ [cv](./resume.pdf)
++ Email: ruoxuanwanggoing@gmail.com
+
 
 
 

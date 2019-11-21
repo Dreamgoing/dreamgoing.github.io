@@ -1,0 +1,511 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>k8s学习笔记</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857143; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; tab-size: 4; background-position: inherit inherit; background-repeat: inherit inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+@media screen and (max-width: 500px) { 
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; }
+button, input, select, textarea { color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 2; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.701961); color: rgb(85, 85, 85); border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px !important; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right-width: 0px; background-color: inherit; }
+.CodeMirror-linenumber { }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; position: relative !important; background-position: inherit inherit; background-repeat: inherit inherit; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; background-position: 0px 0px; background-repeat: initial initial; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print { 
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid-page; break-before: avoid-page; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { padding-left: 32px; padding-right: 32px; padding-bottom: 0px; break-after: avoid-page; }
+  .typora-export #write::after { height: 0px; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background-color: rgb(204, 204, 204); display: block; overflow-x: hidden; background-position: initial initial; background-repeat: initial initial; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) { 
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background-color: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; background-position: initial initial; background-repeat: initial initial; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; }
+a.md-print-anchor { white-space: pre !important; border: none !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; text-shadow: initial !important; background-position: 0px 0px !important; background-repeat: initial initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="mermaid"] svg, [lang="flow"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom-width: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+
+
+.CodeMirror { height: auto; }
+.CodeMirror.cm-s-inner { background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
+.CodeMirror-scroll { overflow-y: hidden; overflow-x: auto; z-index: 3; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-gutters { border-right-width: 1px; border-right-style: solid; border-right-color: rgb(221, 221, 221); background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; white-space: nowrap; background-position: inherit inherit; background-repeat: inherit inherit; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: red; }
+.cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: hidden; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 30px; z-index: 3; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; border: none !important; background-position: 0px 0px !important; background-repeat: initial initial !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-width: 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; word-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; background-position: 0px 0px; background-repeat: initial initial; }
+.CodeMirror-wrap pre { word-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right-width: 30px; border-right-style: solid; border-right-color: transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right-style: none; width: auto; }
+.CodeMirror-linebackground { position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right-style: none; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.cm-searching { background-color: rgba(255, 255, 0, 0.4); background-position: initial initial; background-repeat: initial initial; }
+@media print { 
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
+
+
+html {
+	font-size: 19px;
+}
+
+html, body {
+	margin: auto;
+	background: #fefefe;
+}
+body {
+	font-family: "Vollkorn", Palatino, Times;
+	color: #333;
+	line-height: 1.4;
+	text-align: justify;
+}
+#write {
+	max-width: 960px;
+	margin: 0 auto;
+	margin-bottom: 2em;
+	line-height: 1.53;
+	padding-top: 40px;
+}
+
+/* Typography
+-------------------------------------------------------- */
+
+#write>h1:first-child,
+h1 {
+	margin-top: 1.6em;
+	font-weight: normal;
+}
+
+h1 {
+	font-size:3em;
+}
+
+h2 {
+	margin-top:2em;
+	font-weight: normal;
+}
+
+h3 {
+	font-weight: normal;
+	font-style: italic;
+	margin-top: 3em;
+}
+
+h1, 
+h2, 
+h3{
+	text-align: center;
+}
+
+h2:after{
+	border-bottom: 1px solid #2f2f2f;
+    content: '';
+    width: 100px;
+    display: block;
+    margin: 0 auto;
+    height: 1px;
+}
+
+h1+h2, h2+h3 {
+	margin-top: 0.83em;
+}
+
+p,
+.mathjax-block {
+	margin-top: 0;
+	-webkit-hypens: auto;
+	-moz-hypens: auto;
+	hyphens: auto;
+}
+ul {
+	list-style: square;
+	padding-left: 1.2em;
+}
+ol {
+	padding-left: 1.2em;
+}
+blockquote {
+	margin-left: 1em;
+	padding-left: 1em;
+	border-left: 1px solid #ddd;
+}
+code,
+pre {
+	font-family: "Consolas", "Menlo", "Monaco", monospace, serif;
+	font-size: .9em;
+	background: white;
+}
+.md-fences{
+	margin-left: 1em;
+	padding-left: 1em;
+	border: 1px solid #ddd;
+	padding-bottom: 8px;
+	padding-top: 6px;
+	margin-bottom: 1.5em;
+}
+
+a {
+	color: #2484c1;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+a img {
+	border: none;
+}
+h1 a,
+h1 a:hover {
+	color: #333;
+	text-decoration: none;
+}
+hr {
+	color: #ddd;
+	height: 1px;
+	margin: 2em 0;
+	border-top: solid 1px #ddd;
+	border-bottom: none;
+	border-left: 0;
+	border-right: 0;
+}
+.ty-table-edit {
+	background: #ededed;
+    padding-top: 4px;
+}
+table {
+	margin-bottom: 1.333333rem
+}
+table th,
+table td {
+	padding: 8px;
+	line-height: 1.333333rem;
+	vertical-align: top;
+	border-top: 1px solid #ddd
+}
+table th {
+	font-weight: bold
+}
+table thead th {
+	vertical-align: bottom
+}
+table caption+thead tr:first-child th,
+table caption+thead tr:first-child td,
+table colgroup+thead tr:first-child th,
+table colgroup+thead tr:first-child td,
+table thead:first-child tr:first-child th,
+table thead:first-child tr:first-child td {
+	border-top: 0
+}
+table tbody+tbody {
+	border-top: 2px solid #ddd
+}
+
+.task-list{
+	padding:0;
+}
+
+.md-task-list-item {
+	padding-left: 1.6rem;
+}
+
+.md-task-list-item > input:before {
+	content: '\221A';
+	display: inline-block;
+	width: 1.33333333rem;
+  	height: 1.6rem;
+	vertical-align: middle;
+	text-align: center;
+	color: #ddd;
+	background-color: #fefefe;
+}
+
+.md-task-list-item > input:checked:before,
+.md-task-list-item > input[checked]:before{
+	color: inherit;
+}
+.md-tag {
+	color: inherit;
+	font: inherit;
+}
+#write pre.md-meta-block {
+	min-height: 35px;
+	padding: 0.5em 1em;
+}
+#write pre.md-meta-block {
+	white-space: pre;
+	background: #f8f8f8;
+	border: 0px;
+	color: #999;
+	
+	width: 100vw;
+	max-width: calc(100% + 60px);
+	margin-left: -30px;
+	border-left: 30px #f8f8f8 solid;
+	border-right: 30px #f8f8f8 solid;
+
+	margin-bottom: 2em;
+	margin-top: -1.3333333333333rem;
+	padding-top: 26px;
+	padding-bottom: 10px;
+	line-height: 1.8em;
+	font-size: 0.9em;
+	font-size: 0.76em;
+	padding-left: 0;
+}
+.md-img-error.md-image>.md-meta{
+	vertical-align: bottom;
+}
+#write>h5.md-focus:before {
+	top: 2px;
+}
+
+.md-toc {
+	margin-top: 40px;
+}
+
+.md-toc-content {
+	padding-bottom: 20px;
+}
+
+.outline-expander:before {
+	color: inherit;
+	font-size: 14px;
+	top: auto;
+	content: "\f0da";
+	font-family: FontAwesome;
+}
+
+.outline-expander:hover:before,
+.outline-item-open>.outline-item>.outline-expander:before {
+  	content: "\f0d7";
+}
+
+/** source code mode */
+#typora-source {
+	font-family: Courier, monospace;
+    color: #6A6A6A;
+}
+
+.html-for-mac #typora-sidebar {
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+
+.cm-s-typora-default .cm-header, 
+.cm-s-typora-default .cm-property,
+.CodeMirror.cm-s-typora-default div.CodeMirror-cursor {
+	color: #428bca;
+}
+
+.cm-s-typora-default .cm-atom, .cm-s-typora-default .cm-number {
+	color: #777777;
+}
+
+.typora-node .file-list-item-parent-loc, 
+.typora-node .file-list-item-time, 
+.typora-node .file-list-item-summary {
+	font-family: arial, sans-serif;
+}
+
+.md-task-list-item>input {
+    margin-left: -1.3em;
+    margin-top: calc(1rem - 12px);
+}
+
+.md-mathjax-midline {
+	background: #fafafa;
+}
+
+.md-fences .code-tooltip {
+	bottom: -2em !important;
+}
+
+.dropdown-menu .divider {
+	border-color: #e5e5e5;
+}
+
+ .typora-export li, .typora-export p, .typora-export,  .footnote-line {white-space: normal;} 
+</style>
+</head>
+<body class='typora-export' >
+<div  id='write'  class = 'is-mac'><h1><a name="kubernetes学习笔记" class="md-header-anchor"></a><span>Kubernetes学习笔记</span></h1><blockquote><p><span>记录k8s学习过程中遇到的一些知识杂记，以及阿里云云原生公开课学习 </span></p></blockquote><h2><a name="组件-components" class="md-header-anchor"></a><span>组件 (Components)</span></h2><h4><a name="master-组件" class="md-header-anchor"></a><span>Master 组件</span></h4><p><span>Master 组件提供集群控制。 包括对集群作出全局性的决策(例如：调度)， 以及检查和响应集群事件(例如：当deployment的</span><code>replicas</code><span>字段不满足时，创建新的的Pod).</span></p><ul><li><p><span>kube-apiserver: Master 上的组件暴露Kubernetes的API。Kubernetes控制面板的front-end，被设计成可以水平扩展</span></p></li><li><p><span>etcd：一致性的，高可用的k-v存储。用来存储所有集群相关的数据。</span></p></li><li><p><span>kube-scheduler: Master 上的组件，简单新创建的Pod，并根据具体的一些因素，选择合适的Node去运行该Pod。因素包括：</span><code>individual and collective resource requirements</code><span>,  </span><code>hardware/software/policy constraints</code><span>, </span><code>affinity and anti-affinity specifications</code><span>, </span><code>data locality</code><span>, </span><code>inter-workload interference and deadlines.</code></p></li><li><p><span>kube-controller-manager: Master 上的组件运行</span><a href='https://kubernetes.io/docs/reference/command-line-tools-reference/kube-controller-manager/'><span>controller</span></a></p><ul><li><span>Node Controller: 负责通知和管理Node的状态，当Node挂掉之后，作出响应和通知。</span></li><li><span>Replication Controller: 负责保证Pod具有正确的replica数量</span></li><li><span>Endpoints Controller: (Populates the Endpoints object)设置Pod或者Services的Endpoint</span></li><li><span>Service Account &amp; Token Controllers: 对新的namespaces创建默认的账户和API access token</span></li></ul></li><li><p><span>cloud-controller-manager： 用于与云基础服务提供商（云厂商）交互，即将Kubernetes的代码与云厂商的代码分割开。与云厂商相关的代码由云厂商自己来维护。在未来的release版本中，当运行Kubernetes时，其云厂商代码则会被连接到cloud-controller-manager中。</span></p></li></ul><h4><a name="node-组件" class="md-header-anchor"></a><span>Node 组件</span></h4><p><span>Node 组件在每一个节点上运行，维护运行的Pod并提供Kubernetes运行环境 (runtime environment). </span></p><ul><li><span>kubelet：在集群中每个Node上面运行的agent，保证容器（container）运行在Pod中。主要管理在Pod上面运行的容器，与Master中的kuber-apiserver进行交互得到调度命令，调用Container Runtime来配置运行环境。</span></li><li><span>kube-proxy：在每个Node上面运行网络代理（network proxy）。实现了Kubernetes Service concept的一部分。负责Node上的网络规则，和与集群的网络通信，主要利用iptable能力实现。</span></li><li><span>Container Runtime： 容器运行环境对容器的运行负责。Kubernetes支持多种容器的运行环境，例如：Docker，containerd，cri-o等等，实现了Kubernetes CRI（Container Runtime Interface）的接口的运行环境均可。</span></li></ul><h4><a name="addons-插件" class="md-header-anchor"></a><span>Addons 插件</span></h4><h2><a name="相关术语" class="md-header-anchor"></a><span>相关术语</span></h2><ul><li><span>Node: kubernetes中的worker machine, 之前称之为</span><code>minion</code><span>. Node可以是物理机或者VM。Node具有运行容器（containers）时一些必要服务。Node通过master system来管理。</span></li><li><span>Kubernetes资源对象，Spec期望对象，Status：观察到的状态，Metadata：Labels，Annotations，OwnerReference</span></li><li><span>Pod: kubernetes中运行容器的基本单元，每个pod中会维护至少一个docker容器Container，并且控制着容器的执行，当容器退出，则Pod也会结束。Pod提供了为容器设置环境变量，挂载存储(mount storage)，传递其他信息给容器的功能。</span></li><li><span>Namespaces：一个集群内部的逻辑隔离机制（鉴权，资源额度），每个资源属于一个Namespace</span></li><li><span>ReplicaSets: 可以认为在kubernetes中</span><code>low-level</code><span>的类型。通过Kubernetes用户会选择更高级别的抽象例如</span><code>Deployments</code><span>和</span><code>DaemonSets</code><span>. </span><code>ReplicaSet</code><span>保证了独立配置的pod可以以一定数量的replica运行，当一个pod宕掉,下线之后，ReplicaSet将会生成一个新的Pod进行替换。</span></li><li><span>Service: Kubernetes中云原生的服务发现机制，在Helm中可以通过定义</span><code>service.yaml</code><span>来定义service。且创建的service通过</span><code>selector</code><span>绑定到具体的容器上，Kubernetes会给这个service分配一个IP，称之为</span><code>cluster IP</code><span>. 每一个在Kubernetes中的node，运行着</span><code>kube-proxy</code><span>来维护虚拟IP，以及Service</span></li><li><span>Secrets：存储密码，tokne等敏感信息，base64编码。当这些数据连接到Pod中时，则会自动被解码。Secrets可以被以环境变量或者文件的形式传递给Pod。使用插件的加密方法对数据进行加密。Secrets通常会被使用用来存储</span><code>non-public information</code><span>. 类型于： token，certificates，password. Secrets可以被Pod在运行期间加载进来，因此敏感的配置信息可以被安全的存储在集群中。</span></li><li><span>Deployments: Deployments支持更新和回滚。甚至可以暂停一次发布（Rollouts can even be paused）。</span><code>Deployments</code><span>是一个高级别(high-order)的对于部署(deploying)和维护(maintaining)Pods的抽象。在背后，使用</span><code>ReplicaSet</code><span>保持Pods的运行，并且提供复杂的逻辑(sophisticated logic)去支持部署，更新，以及扩展(scaling)</span></li><li><span>DaemonSet: DaemonSet有很多种用法，最常见的一种用法是使用DaemonSet在每个node上安装配置软件 。DaemonSet提供了一种在集群中保证Pod的复制在每个node上面的运行的方法。 当集群增长或缩减时，DaemonSet在所有node上传播这些有特殊标记的Pods。DaemonSet通常是在每个node上面运行一些agent，适用于如下场景：1. 集群存储进程: glusterd, ceph. 2. 日志收集进程：fluentd，logstash 3. 需要在每个节点运行的监控收集器</span></li><li><span>Ingresses: 集群的路由功能。 对多个应用提供了单一的SSL endpoint。 许多不同的Ingress的实现允许自定义平台。Ingresses提供了集群的路由功能，一个单一的外部Ingress endpoint可以接受并将请求路由到内部不同的服务上去。</span></li><li><code>CronJobs</code><span>：使用通用的Cron语法去调度任务，CronJobs是</span><code>Batch API</code><span>的一部分，用来创建短期任务。</span><code>CrobJobs</code><span> 提供了Pod定期执行任务的方法。对于执行定期任务非常有用。例如： backups， reports， automated tests等等。</span></li><li><span>Job: 即一次任务，可以设置job的并行度，与Job之间的执行顺序。注意：Job中 spec不可以指定replicas参数</span></li><li><code>CRDs</code><span>. </span><code>CustomResourceDefintions</code><span> 提供了一种开发者用来创建自定义资源类型的扩展机制。在Kubernetes API中创建一个自定义的资源</span></li><li><span>Volumes: Container中的磁盘文件是短暂的（ephemeral），当容器重启时候，文件可能会丢失，即容器上的文件生命周期同容器的生命周期一致。Pod的volume的生命周期同Pod的生命周期一致，当Pod被删除时，对应的volume才会被删除，即当容器（container）重启时，之前的文件可以被报错。常用的有</span><code>emptyDir</code></li><li><span>local ephemeral storage: 管理和调度kubernetes中运行的应用和短暂存储，即在每个kubernetes的node上面，kubelet的根目录(默认是/var/lib/kubelet)日志目录(/var/log)存储在node的主分区上 (on the root partition of node).  这个分区（partition）同样被Pod通过</span><code>emptyDir volumes</code><span>以及</span><code>container logs</code><span>, </span><code>image layers</code><span>, </span><code>container writable layers</code><span>共享。 因此</span><code>ephemeral storage</code><span>主要管理这个分区。可以通过配置该资源的</span><code>request</code><span>和</span><code>limit</code><span>进行设置</span></li><li><span>MaxUnavailable: Deployment滚动过程中最多有多少个Pod不可用</span></li><li><span>MaxSurge：Deployment滚动过程中最多存在多少个Pod超过期望的replicas</span></li><li><span>revisionHistoryLimit: 保留历史revision(ReplicaSet), 可以用于回滚</span></li><li><span>RollingUpdate: 更新策略，即老的Pod先会被删除，然后再去创建新的Pod。可以配合健康检查做滚动更新</span></li><li><span>ConfigMap: 主要管理容器运行所需的配置文件，环境变量，命令行参数等可变配置。用于解耦容器镜像和可变配置，从而保证工作负载(workload Pod)的可移植性。 ConfigMap主要被Pod使用，可以通过如下三种方式来使用：1.通过</span><code>configMapKeyRef</code><span>配置环境变量 2. 通过ConfigMap配置命令行参数 3. 通过</span><code>volumeMounts</code><span>方式挂载配置文件</span></li><li><span>ServiceAccount: 主要用于解决Pod在集群中的身份认证问题，其中认证使用的授权信息。</span></li><li><span>Sercurity Context: 主要用于限制容器行为，从而保证系统和其他容器的安全。即可以设置privileged:  容器是否为特权模式，AppArmor：控制可执行文件的访问控制权限，Seccomp：控制进程可以操作的系统调用等</span></li><li><span>InitContainer：先于普通的Container启动，直到所有InitContainer执行成功之后，才会启动普通Container。Pod中多个InitContainer之间按次序依次执行，而pod中多个普通Container是并行启动。InitContainer执行成功之后就结束退出。通常InitContainer服务于普通Container，例如：准备一些配置文件等</span></li></ul><h2><a name="问题与解答" class="md-header-anchor"></a><span>问题与解答</span></h2><h4><a name="1-什么是容器镜像" class="md-header-anchor"></a><span>1. 什么是容器，镜像？</span></h4><p><span>容器(Container)，是一个视图隔离，资源可限制，独立文件系统的进程集合，容器里PID的进程就是应用本身。镜像(Image), 运行容器所有文件集合，镜像一层一层的结构，且镜像层级是共享的，会节省空间。镜像构建步骤产生系统文件的变化称之为: ChangeSet</span></p><ul><li><p><span>传统架构：进程之间可见，可相互通信，共享一份文件系统</span></p></li><li><p><span>容器架构:（Docker）</span></p><ul><li><span>资源视图隔离 - namespace 例如：能看见部分进程，独立主机名（默认情况下进程namespace隔离，使得容器内进程不可见宿主机进程，要做的容器内进行与宿主进程的共享可以使用</span><code>--pid</code><span>参数）</span></li><li><span>控制资源使用率 - cgroup 例如：使用2G内存大学，CPU使用个数等等</span></li><li><span>独立的文件系统 - chroot</span></li></ul></li></ul><p><span>容器运行时的生命周期分为两块：</span></p><ol start='' ><li><p><span>单进程模型：</span></p><ul><li><span>Init进程生命周期 = 容器生命周期</span></li><li><span>运行期间可以运行exec执行一些运维操作</span></li></ul></li><li><p><span>数据持久化</span></p><ul><li><span>独立于容器的生命周期</span></li><li><span>数据卷 - docker volume vs bind</span></li></ul></li></ol><p><code>moby</code><span> 容器引擎架构，containerd是容器运行时管理引擎，独立于moby daemon，containerd-shim管理容器生命周期，可以被containerd动态接管。涉及到的容器虚拟化解决方案：runC,kata,gVisor</span></p><h4><a name="2-容器和vm之间的差异" class="md-header-anchor"></a><span>2. 容器和VM之间的差异？</span></h4><p><span>VM：使用Hypervisor之类的技术来模拟硬件资源</span></p><ul><li><span>模拟硬件资源，需要Guest OS即虚拟机。</span></li><li><span>应用拥有Guest OS所有的资源</span></li><li><span>更好地隔离效果 - Hypervisor需要消耗更多的资源</span></li></ul><p><span>容器：使用容器引擎(Container Engine)</span></p><ul><li><span>无Guest OS，进程级别隔离</span></li><li><span>启动时间更快</span></li><li><span>隔离消耗资源少- 隔离效果弱于VM</span></li></ul><h4><a name="2-iptables基础简述" class="md-header-anchor"></a><span>2. iptables基础简述</span></h4><p><span>Linux上常用的的防火墙软件。在Kubernetes中kube-proxy使用iptables完成路由转发代理的功能。iptables通常我们所说的“四表五链”。iptables主要工作在三层和四层，即传输层（TCP/UDP）和网络层(IP, ICMP)。NAT：Network Address Translate</span></p><p><strong><span>table表</span></strong><span>：</span></p><ul><li><span>raw：高级功能，如：网址过滤</span></li><li><span>mangle：数据包修改（QOS），用于实现服务质量</span></li><li><span>nat: 地址转换，用于网关路由</span></li><li><span>filter: 包过滤，用于防火墙规则</span></li></ul><p><strong><span>chain链（也被称之为五个钩子函数</span><code>hook function</code><span>）：</span></strong></p><ul><li><span>INPUT: 处理输入的数据包. </span></li><li><span>OUTPUT: 处理输出的数据包</span></li><li><span>FORWARD链: 处理转发的数据包</span></li><li><span>PREROUTING链：用于目标地址转换 (DNAT)， 在路由决定（routing decision）之间，进入</span><code>PREROUTING</code><span>。</span></li><li><span>POSTROUTING链：用于源地址转换 (SNAT)， 路由决定（routing decision）已经完成，在包进入硬件之前，进入</span><code>POSTROUTINT</code></li></ul><p><span>流程图如下：</span></p><p><img src='./image/Netfilter-packet-flow.svg' alt='300%' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="" style="page-break-inside: unset;"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ┏╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍┓</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> ┌───────────────┐ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ┃ &nbsp;  Network &nbsp;  ┃</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> │ table: filter │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ┗━━━━━━━┳━━━━━━━┛</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> │ chain: INPUT  │◀────┐ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> └───────┬───────┘ &nbsp; &nbsp; │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ▼</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; │ &nbsp; ┌───────────────────┐</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  ┌ &nbsp; &nbsp;  ▼ &nbsp; &nbsp;  ┐ &nbsp; &nbsp;  │ &nbsp; │ table: nat &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  │local process│ &nbsp; &nbsp;  │ &nbsp; │ chain: PREROUTING │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  └ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ┘ &nbsp; &nbsp;  │ &nbsp; └─────────┬─────────┘</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; ▼ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ▼ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ┌─────────────────┐</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅ &nbsp;  │ &nbsp; &nbsp; ┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅ &nbsp; &nbsp;  │table: nat &nbsp; &nbsp; &nbsp; │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> Routing decision &nbsp; &nbsp;  └───── outing decision ─────▶│chain: PREROUTING│</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">┅┅┅┅┅┅┅┅┅┳┅┅┅┅┅┅┅┅┅ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅ &nbsp;  └────────┬────────┘</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; ▼ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> ┌───────────────┐ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> │ table: nat &nbsp;  │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> │ chain: OUTPUT │ &nbsp;  ┌─────▶ outing decision ◀──────────────┘</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> └───────┬───────┘ &nbsp;  │ &nbsp; &nbsp;  ┅┅┅┅┅┅┅┅┳┅┅┅┅┅┅┅┅</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; ▼ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ▼</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> ┌───────────────┐ &nbsp;  │ &nbsp; ┌────────────────────┐</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> │ table: filter │ &nbsp;  │ &nbsp; │ chain: POSTROUTING │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> │ chain: OUTPUT ├────┘ &nbsp; └──────────┬─────────┘</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> └───────────────┘ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ▼</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ┏╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍┓</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ┃ &nbsp;  Network &nbsp;  ┃</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ┗━━━━━━━━━━━━━━━┛</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 780px;"></div><div class="CodeMirror-gutters" style="display: none; height: 780px;"></div></div></div></pre><ul><li><code>iptables -t nat -L</code><span>: 查看nat上面所有的规则。</span></li></ul><h4><a name="3-service相关" class="md-header-anchor"></a><span>3. Service相关</span></h4><p><span>Service： Kubernetes会创建一个虚拟服务，用来整合集群内的Pod。Service会生成一个虚拟IP（VIP），并在Service销毁之前保持该VIP地址不变。通过对它的访问，以代理的方式负载到对应的Pod上，同时Pod生命周期的变换，也会及时反应在代理上。</span></p><p><span>Service与Pod的地址映射关系由Endpoint管理。 Endpoint与Service的绑定关系通过名称关联, 即以</span><code>&lt;service&gt;: [&lt;pod ip&gt;]</code><span>形式,因此而者名字（name）一定要一致。也可以手动创建或者删除Endpoint与Service绑定。</span></p><p><span>Service的代理由kube-proxy实现。而代理模式有如下几种：</span><code>userspace</code><span>, </span><code>iptables</code><span>, </span><code>IPVS</code><span> . userspcase运行在用户空间，而iptable和ipvs运行在内核空间能够为kubernetes提供更强大的性能支持</span></p><ul><li><span>userspace: 每个Service都会在当前节点上开启一个端口所有连接到当前代理端口的请求都会被转发到Service背后的一组Pod上面, 实际上也会写node上的iptable进行转发，与iptables模式不同的是，需要先进入userspace再写iptables。默认userspace模式会通过</span><code>round-robin algorithm</code><span>来选择后端服务</span></li><li><span>iptables: 直接使用iptables转发当前节点上面的全部流量。使用iptables的方式，启动节点上的代理时，所有的流量都会先经过</span><code>PREROUTING</code><span>或者</span><code>OUTPUT</code><span>链，随后进入Kubernetes自定义的链的入口</span><code>KUBE-SERVICES</code><span>，单个Service对应的链</span><code>KUBE-SVC-XXXX</code><span>以及每个Pod对应的链</span><code>KUBE-SEP-XXXX</code><span>, 经过这些链的处理才最终访问到一个真实IP地址。 当集群中的Service到达一定数量时（5000个）以上时，则每增加一条规则就会需要很多的耗时，因此在大规模集群中使用iptables作为代理模式是完全不可用的</span></li><li><span>IPVS: </span><code>IP Virtual Server</code><span> 就是用于解决在大量Service时，iptables规则同步变得不可用的性能问题。ipvs在内核空间使用哈希表。这意味着kube-proxy在ipvs mode下重定向有更低的延迟和同步proxy规则有更高的性能。</span></li></ul><p><span>Service服务发现机制，对于服务之间的调用，实际上是Pod对Service的调用。而Pod是如何发现Service的呢。可以选择两种机制：</span></p><ul><li><span>环境变量：在Pod中，集群的Service会以环境变量的方式赋值在容器中，可以通过</span><code>{SERVICE_NAME}_SERVICE_HOST</code><span>和</span><code>{SERVICE_NAME}_SERVICE_PORT</code><span> 获取。</span></li><li><span>dns解析：通过kube-dns对Service进行域名解析，同样也能达到服务发现的目的</span></li></ul><p><span>Service对外暴露服务，在Service的配置文件中，通过设置spec.type来设置服务的暴露方式，它提供三种方式：</span></p><ul><li><span>ClusterIP：提供一个集群内部的IP以供Pod访问（默认类型）</span></li><li><span>NodePod：在每个Node上打开一个端口以供外部访问</span></li><li><span>LoadBalancer：通过外部的负载均衡器来访问（一般需要云提供商提供LB支持）。注意：在AKS（Azure Kubernetes Service）上load balancer类型的Service被创建时，AKS集群会分配一个公共IP，同样的这个IP的生命周期和load balancer资源生命周期一致。在一些情况下，推荐使用静态IP作为load balancer。具体参考：</span><a href='https://docs.microsoft.com/en-us/azure/aks/static-ip'><span>doc: aks static-ip</span></a></li><li><span>ExternalName: 通过返回CNAME和它的值，可以将服务映射到externalName字段的内容。需要有CoreDNS 1.7的支持</span></li></ul><h4><a name="4-为什么需要pod" class="md-header-anchor"></a><span>4. 为什么需要Pod？</span></h4><p><span>将Kubernetes生态类比于操作系统，则有类似如下映射</span></p><ul><li><span>kubernetes: 操作系统</span></li><li><span>Container：进程（线程）。容器是“单进程”模型，且PID=1的为应用进程，不为systemd，一般情况下不具备像systemd这样完善的进程管理能力，因此无法管理多进程，对于复杂多进程的应用不便于管理（需要设置systemd）。</span></li><li><span>Pod: 进程组，即一个Pod里面可以运行多个container。在同一个Pod里面的容器要求具有 </span><strong><span>超亲密关系</span></strong><span>(affinity)，即：容器之间会发生直接的文件交换，或者使用本地socket进行通信，会发生频繁的RPC调用，会共享某些Linux Namespace (比如, 一个容器要加入另一个容器的Network Namespace). 对于亲密关系的容器，可以由调度器运行在同一个宿主机上。</span></li></ul><p><span>因此Pod存在的意义在于进程与进程组的关系，核心在于多个进程之间共享信息，Pod在Kubernetes中是原子调度单位。</span></p><p><span>Pod之所以是Kubernetes中原子调度单位，是因为多个紧密协作的容器，资源统一分配在一个Pod中，例如：App：1G， LogCollector: 0.5G. Node_A: 1.25G Node_B: 2G. 如果使用分开调度的方式分配资源，很有可能导致App，LogCollector分配到Node_A上导致资源不足。</span></p><p><span>Pod中关键的一个设计模式是保证Pod里的container数据能够高效的共享。</span></p><ul><li><strong><span>共享网络:</span></strong><span> 通过Infra Container的方式共享同一个</span><code>Network Namespace</code><span>. 即所有在Pod中的Container所看到网络视图view（网络设备，网卡之类的）是一致的，因此Pod的生命周期跟Infra Container一致。</span></li><li><strong><span>共享存储:</span></strong><span> 即创建Pod级别的volumes, 并通过</span><code>volumeMounts</code><span>进行挂载，因此两个Container将会看到同一份文件。</span></li></ul><p><span>Pod由ReplicaSet创建，其OwnerReference为RelicaSet. Deployment只负责管理不同版本的ReplicaSet，由ReplicaSet管理Pod副本数。每个ReplicaSet对应了Deployment template的一个版本，一个ReplicaSet下的Pod都是相同的版本</span></p><h4><a name="5-容器设计模式-sidecar" class="md-header-anchor"></a><span>5. 容器设计模式 Sidecar</span></h4><blockquote><p><span>所有“设计模式”的本质都是：解耦和重用</span></p></blockquote><p><span>通过在Pod里定义专门容器，来执行主业务容器需要的辅助工作。优势在于将辅助功能同主业务容器解耦，实现独立发布和能力重用。例如：</span></p><ul><li><span>原本需要SSH进去执行的脚步</span></li><li><span>日志收集</span></li><li><span>Debug应用，定义Debug Container，去监控主应用，具有主应用的Namespace</span></li><li><span>应用监控</span></li></ul><p><span>通常可以使用</span><code>InitContainer</code><span>之类的技术实现. 且主应用Container与Sidecar Container之间的通信是通过localhost实现（同一个Pod内），实际应用如下:</span></p><ul><li><span>Sidecar应用日志收集，业务日志将日志写在Volume里，日志容器共享该Volume从而将日志转发到远程存储中。例如：Fluentd等</span></li><li><span>Sidecar代理容器，代理容器对业务容器屏蔽被代理的服务集群，简化业务代码实现的逻辑。同一个Pod之间容器之间通过localhost直接通信，代理容器的代码可以被全公司重用（复用）。</span></li><li><span>Sidecar适配器容器（adapter），适配器容器将业务容器暴露出来的接口转化成另一种格式。代理容器的代码可以被全公司重用。</span></li></ul><h4><a name="6-控制器设计模式" class="md-header-anchor"></a><span>6. 控制器设计模式</span></h4><p><span>在机器人设计和自动化的应用中，</span><strong><span>控制循环</span></strong><span>是一个用来调节系统状态的非终止循环。而在 Kubernetes 中，控制器就是前面提到的控制循环，它通过 API Server 监控整个集群的状态，并确保集群处于预期的工作状态。Kubernetes 自带的控制器有 ReplicaSet 控制器，Endpoint 控制器，Namespace 控制器和 Service Account 控制器等。</span></p><p><img src='./image/k8s-deployment-flowchart.png' alt='' referrerPolicy='no-referrer' /></p><blockquote><p><code>Check paused</code><span>： 检查是否是一次新的发布，反之，仅为一个replica的sync。</span></p></blockquote><p><img src='./image/k8s-replicaset-flowchart.png' alt='' referrerPolicy='no-referrer' /></p><p><span>Deployment管理ReplicaSet，Deployment回负责相应的版本管理，而ReplicaSet只负责维护Replicas的数量。例如：发布一个新版本，则Deployment创建新的版本ReplicaSet，并由ReplicaSet维护同步Replicas的数量。</span></p><p><span>Kubernetes采用控制器模型，声明API。由声明式的API驱动-K8S资源对象，由控制器异步地控制系统向终态驱近。使系统的自动化和无人值守化成为可能。便于扩展-自定义资源和控制器 （特别的，operator）。Kubernetes中运行着一系列的控制器确保集群状态与期望状态一致。</span></p><p><span>命令式API (Imperative)：</span></p><ul><li><span>反复重试，记录当前操作</span></li><li><span>巡检修正</span></li><li><span>并发加锁</span></li></ul><p><span>声明式API (Declarative)：</span></p><ul><li><span>天然的记录了状态</span></li><li><span>幂等操作，可以在任何时刻反复操作</span></li><li><span>正常操作即巡检</span></li><li><span>可以合并多个变更</span></li></ul><h4><a name="7-pod如何进行配置管理" class="md-header-anchor"></a><span>7. Pod如何进行配置管理？</span></h4><p><span>为了服务的可扩展性，通常服务的配置是不会打包到image镜像里的。对于不同的类型的配置，kubernetes有如下几种管理方式。</span></p><ul><li><span>ConfigMap: 可变配置</span></li><li><span>Secret：敏感信息</span></li><li><span>ServiceAccount：身份认证</span></li><li><span>Spec.Containers[].Resources.limits/requests: 资源配置</span></li><li><span>Spec.Containers[].SecurityContext： 安全管控</span></li><li><span>Spec.InitContainers: 前置校验</span></li></ul><p><span>使用ConfigMap时进行配置管理时，有如下几个注意点：</span></p><ul><li><span>ConfigMap文件大小限制： 1MD (*ETCD的要求)</span></li><li><span>Pod只能引用相同Namespace下的ConfigMap</span></li><li><span>Pod引用的ConfigMap不存在时，Pod无法创建成功。即Pod创建前需要先创建ConfigMap</span></li><li><span>使用envFrom从ConfigMap配置环境变量时，如果某些key被认为无效（例如：key名称带有数字），则该环境变量不会被导入容器，但是Pod可以正常创建</span></li><li><span>只有通过k8s api创建的pod才能使用ConfigMap。</span></li></ul><h4><a name="8-service在kubernetes中运行在哪里" class="md-header-anchor"></a><span>8. Service在Kubernetes中运行在哪里？</span></h4><p><a href='https://stackoverflow.com/questions/47941012/where-do-services-live-in-kubernetes'><span>Where do service live in Kubernetes stackoverflow?</span></a></p><p><span>Service是k8s集群中的REST资源对象。有如下基本功能（fundamental Purpose of Services）</span></p><ul><li><span>为Pods提供单一的gateway入口</span></li><li><span>Load balancing Pods (Pods 的负载均衡)</span></li><li><span>内部Pods通信（Inter Pods communication）</span></li><li><span>提供稳定性（Stability）例如，当Pod挂掉之后，可以重启并使用不同的ip。</span></li></ul><p><span>Service对象的信息存储在etcd中,是由于Service的信息是k8s集群中单一的事实来源。而真正负责实现Service功能是Kube-proxy.  Kube-Proxy根据Sevice定义的selector和label对具有相同的label的Pod进行匹配. 更具体一点的是，每个Pod有其自身的ip，并且Service到Pod的映射由EndPoint来管理，最终由Kube-proxy以proxy-mode的形式（userspace， iptables，ipvs）负责代理实现。</span></p><p><span>kube-proxy作为DaemonSet被部署到集群中每个node中，因此集群中每个node的kube-proxy数据通过etcd来达成共识。同时，kube-proxy也会与Kube-api server进行交互，去检查Pods对应的状态改变，并作出响应，例如：更新Service，iptable，eted等。</span></p><p><span>总结：Service是k8s集群中REST的资源对象，而实际由kube-proxy进行实现，管理，因此可以理解为Service运行在k8s集群中的每个node上面。</span></p><h4><a name="9-ingreess-vs-load-balancer" class="md-header-anchor"></a><span>9. Ingreess Vs Load Balancer?</span></h4><p><a href='https://stackoverflow.com/questions/45079988/ingress-vs-load-balancer'><span>ingress vs load balancer stackoverflow</span></a></p><ul><li><span>Load Balancer: Kubernetes中LoadBalancer Service通常为外部云服务提供商的LB。对于LoadBalancer Service的depolyment，云服务提供商都会创建一个LB与之映射.  </span></li><li><span>Ingress: Ingress实际上是一些传递给控制器（controller）的规则（rules），并由控制器会监听并执行规则。如果仅仅是deploy一些ingress rule规则，并没有实际的controller执行这些规则的话，就不会产生实际的影响。当然，Loadbalaner，NodePort，Pod都可以作为ingress controller配置并执行ingress的rules。Ingress作为Kubernetes的入口存在，可以实现（SSL，Auth，Routing）等功能. </span></li></ul><p><strong><span>Ingress：Ingress Object + Ingress Controller </span></strong><span>（Build on LoadBalancer Service）</span></p><ul><li><span>Ingress Object: 负责7层的负载均衡，以及定义请求如果路由到k8s集群的规则</span></li><li><span>Ingress Controller：负载监听请求的入口端口（80 or 443）, 监听Ingress Object的创建和修改，并根据Ingress Object动态的创建7层路由的规则。常见的Ingress controller例如：Nginx Ingress Controller </span></li></ul><p><strong><span>LoadBalancer: External Load Balancer Provider + Service Type</span></strong></p><ul><li><span>External Load Balancer Provider: 由云服务提供商提供的IP，以及Load Balancer的服务</span></li><li><span>Service Type: 当Service type被设置成LoadBalancer，将会给Service设置由云服务提供商提供的外部IP。（external IP）</span></li></ul><p><span>下图即为Ingress的网络：</span></p><p><img src='./image/ingress-network-flow.png' alt='' referrerPolicy='no-referrer' /></p><p><strong><span>关系</span></strong><span>: Ingress Controller Service通常由LoadBalancer来提供服务，并由k8s集群中运行的Pod提供复杂的网关路由的能力。</span></p><h4><a name="10-什么是pod的服务质量qos" class="md-header-anchor"></a><span>10. 什么是Pod的服务质量（QoS)?</span></h4><p><span>容器支持资源（Resource）配置的类型有如下几个：</span></p><ul><li><span>CPU: 单位：millcore（1Core=1000millicore）</span></li><li><span>Memory: 单位：Byte</span></li><li><span>Ephemeral storage(临时存储)：单位Byte</span></li><li><span>自定义资源必须是整数</span></li></ul><p><span>依据容器对CPU，Memory资源的request/limit需求，Pod服务质量分类：</span></p><ul><li><span>Guaranteed: Pod里每个容器都必须有CPU，内存限制和请求，而且request/limit必须是一样的。 高保证</span></li><li><span>Burstable：非Guaranteed，Pod里至少有一个容器有内存或者CPU请求。中，弹性</span></li><li><span>BestEffort定义：非Guaranteed，非Burstable。低，尽力而为</span></li></ul><p><span>当节点上Memory资源不足时，依据BestEffort,Burstable,Guaranteed的优先级顺序驱逐Pod</span></p><p><span>不同的QoS在底层有不同的表现，调度器会使用request的值来进行调度。</span></p><ul><li><span>CPU会安装request划分权重。--cpu-manager-policy=static，即当guaranteed的整数时，会绑核</span></li><li><span>Memory安装Qos划分不同的OOMScore，Guaranteed -998，Bustable 2-999 bestEffort 1000 即，当OOMScore得分越高，当发送OOM时，程序会更容易被kill。</span></li></ul><h4><a name="11-volumes基础知识" class="md-header-anchor"></a><span>11. Volumes基础知识</span></h4><p><span>Kubernetes Volume的类型：</span></p><ul><li><p><span>本地存储：emptydir/hostpath</span></p></li><li><p><span>网络存储：</span></p><ul><li><span>in-tree: awsElasticBlockStore/nfs</span></li><li><span>out-of-tree: flexvolume/csi等网络存储volume plugins</span></li></ul></li><li><p><span>Projected Volume: scret/configmap/dowanwardAPI/serviceAccountToken</span></p></li><li><p><span>PVC与PV体系</span></p></li></ul><p><span>PV即Persistent Volumes常用于</span></p><ul><li><span>Pod销毁重建（例如：Deployment管理的Pod镜像升级）</span></li><li><span>宿主机故障迁移(如：StatefulSet管理的Pod带远程volume迁移)</span></li><li><span>多Pod共享同一个数据volume</span></li><li><span>数据volume snapshot，resize等功能的扩展实现</span></li></ul><p><span>PVC即PersistentVolumeClaim, 有了PV，为什么又设计了PVC？</span></p><ol start='' ><li><span>职责分离，PVC中只用声明自己需要存储的size，access mode(单node独占还是多node共享，只读还是读写访问)等，业务的存储需求，PV和其对应的后端存储信息则交由cluster admin统一运维管理，安全访问策略更容易控制</span></li><li><span>PVC简化了User对存储的需求，PV才是存储的实际信息承载体，通过</span><code>kube-controller-manager</code><span>中的PersisentVolumeController将PVC与合适的PV 绑定bound到一起，从而满足User对存储的实际需求</span></li><li><span>PVC像是面向对象过程编程中抽象出来的接口，PV是接口对应的实现</span></li></ol><p><span>Static volume Provisioning, Dynamic Volume Provisioning为两种创建PV的方式，静态方式则是提前规划或者预测存储需求，但是这样会导致User提交的PVC找不到合适的PV。动态方式则是提交创建PV的模板（包含了创建某种具体类型PV所需的参数），User不关心PV细节，K8s会结合PVC与Storage Class的信息动态创建对象。</span></p><p><span>使用PV和PVC时，需要先在云服务提供商上定义相应的存储，例如文件存储，网络存储，然后定义k8s模板PV以及PVC对象。静态PV则预创建分配存储，动态PV则创建StorageClass模板，动态创建, 具体参考</span><a href='https://kubernetes.io/docs/concepts/storage/persistent-volumes/'><span>k8s persistent-volumes</span></a><span>。</span></p><p><span>PVC整体流程如下：</span></p><p><img src='./image/pvc-arch.png' alt='' referrerPolicy='no-referrer' /></p><p><span>PVC&amp;PV创建到使用的有三个阶段：1. create 即创建相应的PV，PVC 2. attach 将PV attach到node上面 3. mount 将存储mount到pod可以访问的路径上面</span></p><h4><a name="12-liveness--probe-vs-readiness-probe" class="md-header-anchor"></a><span>12. Liveness  probe vs Readiness probe</span></h4><p><span>Liveness probe和Readiness probe为kubernetes中应用健康监控的两种方式，有Probe Manager管理</span></p><ul><li><span>Readiness Probe(就绪指针)：即用于探测容器的依赖有没有成功加载，例如：Database的connection，以及其他依赖的加载。检测失败则切断上层流量</span></li><li><span>Liveness Probe(存活指针)：即用于检测容器是否是启动，且存活状态，如果不是，则会根据重启策略，对容器执行相应的操作。检测失败则杀掉Pod，并支持重新拉起的应用</span></li></ul><p><span>探测方式支持：httpGet（发送http Get），Exec（通过执行命令来检测），tcpScoket（通过容器的IP和Port执行TCP检测，即是否建立TCP连接来表明容器健康状态）。</span></p><h4><a name="13-prometheus--fluentd监控架构" class="md-header-anchor"></a><span>13. Prometheus &amp; Fluentd监控架构</span></h4><p><span>下图是prometheus的整体架构，prometheus的采集通常采用定期pull的模式。对于短任务采集来说由于任务周期有可能会少于采集周期，因此使用Pushgateway作为中间层。其他通常模式直接pull metrics。还可以采用Prometheus-On-Prometheus的模式。在kubernetes中部署时通常采用</span><code>Prometheus Operator</code><span>的形式。</span></p><p><img src='./image/prometheus-architecture.svg' alt='' referrerPolicy='no-referrer' /></p><p><span>对于日志监控，主机内核的日志，Docker runtime的日志，核心组件的日志（ingress的日志），以及应用的日志，kubernetes社区中一种主流的做法是使用fluentd进行日志的收集。</span></p><h4><a name="14-容器原理cgroup-vs-namespace" class="md-header-anchor"></a><span>14. 容器原理：Cgroup vs Namespace</span></h4><p><span>Cgroup和Namespace为docker提供了隔离的基础, </span><a href='https://stackoverflow.com/questions/34820558/difference-between-cgroups-and-namespaces'><span>stackover flow cgroup vs namespace</span></a></p><p><span>Namespace主要作视图控制，即视图上的隔离，由如下几部分：mount（控制文件），uts（hostname），pid（进程），network，user，ipc（控制进程间通信），cgroup（容器内部cgroup). 容器创建使用namespace通过unshare系统调用来实现。</span></p><p><span>Cgroup主要作资源控制，有两种驱动：systemd cgroup driver，cgroupfs cgroup driver。容器中常用的cgroup为：1. cpu cpuset cpuacct， 2. memory 3. device (安全性设备) 4. freezer（停止容器时，并将进程写入相应文件，主要防止容器停止时，进程逃逸到宿主机）5. blkio（限制对文件，磁盘的iops）6.（pid 限制容器里最大进程数量）</span></p><h4><a name="15-etcd-基本架构和原理" class="md-header-anchor"></a><span>15. Etcd 基本架构和原理</span></h4><p><span>Etcd是一个高可用，强一致的KeyValue数据存储，以分布式分布式共识协议算法Raft来保证数据的一致性。Quorum=(n+1)/2, 即3个节点容忍一个故障，5个节点容忍2个故障。更多关于Raft内容可以参考Raft算法。Etcd支持Watch机制以增量更新。Etcd支持两种查询机制，单个key Get(key), 以及Get(keyFrom, keyEnd)范围获取，Etcd支持分布式事务Transaction机制 (if/then/else ops).Commit()，以及Lease租约机制(Grant, Revoke, KeepAlive)。</span></p><p><span>Etcd主要提供了如下一组APIs：</span></p><ul><li><span>Put(key, value)/Delete(key)</span></li><li><span>Get(key, rev=reversion) / Get(keyFrom, keyEnd)</span></li><li><span>Watch(key/ keyPrefix)</span></li><li><span>Transactions (if/then/else ops).Commit()</span></li><li><span>Leases: Grant/Revoke/KeepAlive</span></li></ul><p><span>Etcd提供如下几个关键数据信息：</span></p><ul><li><p><span>term：Raft的leader任期号，全局单调递增，64bits</span></p></li><li><p><span>revision: 全局单调递增，64bits. revision的存在，因此etcd支持，mvcc，以及watch机制</span></p></li><li><p><span>KeyValue: （类似于MySQL MVCC)</span></p><ul><li><span>create_revision：创建时的revision</span></li><li><span>mod_revision：修改是的revision</span></li><li><span>version：version计数器代表该数据被修改了多少次</span></li></ul></li></ul><p><span>Etch watch机制, 监听key的某个revsion，获取所有etcd关于这个key的更新，以支持增量更新：</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="go"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="go"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">watcher</span> <span class="cm-operator">=</span> <span class="cm-variable">Watch</span>(<span class="cm-variable">key</span>, <span class="cm-variable">rev</span>)</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">for</span>{</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-variable">event</span><span class="cm-operator">=</span><span class="cm-variable">watcher</span><span class="cm-number">.</span><span class="cm-variable">Recv</span>()</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-variable">handle</span>(<span class="cm-variable">event</span>)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 130px;"></div><div class="CodeMirror-gutters" style="display: none; height: 130px;"></div></div></div></pre><p><span>Etcd data model </span><a href='https://github.com/etcd-io/etcd/blob/master/Documentation/learning/data_model.md'><span>data-model</span></a><span>. Etcd通过B+tree将数据持久化保存到磁盘中，并维护两个B+tree index，这里类似于MySQL的二级索引，第一个index为revision-&gt;value（存储了所有数据，并通过mmap的方式加速查询）, 第二个index为key-&gt;revisions (watch机制). Etcd中的一个key对应多个版本的数据，通过定期的Compaction来清理历史数据。</span></p><p><span>Etcd支持mini-transaction的机制，且Etcd内部会保证if条件，以及then执行过程的原子性。 通过Etcd提供的事务机制，Kubernetes多个APIserver对etcd修改的一致性。</span></p><p><span>Etcd支持Lease租约机制, etcd支持多个key关联到同一个lease对象上。</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="go"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="go"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">lease</span><span class="cm-operator">=</span><span class="cm-variable">CreateLease</span>(<span class="cm-number">10</span><span class="cm-variable">s</span>)</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">Put</span>(<span class="cm-variable">key1</span>, <span class="cm-variable">value1</span>, <span class="cm-variable">lease</span>) <span class="cm-comment">//10秒租约结束后，etcd自动清除key1</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">Put</span>(<span class="cm-variable">key2</span>, <span class="cm-variable">value2</span>, <span class="cm-variable">lease</span>)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">...</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">lease</span><span class="cm-number">.</span><span class="cm-variable">KeepAlive</span>() <span class="cm-comment">//保证租约不过期，自动续约</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">lease</span><span class="cm-number">.</span><span class="cm-variable">revokeAll</span>() <span class="cm-comment">//全部过期</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 156px;"></div><div class="CodeMirror-gutters" style="display: none; height: 156px;"></div></div></div></pre><p><span>Etcd用来在kubernetes系统中存储元数据。Etcd还可以作为Service Discovery服务发现（Nameing Service), 即后端进程将自己的进程注册到Etcd中进行资源注册，并进行存活性检查，API gateway网关根据etcd中的存储信息，进行请求的转发。 Etcd可以用于分布式选主，以及分布式系统的并发控制（分布式信号量，自动踢出故障节点，存储进程的执行状态）。</span></p><h4><a name="16-为什么要有request和limit" class="md-header-anchor"></a><span>16. 为什么要有request和limit？</span></h4><p><span>request提供了对资源的一种保底能力，limit提供了对资源的限制能力。request和limit的组合来实现不同的QoS级别，以及资源的弹性的能力。limit即是上限 limit&gt;request。当实际资源使用，超过了requests,接近limit，则kubernetes则会选择一个pod并将其evit</span></p><h4><a name="17-kubernetes-的调度过程" class="md-header-anchor"></a><span>17. Kubernetes 的调度过程</span></h4><p><span>kubernetes的调度为kube-apiServer，kube-scheduler，controller共同协同完成，调度过程即将Pod放到“合适的”Node上， 什么是合适：</span></p><ul><li><span>满足Pod的资源要求</span></li><li><span>满足Pod的特殊关系要求</span></li><li><span>满足Node的限制条件要求</span></li><li><span>做到集群资源合理利用</span></li></ul><p><img src='./image/k8sScheduler.jpg' alt='' referrerPolicy='no-referrer' />
+<span>Kubernetes的基础调度能力有，资源调度和关系调度</span></p><p><strong><span>资源调度 - 满足Pod的资源要求</span></strong></p><ul><li><span>Resource: CPU/Memory/Storage/GPU/FGPA</span></li><li><span>QoS: Guaranteed/Burstable/BestEffort</span></li><li><span>Resource Quota</span></li></ul><p><strong><span>关系调度 - 满足Pod/Node的特殊关系/条件要求</span></strong></p><ul><li><p><span>PodAffinity/PodAntiAffinity: Pod和Pod之间的关系 （Pod和Pod的亲和关系）</span></p><ul><li><span>requiredDuringSchedulingIgnoredDuringExecution: 必须和某些Pod调度在一起</span></li><li><span>preferredDuringSchedulingIgnoredDuringExecution: 优先和某些Pod调度在一起</span></li></ul></li><li><p><span>NodeSelector/NodeAffinity: 由Pod决定合适自己的Node （Pod和Node的亲和关系）</span></p><ul><li><span>NodeSelector: 必须调度到带了某些标签的Node</span></li><li><span>NodeAffinity: 与PodAffinity类似，增加了Gt/Lt的功能。</span></li></ul></li><li><p><span>Taint/Tolerations: 限制调度到某些Node，即Node只会容忍某些满足条件的Pod (Node的限制条件标记)</span></p><ul><li><span>Taint: 一个node有多个Taints，Taints包含key，value，effect. effect定义了Node taint的行为。包括NoScheduler(禁止新的Pod调度)，PreferNoSchedule(尽量不要调度到这台)，NoExecute(会evict没有对于toleration的Pods)</span></li><li><span>Tolerations: 一个pod可以有多个Tolerations。包含key，value，effect，operator（exists，equal）. </span></li></ul></li></ul><p><span>使用ResourceQuota来限制每个NameSpace的资源使用总量。关于ResourceQuota的使用可以具体看官网文档。</span></p><p><span>Kubernetes的高级调度能力，优先级抢占调度。（Priority，Preemption）. 优先级调度的配置可以通过创建PriorityClass来实现。</span><a href='https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/'><span>pod-priority-preemption</span></a><span>。 Pod可以具有优先级，优先级标志着Pod的重要性，即当一个Pod无法被调度时，调度器则会抢占低优先级的Pod （preempt (evict) lower priority Pods），使得高优先级的Pod完成调度。Pod的内置默认优先级为0. 优先级调度过程发生在Peng Pod出队列开始调度时。出队列时会选择优先级高的Pod进行调度。在实际的应用中，我们可以创建一些优先级类型（PriorityClass），并给不同类型的Pods配置不同的优先级（ProrityClassName），通过组合不同类型的Pods运行和优先级抢占让集群资源和调度弹性起来。</span></p><h4><a name="18-kubernetes调度详解" class="md-header-anchor"></a><span>18. Kubernetes调度详解</span></h4><p><span>在17章节主要，介绍了调度器的策略，以及能力。本节主要介绍调度器的算法流程，以及扩展。下图即为基本的调度流程。Informer提供了watch的机制。主要调度流程分为Filter（选择最佳的一组Node），Score（对Node打分），SelectHost（选择host），Bind（绑定）这几个阶段</span></p><p><img src='./image/k8s-scheduler-process-overview.png' alt='' referrerPolicy='no-referrer' /></p><p><strong><span>调度器算法实现</span></strong></p><p><span>Predicates： 会检查如下一些策略</span></p><p><span>存储相关：</span></p><ul><li><span>NoVolumeZoneConflict: 校验pvc上的要求的zone是否和Node的zone匹配</span></li><li><span>MaxCSIVolumeCountPredict：校验pvc上指定的Provision在CSI plugin上的单机最大挂盘数</span></li><li><span>CheckVolumeBindingPredict：pvc和pv的binding逻辑校验</span></li><li><span>NoDiskConflict:SCSI存储不被重复volume</span></li></ul><p><span>Pod和Node匹配相关：</span></p><ul><li><span>CheckNodeCondition，CheckNodeUnscheduable,PodToleratesNodeTaints,PodFitsHost,MatchNodeSelector</span></li></ul><p><span>Pod和Pod匹配相关：</span></p><ul><li><span>MatchInterPOdAffinity: PodAffinity和PodAntiAffinity的校验逻辑</span></li></ul><p><span>Pod打散相关：</span></p><ul><li><span>EvenPodsSpread（描述符合条件的一组Pod在指定的Topo上的打散的要求）,CheckServiceAffinity</span></li></ul><p><span>资源水位，是对Pod打散的一个重要指标，包括request：Node已经分配的资源。Allocatable: Node可调度的资源。对于资源水位有如下几个策略：</span></p><ul><li><span>LeastRequestedPriority: 优先打散 </span><code>（Allocatable-Request）/ Allocatable*Score</code><span> 可调度资源比例越多的Node，最先被调度</span></li><li><span>MostRequestedPriority：优先堆叠  </span><code>Request/Allocatable * Score</code><span> 已使用资源比例越多的Node，最先被调度</span></li><li><span>BalancedResourceAllocation：碎片率 1-Abs[CPU(Request/Allocatable)-Mem(Request/Alloctable)]*Score</span></li><li><span>RequestedToCapacityRatioPriority：指定比率的分数 Request/Allocatable*MaxUtilization</span></li></ul><h4><a name="19-ephemeral-local-storage" class="md-header-anchor"></a><span>19. Ephemeral Local Storage</span></h4><p><span>kubernetes 1.8 版本之后引入了一种的新的资源类型，即ephemeral-storage。 在每个Kubernetes的Node上，kubelet的根目录（</span><code>/var/lib/kubelet</code><span>），以及日志目录(</span><code>/var/log</code><span>) 都存储在node的根分区上面。这个分区通用被Pod通过</span><code>emptyDir</code><span>,容器日志（</span><code>container logs</code><span>），镜像层级（</span><code>image layers</code><span>）,容器可写层级 (</span><code>container writable layers</code><span>).  Ephemeral Storage的默认单位是bytes, 并且ephemeral storage可以在spec的resource section中定义requests和limits。 官网文档</span><a href='https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#local-ephemeral-storage'><span>local-ephemeral-storage</span></a><span> </span></p><p><strong><span>如何调度带有ephemeral-storage请求的Pod?</span></strong></p><p><span>当创建一个Pod时，Kubernetes会选择一个Node负责执行该Pod的运行。每个Node都有一个可以提供的最大的Local ephemeral storage. 调度器会保证请求的资源小于Node提供的能力。 </span></p><p><strong><span>带有ephemeral-storage limit的pod会如何运行？</span></strong></p><ul><li><span>在容器级别的隔离上（container-level isolation）， 如果容器的可写层级以及日志的使用超过了ephemeral storage limit的限制，则这个Pod就会被evited </span></li><li><span>在Pod级别的隔离上 (pod-level isolation)， 如果所有容器的使用ephemeral storage的总和加Pod的EmptyDir volume使用超过了limit，则这个Pod就会被evited</span></li></ul><p><span>我们通常可以通过如下方式来查询ephemeral-storage的用量</span><a href='https://stackoverflow.com/questions/53217227/how-can-i-determine-the-current-ephemeral-storage-usage-of-a-running-kubernetes'><span>stackoverflow how-can-i-determine-the-current-ephemeral-storage</span></a></p><h4><a name="20-statefulset-有状态的容器编排" class="md-header-anchor"></a><span>20. StatefulSet 有状态的容器编排</span></h4><p><span>有如下一些需求场景：</span></p><ul><li><span>Pod之间并非相同的副本，每个Pod有一个独立的标识</span></li><li><span>Pod独立标识要能够对应到一个固定的网络标识，并在发布升级后继续保持</span></li><li><span>每个Pod有一块独立的存储盘，并在发布升级后还能继续挂载原有的盘（保留数据）</span></li><li><span>应用发布时，按照固定顺序升级Pod</span></li></ul><p><span>因此StatefulSet: 主要面向有状态应用管理的控制器：</span></p><ol><li><span>每个Pod都有Order序号，会按照序号创建，删除，更新Pod</span></li><li><span>通过配置headless Service，使每个Pod有一个唯一的网络标识（hostname）</span></li><li><span>通过配置pvc template （volumeClaimTemplate），每个Pod有一个块独享的pv存储盘, 升级StatefulSet之后，新的Pod也会复用之前的pvc.</span></li><li><span>支持一定数量的灰度发布</span></li></ol><p><span>Pod版本：不同于Deployment使用的ReplicaSet来管理版本和维持副本数量，StatefulSet controller直接管理下属的Pod，而Pod中用一个label来标识版本即：controller-revision-hash. </span></p><p><span>StatefulSet会创建管理的资源：</span></p><ul><li><span>ControllerRevision: 通过这个资源，StatefulSet可以很方便的管理不同版本的template。会级联删除</span></li><li><span>PVC: 如果在StatefulSet中定义了volumeClaimTemplates, StatefulSet会在创建Pod之前，先根据这个模板先创建PVC，并把PVC加到Pod volumes中。 没有ownerReference因此删除StatefulSet之后，PVC不会被级联删除。</span></li><li><span>Pod: StatefulSet按照顺序创建，删除，更新Pod，每个Pod有唯一的序号（0-N）。ownerReference, 删除StatefulSet之后会级联删除。</span></li></ul><p><span>StatefulSet支持两种扩缩容策略，以字段podManagementPolicy定义</span></p><ul><li><span>OrderedReady：扩缩容按照order的顺序执行，扩容时，必须等前面的序号的Pod都ready了（前序所有的Pod都ready），才能扩下一个；缩容时，按照倒序删除</span></li><li><span>Parallel: 并行扩缩容，不需要等前面Pod都ready或删除后再处理下一个</span></li></ul><p><span>StatefulSet升级策略有RollingUpdate滚动升级，OnDelete禁止主动升级。</span><strong><span>Partition</span></strong><span>为滚动升级时，保留旧版本的Pod数量（灰度发布），假设replicas=N, partition=M (M&lt;=N), 则最终旧版本Pod序号为[0, M), 新版本序号Pod为[M, n)</span></p><h2><a name="常用命令" class="md-header-anchor"></a><span>常用命令</span></h2><ul><li><code>kubectl config get-contexts</code><span>: 获取所有集群contexts的信息， 即有多少个不同集群</span></li><li><code>kubectl config use-context &lt;yourClusterName&gt;</code><span>: 切换到某个集群的上下文</span></li><li><code>kubectl config set-context --current --namespace=my-namespace</code><span> 设置当前cluster context的namespace</span></li><li><code>kuberctl config view</code><span>: 检查kubernetes的location和credentials。</span></li><li><code>kubectl get nodes</code><span>: 查看当前kubernetes cluster下面的node</span></li><li><code>kubectl get deployments</code><span>: 查看当前kubernetes cluster下面的deployment的信息, </span><code>--watch</code><span>参数为实时监控</span></li><li><code>kubectl get pods -l app=openapi,role=kebab</code><span>: 根据label，selector过滤筛选pod</span></li><li><code>kubectl describe deployment  &lt;name&gt;</code><span> : 查看全部或者具体某个deployment的信息</span></li><li><code>kubectl delete deployment &lt;name&gt;</code><span> :删除某个deployment</span></li><li><code>kubectl apply -f</code><span>：将某个配置文件（yaml）应用到容器中</span></li><li><code>kubectl get ep</code><span>: 获取集群中的endpoint</span></li><li><code>kubectl get pods --show-labels</code><span> -l env=dev: 通过label selector过滤并显示所有labels</span></li><li><code>kubectl rollout undo deployment/nginx-deployment</code><span>: 回滚到Deployment上一个版本</span></li><li><code>kubectl rollout undo deployment/nginx-deployment --to-revision=2</code><span>，回滚到指定的某个版本</span></li><li><code>kubectl rollout history deployment/&lt;deployment name&gt;</code><span> 查询历史deployment版本</span></li><li><code>kubectl get replicaset</code><span>: 查看集群中replicaset的信息</span></li><li><code>kubectl edit deployments  openapikebab-slabot-kebab</code><span>: 编辑某次deployment</span></li><li><code>kubectl get jobs</code><span>： 查看集群中的Job</span></li><li><code>kubectl get jobs keyvault-job -o yaml</code><span>： 以Yaml的形式查看具体的job</span></li><li><code>kubectl logs &lt;pod name&gt;</code><span>： 打印具体某个pod的日志</span></li><li><code>kebectl get pods --namespace kube-system</code><span>: 获取kube-system系统名字空间下的pod，例如：kube-dns，kube-proxy，kubernetes-dashboard，fluentd等等</span></li><li><code>kubectl get pods --namespace kube-system -o wide</code><span> : -o wide为显示ip，以及node信息</span></li><li><code>kubectl exec -it &lt;pod-name&gt; -c container-name /bin/bash</code><span>: 多容器Pod调试命令</span></li><li><code>kubectl get pods --all-namespaces -o json | jq &#39;.items[] | select(.status.reason!=null) | select(.status.reason | contains(&quot;Evicted&quot;)) | .status&#39;</code><span> 查询所有名字空间下pod Evicted的原因</span></li><li><code>kubectl get pods --all-namespaces -o json | jq &#39;.items[] | select(.status.reason!=null) | select(.status.reason | contains(&quot;Evicted&quot;)) | &quot;kubectl delete pods \(.metadata.name) -n \(.metadata.namespace)&quot;&#39; | xargs -n 1 bash -c</code><span>  删除Evicted的pod的命令</span></li><li><code>jq</code><span>  为很强大的json处理，利器，对于分析pod的原因很有帮助</span></li></ul><p>&nbsp;</p><h2><a name="reference" class="md-header-anchor"></a><span>Reference</span></h2><ul><li><a href='https://azure.microsoft.com/mediahandler/files/resourcefiles/kubernetes-learning-path/Kubernetes Learning Path version 1.0.pdf'><span>Microsoft kubernetes in 50 days</span></a></li><li><a href='https://azure.microsoft.com/mediahandler/files/resourcefiles/phippy-goes-to-the-zoo/Phippy Goes To The Zoo_MSFTonline.pdf'><span>Microsoft azure zoo</span></a></li><li><a href='https://juejin.im/entry/5b6ef3956fb9a04fc226e133'><span>Helm入门介绍</span></a></li><li><a href='https://edu.aliyun.com/roadmap/cloudnative?spm=5176.12901015.0.i12901015.2c32525cYc0V25#suit'><span>Aliyun 云原生技术公开课</span></a></li><li><a href='https://wangchujiang.com/linux-command/c/iptables.html'><span>iptables command</span></a></li><li><a href='https://en.wikipedia.org/wiki/Iptables'><span>wikipedia iptables</span></a></li><li><a href='https://www.yangcs.net/posts/a-deep-dive-into-kubernetes-controllers/'><span>kubernetes控制器工作原理</span></a></li><li><a href='https://engineering.bitnami.com/articles/a-deep-dive-into-kubernetes-controllers.html'><span>a deep dive into kubernetes controller</span></a></li><li><a href='https://stackoverflow.com/questions/45079988/ingress-vs-load-balancer'><span>ingress vs load balancer</span></a></li><li><a href='https://github.com/kubernetes/kubernetes/blob/v1.5.1/docs/design/architecture.md'><span>kubernetes architecture design doc</span></a></li></ul></div>
+</body>
+</html>
