@@ -97,6 +97,10 @@
 + [IP协议](./IP协议.html)
 + [thread线程知识](./thread线程.html)
 
+#### 生活
+
++ [一个关于投资还是买房的数学题](./关于买房投资的数学题.html)
+
 ## 学习资源
 
 + [golang 搭建整套微服务Blog](http://callistaenterprise.se/blogg/teknik/2017/02/17/go-blog-series-part1/)
