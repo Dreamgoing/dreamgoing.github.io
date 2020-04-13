@@ -109,10 +109,7 @@
 
 + 90后，工作一年，HUST,  backend,  python，golang，TypeScript，存储，分布式系统~ 
 + Email: ruoxuanwanggoing@gmail.com (有任何疑问欢迎联系~)
-+ 90后，工作一年，HUST,  backend,  python，golang，分布式~ 
 + 知乎：[Dreamgoing](https://www.zhihu.com/people/wang-ruo-xuan-33-78/activities) (欢迎关注交流)
-+ [cv](./resume.pdf)
-+ Email: ruoxuanwanggoing@gmail.com
 
 
 
